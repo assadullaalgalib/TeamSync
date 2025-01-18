@@ -42,25 +42,7 @@ if ($user !== null) {
     $_SESSION['firstname'] = $user['firstname'];
     $_SESSION['lastname'] = $user['lastname'];
 
-    // Redirect to dashboard or main page based on role
-    switch ($user['roleid']) {
-        case 1: // Admin
-            header("Location: ../view/admin_dashboard.php");
-            break;
-        case 2: // Project Manager
-            header("Location: ../view/project_manager_dashboard.php");
-            break;
-        case 3: // Developer
-            header("Location: ../view/developer_dashboard.php");
-            break;
-        case 4: // Client
-            header("Location: ../view/client_dashboard.php");
-            break;
-        default:
-            // Default case if no role matches
-            header("Location: ../view/login.php");
-            break;
-    }
+    header("Location: ../controller/dashboard_controller.php");
     
 } else {
     // Incorrect credentials or user not found
