@@ -8,9 +8,9 @@ include_once '../model/project_model.php';
 $errorMessages = [];
 
 // Retrieve form data
-$name = trim($_POST['name']);
+$name = trim($_POST['proposalname']);
 $description = trim($_POST['description']);
-$deadline = $_POST['deadline'];
+$deadline = $_POST['proposaldeadline'];
 
 // Server-side validation
 // Name validation
@@ -37,14 +37,18 @@ if (!empty($errorMessages)) {
 
 // Call the model function to submit the new proposal
 $clientId = $_SESSION['userid'];
+$submitSuccess = submitNewProposal($clientId, $name, $description, $deadline);
 
-if (submitNewProposal($clientId, $name, $description, $deadline)) {
-    // Proposal submitted successfully
-    $_SESSION['successMessage'] = "Proposal submitted successfully.";
-    header("Location: ../view/client_dashboard.php");
+if ($submitSuccess) {
+    echo "<script>
+                alert('Project Proposal Has Been Submitted Successfully');
+                window.location.href = '../controller/dashboard_controller.php';
+              </script>";
 } else {
     // Failed to submit the proposal
-    $_SESSION['errorMessages'] = ["Failed to submit the proposal. Please try again."];
-    header("Location: ../view/submit_proposal.php");
+    echo "<script>
+                alert('Error: Something went wrong during submission. Please try again.');
+                window.location.href = '../controller/dashboard_controller.php';
+              </script>";
 }
 ?>
