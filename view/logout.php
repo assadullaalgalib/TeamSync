@@ -1,14 +1,9 @@
 <?php
+session_start();
+
 if(isset($_SESSION['userid'])) {
     session_unset();
     session_destroy();
-    header('Location: ../view/login.php');
+    header('Location: ../index.php');
 }
-else {
-    header('Location: ../view/login.php');
-}
-
-
-
-
 ?>

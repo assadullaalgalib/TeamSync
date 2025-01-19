@@ -3,6 +3,7 @@
 
 include_once '../model/project_model.php';
 include_once '../model/user_model.php';
+include_once '../model/task_model.php';
 
 session_start();
 
@@ -18,13 +19,10 @@ if (isset($_SESSION['userid']) && isset($_SESSION['roleid'])) {
             header('Location: ../view/pm_dashboard.php');
             break;
         case 3: // Developer
-            
-            header('Location: ../view/dev_dashboard.php');
+            showDeveloperDashboard($userId);
             break;
         case 4: // Client
-
             showClientDashboard($userId);
-            
             break;
         default:
             // Invalid role, redirect to login with an error
@@ -37,6 +35,17 @@ if (isset($_SESSION['userid']) && isset($_SESSION['roleid'])) {
     exit();
 }
 
+function showDeveloperDashboard($developerId) {
+    $developerInfo = getDeveloperInfo($developerId);
+    $developerName = $developerInfo['firstname'] . ' ' . $developerInfo['lastname'];
+    $activeTasks = getActiveTasks($developerId);
+    $completedTasks = getCompletedTasks($developerId);
+    $activeTasksCount = count($activeTasks);
+    $completedTasksCount = count($completedTasks);
+
+    include '../view/developer_dashboard.php';
+}
+
 function showClientDashboard($clientId) {
     $projects = getClientProjects($clientId);
     $activeCount = getActiveProjectsCount($clientId);
@@ -46,5 +55,4 @@ function showClientDashboard($clientId) {
 
     include '../view/client_dashboard.php';
 }
-
 ?>
