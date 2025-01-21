@@ -81,6 +81,6 @@ if (isset($_SESSION['errorMessages'])) {
         </fieldset>
     </form>
     
-    <p>Already have an account? <a href="../view/login.php">Login here</a></p>
+    <p>Already have an account? <a href="../view/login.php"><button>Login here</button></a></p>
 </body>
 </html>

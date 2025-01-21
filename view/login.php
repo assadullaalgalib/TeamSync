@@ -41,6 +41,6 @@ if (isset($_SESSION['errorMessages'])) {
         </fieldset>
     </form>
 
-    <p>Don't have an account? <a href="../view/registration.php">Register here</a></p>
+    <p>Don't have an account? <a href="../view/registration.php"><button>Register here</button></a></p>
 </body>
 </html>
