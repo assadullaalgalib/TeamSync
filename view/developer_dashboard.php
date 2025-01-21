@@ -11,12 +11,14 @@
 <!-- Header -->
 <table>
     <tr>
-        <td colspan="3"><h1>Welcome, <?php echo $developerName; ?>!</h1></td>
+        <td colspan="3">
+            <h1>Welcome, <?php echo $developerName; ?>!</h1>
+        </td>
     </tr>
     <tr>
-        <td><a href="developer_dashboard.php">Dashboard</a></td>
+        <td><a href="../controller/dashboard_controller.php">Dashboard</a></td>
         <td><a href="profile.php">Profile</a></td>
-        <td><a href="logout.php">Logout</a></td>
+        <td><a href="../view/logout.php">Logout</a></td>
     </tr>
 </table>
 
@@ -54,8 +56,7 @@
             <td><?php echo $task['deadline']; ?></td>
             <td><?php echo $task['pm_comment']; ?></td>
             <td>
-                <a href="task_details.php?task_id=<?php echo $task['task_id']; ?>">View</a>
-                <a href="upload_file.php?task_id=<?php echo $task['task_id']; ?>">Upload</a>
+                <a href="../controller/task_controller.php?action=view_active&task_id=<?php echo $task['task_id']; ?>">View</a>
             </td>
         </tr>
         <?php } ?>
@@ -88,8 +89,7 @@
             <td><?php echo $task['deadline']; ?></td>
             <td><?php echo $task['pm_comment']; ?></td>
             <td>
-                <a href="task_details.php?task_id=<?php echo $task['task_id']; ?>">View</a>
-                <a href="download_file.php?task_id=<?php echo $task['task_id']; ?>">Download</a>
+                <a href="../controller/task_controller.php?action=view_completed&task_id=<?php echo $task['task_id']; ?>">View</a>
             </td>
         </tr>
         <?php } ?>

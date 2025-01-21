@@ -15,8 +15,8 @@ if (isset($_SESSION['errorMessages'])) {
 <html>
 <head>
     <title>TeamSync Registration</title>
-    <link rel="stylesheet" href="../scripts/css/validation.css">
-    <script src="../scripts/js/validation.js" defer></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/scripts.js" defer></script>
 </head>
 <body>
     <h2>TeamSync Registration</h2>
@@ -81,6 +81,6 @@ if (isset($_SESSION['errorMessages'])) {
         </fieldset>
     </form>
     
-    <p>Already have an account? <a href="../view/login.php"><button>Login here</button></a></p>
+    <p>Already have an account? <a href="../view/login.php">Login here</a></p>
 </body>
 </html>

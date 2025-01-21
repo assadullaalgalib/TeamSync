@@ -35,9 +35,9 @@ if (isset($_SESSION['userid']) && isset($_SESSION['roleid'])) {
     exit();
 }
 
-function showDeveloperDashboard($developerId) {
-    $developerInfo = getDeveloperInfo($developerId);
-    $developerName = $developerInfo['firstname'] . ' ' . $developerInfo['lastname'];
+function showDeveloperDashboard($developerId)
+{
+    $developerName = getUserName($developerId);
     $activeTasks = getActiveTasks($developerId);
     $completedTasks = getCompletedTasks($developerId);
     $activeTasksCount = count($activeTasks);
@@ -46,13 +46,13 @@ function showDeveloperDashboard($developerId) {
     include '../view/developer_dashboard.php';
 }
 
-function showClientDashboard($clientId) {
+function showClientDashboard($clientId)
+{
     $projects = getClientProjects($clientId);
     $activeCount = getActiveProjectsCount($clientId);
     $pendingCount = getPendingProjectsCount($clientId);
     $completedCount = getCompletedProjectsCount($clientId);
-    $clientName = getClientName($clientId);
+    $clientName = getUserName($clientId);
 
     include '../view/client_dashboard.php';
 }
-?>

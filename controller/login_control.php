@@ -52,4 +52,4 @@ if ($user !== null) {
 
 // Close the database connection
 $conn->close();
-?>
+

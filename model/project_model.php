@@ -20,20 +20,6 @@ function getClientProjects($clientId) {
     return $projects;
 }
 
-function getClientName($clientId) {
-    $conn = getDbConnection();
-    $sql = "SELECT firstname, lastname FROM usr WHERE userid = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $clientId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-
-    $stmt->close();
-    $conn->close();
-
-    return $user['firstname'] . ' ' . $user['lastname'];
-}
 
 function getActiveProjectsCount($clientId) {
     $conn = getDbConnection();
@@ -105,7 +91,7 @@ function calculateProjectProgress($projectId) {
 
     // Calculate progress
     if ($totalTasks === 0) {
-        return 0; // No tasks, so progress is 0%
+        return 0;
     }
 
     $progress = ($completedTasks * 100) / $totalTasks;
@@ -115,7 +101,7 @@ function calculateProjectProgress($projectId) {
 function submitNewProposal($clientId, $name, $description, $deadline) {
     $conn = getDbConnection();
     
-    // Insert the new proposal into the projects table
+
     $sql = "INSERT INTO projects (client_id, name, description, deadline, status, type) VALUES (?, ?, ?, ?, 'Pending Approval', 'Proposal')";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("isss", $clientId, $name, $description, $deadline);
