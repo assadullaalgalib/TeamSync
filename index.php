@@ -1,14 +1,15 @@
 <?php
-// index.php - Entry point to the application
+include_once 'model/session-manager-model.php';
 
-// Check if the user is authenticated
-if (isset($_SESSION['userid']) && isset($_SESSION['roleid'])) {
-    // Redirect to the dashboard controller
-    header('Location: controller/dashboard_controller.php');
+startSession();
+
+if (sessionExists('userid') && sessionExists('roleid')) {
+
+    header('Location: controller/user-dashboard-controller.php');
     exit();
 } else {
-    // Not authenticated, redirect to login
-    header('Location: view/login.php');
+
+    header('Location: view/user-login.php');
     exit();
 }
 ?>
