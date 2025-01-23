@@ -8,7 +8,7 @@
     <!-- Welcome Section -->
     <header>
         <h1>Welcome, <?php echo $clientName; ?>!</h1>
-        <a href="../view/submit_proposal.php">Submit New Proposal</a>
+        <a href="../view/client-submit-proposal.php">Submit New Proposal</a>
     </header>
 
     <!-- Project Overview -->
@@ -42,7 +42,7 @@
                     <td><?php echo $project['progress']; ?>%</td>
                 </tr>
                 <?php } ?>
-                <tr><td><input type="button" value="Logout" onclick="window.location.href='../view/logout.php';"></td></tr>
+                <tr><td><input type="button" value="Logout" onclick="window.location.href='../controller/user-logout-controller.php';"></td></tr>
             </tbody>
         </table>
     </section>

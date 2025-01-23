@@ -1,15 +1,19 @@
+<!-- here the validation should work so that it check if the email or pass is incorrect it will show the error using the PHP Validation -->
+
 <?php
-session_start();
-// Display error messages if any
-if (isset($_SESSION['errorMessages'])) {
+require_once '../model/session-manager-model.php';
+
+if (sessionExists('errorMessages')) {
     echo '<ul>';
-    foreach ($_SESSION['errorMessages'] as $message) {
+    $errorMessages = getSession('errorMessages');
+    foreach ($errorMessages as $message) {
         echo "<li>$message</li>";
     }
     echo '</ul>';
-    unset($_SESSION['errorMessages']);
+    removeSession('errorMessages');
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +24,7 @@ if (isset($_SESSION['errorMessages'])) {
 </head>
 <body>
     <h2>TeamSync Registration</h2>
-    <form id="registrationForm" action="../controller/registration_control.php" method="POST" onsubmit="regValidate(event)">
+    <form id="registrationForm" action="../controller/user-registration-controller.php" method="POST" onsubmit="regValidate(event)">
         <!-- Role Selection Section -->
         <fieldset>
             <legend>Select Role</legend>
@@ -81,6 +85,6 @@ if (isset($_SESSION['errorMessages'])) {
         </fieldset>
     </form>
     
-    <p>Already have an account? <a href="../view/login.php">Login here</a></p>
+    <p>Already have an account? <a href="../view/user-login.php">Login here</a></p>
 </body>
 </html>

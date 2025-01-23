@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +40,7 @@
 </table>
 
 <h2>Submit Task</h2>
-<form action="task_controller.php?action=submit_task" method="post" enctype="multipart/form-data">
+<form action="dev-task-controller.php?action=submit_task" method="post" enctype="multipart/form-data">
     <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
     <table>
         <tr>
@@ -51,15 +49,23 @@
         </tr>
         <tr>
             <p id="fileMessage">
-                <?php 
-                if (isset($_SESSION['fileMessage'])) {
-                    echo $_SESSION['fileMessage'];
-                    unset($_SESSION['fileMessage']);
+                <?php
+                require_once '../model/session-manager-model.php';
+                startSession();
+
+                // Check if fileMessage exists in the session
+                if (sessionExists('fileMessage')) {
+
+                    // Display the file message
+                    echo getSession('fileMessage');
+
+                    // Remove the fileMessage from the session after displaying it
+                    removeSession('fileMessage');
                 }
                 ?>
             </p>
         <tr>
-            <td><input type="button" value="Back" onclick="window.location.href='../controller/dashboard_controller.php'"></td>
+            <td><input type="button" value="Back" onclick="window.location.href='../controller/user-dashboard-controller.php'"></td>
             <td colspan="2"><button type="submit">Submit</button></td>
         </tr>
     </table>

@@ -45,7 +45,7 @@
 </table>
 
 <h2>Download File</h2>
-<a href="task_controller.php?action=download_file&task_id=<?php echo $task['task_id']; ?>">Download File</a>
+<a href="dev-task-controller.php?action=download_file&task_id=<?php echo $task['task_id']; ?>">Download File</a>
 
 </body>
 </html>

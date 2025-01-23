@@ -1,15 +1,19 @@
 <?php
-session_start();
-// Display error messages if any
-if (isset($_SESSION['errorMessages'])) {
+require_once '../model/session-manager-model.php';
+
+startSession();
+
+if (sessionExists('errorMessages')) {
+    $errorMessages = getSession('errorMessages');
     echo '<ul>';
-    foreach ($_SESSION['errorMessages'] as $message) {
+    foreach ($errorMessages as $message) {
         echo "<li>$message</li>";
     }
     echo '</ul>';
-    unset($_SESSION['errorMessages']);
+    removeSession('errorMessages');
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +33,7 @@ if (isset($_SESSION['errorMessages'])) {
     </header>
 
     <section>
-        <form id="proposalForm" action="../controller/proposal_controller.php" method="post"
+        <form id="proposalForm" action="../controller/client-submit-proposal-controller.php" method="post"
             onsubmit="validateProposalForm(event)">
             <table>
                 <tr>
@@ -59,7 +63,7 @@ if (isset($_SESSION['errorMessages'])) {
                 </tr>
                 <tr>
                     <td><input type="button" value="Back"
-                            onclick="window.location.href='../controller/dashboard_controller.php';"></td>
+                            onclick="window.location.href='../controller/user-dashboard-controller.php';"></td>
                 </tr>
             </table>
         </form>
