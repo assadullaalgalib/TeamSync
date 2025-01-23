@@ -1,27 +1,6 @@
-/* document.addEventListener('DOMContentLoaded', () => {
-    // Proposal Form Validation
-    var proposalForm = document.getElementById('proposalForm');
-    if (proposalForm) {
-        proposalForm.addEventListener('submit', validateProposalForm);
-    }
-    
-    // Login Form Validation
-    var loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', loginValidate);
-    }
-
-    // Registration Form Validation
-    var registrationForm = document.getElementById('registrationForm');
-    if (registrationForm) {
-        registrationForm.addEventListener('submit', regValidate);
-    }
-
-    
-}); */
-
 function loginValidate(event) {
     event.preventDefault();
+
     var email = document.getElementById('email');
     var password = document.getElementById('password');
     var emailError = document.getElementById('emailError');
@@ -49,6 +28,7 @@ function loginValidate(event) {
 
     if (valid) {
         event.target.submit();
+        
     }
 }
 
