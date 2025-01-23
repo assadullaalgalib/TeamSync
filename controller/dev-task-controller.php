@@ -1,18 +1,24 @@
 <?php
-session_start();
-include_once '../model/task_model.php';
+// Include the session manager
+require_once '../model/session-manager-model.php';
+
+// Start the session using the session manager
+startSession();
+
+
+include_once '../model/task-model.php';
 
 $action = $_GET['action'] ?? '';
 
 if ($action == 'view_active') {
     $taskId = $_GET['task_id'];
     $task = getTaskDetails($taskId);
-    include '../view/active_task.php';
+    include '../view/dev-task-active.php';
 
 } elseif ($action == 'view_completed') {
     $taskId = $_GET['task_id'];
     $task = getTaskDetails($taskId);
-    include '../view/completed_task.php';
+    include '../view/dev-task-completed.php';
 
 } elseif ($action == 'submit_task') {
     handleFileUpload();
@@ -21,7 +27,7 @@ if ($action == 'view_active') {
     handleFileDownload();
 
 }else {
-    header("Location: ../controller/dashboard_controller.php");
+    header("Location: ../controller/user-dashboard-controller.php");
     exit();
 }
 
@@ -36,12 +42,12 @@ function handleFileUpload() {
             saveFileData($taskId, $fileData, $fileName, $fileType);
             $status = 'Waiting For Approval'; 
             updateTaskStatus($taskId, $status); 
-            $_SESSION['fileMessage'] = "File uploaded successfully.";
+            setSession('fileMessage', "File uploaded successfully.");
         } else {
-            $_SESSION['fileMessage'] = "File upload failed, please try again.";
+            setSession('fileMessage', "File upload failed, please try again.");
         }
         
-        header("Location: ../controller/task_controller.php?action=view_active&task_id=$taskId");
+        header("Location: ../controller/dev-task-controller.php?action=view_active&task_id=$taskId");
         exit();
     }
 }
@@ -58,8 +64,8 @@ function handleFileDownload() {
         echo $fileDetails['file_data'];
         exit;
     } else {
-        $_SESSION['fileMessage'] = "File not found.";
-        header("Location: ../controller/task_controller.php?action=view_completed&task_id=$taskId");
+        setSession('fileMessage', "File not found.");
+        header("Location: ../controller/dev-task-controller.php?action=view_completed&task_id=$taskId");
     }
 }
 
