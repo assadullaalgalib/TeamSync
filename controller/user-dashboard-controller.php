@@ -1,22 +1,21 @@
 <?php
-// dashboard_controller.php - Handle user dashboard requests
+require_once '../model/session-manager-model.php';
+include_once '../model/project-model.php';
+include_once '../model/user-model.php';
+include_once '../model/task-model.php';
 
-include_once '../model/project_model.php';
-include_once '../model/user_model.php';
-include_once '../model/task_model.php';
+startSession();
 
-session_start();
-
-if (isset($_SESSION['userid']) && isset($_SESSION['roleid'])) {
-    $userId = $_SESSION['userid'];
-    $roleId = $_SESSION['roleid'];
+if (sessionExists('userid') && sessionExists('roleid')) {
+    $userId = getSession('userid');
+    $roleId = getSession('roleid');
 
     switch ($roleId) {
         case 1: // Admin
             header('Location: ../view/admin_dashboard.php');
             break;
         case 2: // Project Manager
-            header('Location: ../view/pm_dashboard.php');
+            showPMdashboard($userId);
             break;
         case 3: // Developer
             showDeveloperDashboard($userId);
@@ -25,13 +24,15 @@ if (isset($_SESSION['userid']) && isset($_SESSION['roleid'])) {
             showClientDashboard($userId);
             break;
         default:
+            // There is some issue here, if the user authentication or something doesnt work it auto redirects to login without even notifying. 
+
             // Invalid role, redirect to login with an error
-            header('Location: ../view/login.php?error=invalid_role');
+            header('Location: ../view/user-login.php?error=invalid_role');
     }
     exit();
 } else {
     // Not authenticated, redirect to login
-    header('Location: ../view/login.php?error=not_authenticated');
+    header('Location: ../view/user-login.php?error=not_authenticated');
     exit();
 }
 
@@ -43,7 +44,7 @@ function showDeveloperDashboard($developerId)
     $activeTasksCount = count($activeTasks);
     $completedTasksCount = count($completedTasks);
 
-    include '../view/developer_dashboard.php';
+    include '../view/dev-dashboard.php';
 }
 
 function showClientDashboard($clientId)
@@ -54,5 +55,14 @@ function showClientDashboard($clientId)
     $completedCount = getCompletedProjectsCount($clientId);
     $clientName = getUserName($clientId);
 
-    include '../view/client_dashboard.php';
+    include '../view/client-dashboard.php';
+}
+
+function showPMdashboard($pmId)
+{
+    $pmName = getUserName($pmId);
+    $projects = getPMProjects($pmId);
+    $pendingTaskApprovals = getPendingTaskApprovals($pmId);
+
+    include '../view/pm-dashboard.php';
 }

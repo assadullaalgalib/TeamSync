@@ -1,9 +1,10 @@
 <?php
-session_start();
-
 // Include the database connection and model
-include_once '../model/db.php';
-include_once '../model/user_model.php';
+require_once '../model/session-manager-model.php';
+include_once '../model/db-connection-model.php';
+include_once '../model/user-model.php';
+
+startSession();
 
 $errorMessages = [];
 
@@ -55,8 +56,12 @@ if ($password !== $confirmPassword) {
 
 // Check for errors
 if (!empty($errorMessages)) {
-    $_SESSION['errorMessages'] = $errorMessages;
-    header("Location: ../view/registration.php");
+
+    // Here redirection issue, if any error validation error occurs, it just redirect to the registration page without showing the error messages
+
+
+    setSession('errorMessages', $errorMessages);
+    header("Location: ../view/user-registration.php");
     exit();
 } else {
     // Role mapping based on the value in the registration form
@@ -72,20 +77,20 @@ if (!empty($errorMessages)) {
             break;
     }
 
-    // Call the model function to insert the user into the database
-    $insertSuccess = insertUser($first_name, $last_name, $username, $email, $password, $roleid);
+    // Call the model function to register the user into the database
+    $registrationSuccess = registerUser($first_name, $last_name, $username, $email, $password, $roleid);
 
-    if ($insertSuccess) {
+    if ($registrationSuccess) {
         // Registration successful, redirect to login page with success message
         echo "<script>
                 alert('Registration Successful');
-                window.location.href = '../view/login.php';
+                window.location.href = '../view/user-login.php';
               </script>";
     } else {
         // Error during registration
         echo "<script>
                 alert('Error: Something went wrong during registration.');
-                window.location.href = '../view/registration.php';
+                window.location.href = '../view/user-registration.php';
               </script>";
     }
 }

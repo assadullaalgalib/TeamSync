@@ -1,9 +1,10 @@
 <?php
-session_start();
+require_once '../model/session-manager-model.php';
 
-// Include the database connection and model
-include_once '../model/db.php';
-include_once '../model/user_model.php';
+include_once '../model/db-connection-model.php';
+include_once '../model/user-model.php';
+
+startSession();
 
 $errorMessages = [];
 
@@ -26,8 +27,8 @@ if (empty($password)) {
 
 // If there are validation errors, redirect to login page with error messages
 if (!empty($errorMessages)) {
-    $_SESSION['errorMessages'] = $errorMessages;
-    header("Location: ../view/login.php");
+    setSession('errorMessages', $errorMessages);
+    header("Location: ../view/user-login.php");
     exit();
 }
 
@@ -36,18 +37,19 @@ $user = authenticateUser($email, $password);
 
 if ($user !== null) {
     // User found and password matches, login successful
-    $_SESSION['userid'] = $user['userid'];
-    $_SESSION['email'] = $user['email'];
-    $_SESSION['roleid'] = $user['roleid'];
-    $_SESSION['firstname'] = $user['firstname'];
-    $_SESSION['lastname'] = $user['lastname'];
+    setSession('userid', $user['userid']);
+    setSession('email', $user['email']);
+    setSession('roleid', $user['roleid']);
+    setSession('firstname', $user['firstname']);
+    setSession('lastname', $user['lastname']);
 
-    header("Location: ../controller/dashboard_controller.php");
-    
+    header("Location: ../controller/user-dashboard-controller.php");
+    exit();
 } else {
     // Incorrect credentials or user not found
-    $_SESSION['errorMessages'] = ["Invalid email or password. Please try again."];
-    header("Location: ../view/login.php");
+    setSession('errorMessages', ["Invalid email or password. Please try again."]);
+    header("Location: ../view/user-login.php");
+    exit();
 }
 
 // Close the database connection
