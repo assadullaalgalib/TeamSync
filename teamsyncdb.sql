@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2025 at 04:50 PM
+-- Generation Time: Jan 24, 2025 at 11:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,84 @@ SET time_zone = "+00:00";
 --
 -- Database: `teamsyncdb`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `comment_id` int(11) NOT NULL,
+  `task_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`comment_id`, `task_id`, `user_id`, `comment`, `type`, `timestamp`) VALUES
+(1, 1, 2, 'Started working on Task 1.', 'feedback', '2025-01-18 02:46:36'),
+(2, 3, 7, 'Initial draft for Task 3 uploaded.', 'feedback', '2025-01-18 02:46:36'),
+(3, 4, 3, 'Task 4 needs some revisions.', 'rejection', '2025-01-18 02:46:36'),
+(4, 5, 4, 'Task 5 completed successfully.', 'approval', '2025-01-18 02:46:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `files`
+--
+
+CREATE TABLE `files` (
+  `file_id` int(11) NOT NULL,
+  `task_id` int(11) NOT NULL,
+  `developer_id` int(11) NOT NULL,
+  `file_path` varchar(255) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` varchar(50) NOT NULL DEFAULT 'Pending Approval'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `projects`
+--
+
+CREATE TABLE `projects` (
+  `project_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `pm_id` int(11) DEFAULT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `deadline` date NOT NULL,
+  `status` varchar(50) NOT NULL DEFAULT 'Pending Approval',
+  `type` varchar(50) NOT NULL DEFAULT 'Proposal',
+  `comment` text DEFAULT NULL,
+  `client_feedback` text DEFAULT NULL,
+  `progress` decimal(5,2) DEFAULT 0.00
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`project_id`, `client_id`, `pm_id`, `name`, `description`, `start_date`, `deadline`, `status`, `type`, `comment`, `client_feedback`, `progress`) VALUES
+(1, 3, 3, 'Project Alpha', 'Description for Project Alpha', '2025-01-01', '2025-12-31', 'Approved', 'Project', 'Approved by PM', '', 50.00),
+(2, 3, NULL, 'Project Beta', 'Description for Project Beta', NULL, '2025-11-30', 'Pending Approval', 'Proposal', 'Awaiting PM approval', '', 0.00),
+(3, 3, 3, 'Project Gamma', 'Description for Project Gamma', '2025-02-01', '2025-10-15', 'Approved', 'Project', 'Approved by PM', '', 100.00),
+(4, 3, 3, 'Project Delta', 'Description for Project Delta', NULL, '2025-09-30', 'Approved', 'Proposal', 'Approved by PM', '', 100.00),
+(5, 7, 4, 'Project Epsilon', 'Description for Project Epsilon', '2025-03-01', '2025-08-31', 'Completed', 'Project', 'Project handed over to client', 'Great job!', 0.00),
+(6, 7, NULL, 'Project Zeta', 'Description for Project Zeta', NULL, '2025-07-31', 'Pending Approval', 'Proposal', 'Awaiting PM approval', '', 0.00),
+(7, 10, 5, 'Project Eta', 'Description for Project Eta', '2025-04-01', '2025-12-01', 'Approved', 'Project', 'Approved by PM', '', 0.00),
+(8, 10, NULL, 'Project Theta', 'Description for Project Theta', NULL, '2025-06-30', 'Pending Approval', 'Proposal', 'Awaiting PM approval', '', 0.00),
+(9, 10, 6, 'Project Iota', 'Description for Project Iota', '2025-05-01', '2025-10-01', 'Approved', 'Project', 'Approved by PM', '', 0.00),
+(10, 10, NULL, 'Project Kappa', 'Description for Project Kappa', NULL, '2025-09-01', 'Pending Approval', 'Proposal', 'Awaiting PM approval', '', 0.00),
+(11, 3, NULL, 'Project Proposal 1', 'Project Proposal 1', NULL, '2025-01-21', 'Pending Approval', 'Proposal', NULL, NULL, 0.00);
 
 -- --------------------------------------------------------
 
@@ -123,9 +201,96 @@ END
 $$
 DELIMITER ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usr`
+--
+
+CREATE TABLE `usr` (
+  `userid` int(11) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `roleid` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `usr`
+--
+
+INSERT INTO `usr` (`userid`, `firstname`, `lastname`, `username`, `email`, `password`, `roleid`) VALUES
+(1, 'Md Asif', 'Chowdhury', 'NocillaX', 'asifjarif@gmail.com', '$2y$10$oWBK3vUqAFtNZqrctVu84e8rJDlOcoXFZ0HP6XvBiUc2IRpr.50X.', 3),
+(2, 'John', 'Doe', 'jdoe', 'john.doe@example.com', '$2y$10$oWBK3vUqAFtNZqrctVu84e8rJDlOcoXFZ0HP6XvBiUc2IRpr.50X.', 3),
+(3, 'Jane', 'Smith', 'jsmith', 'jane.smith@example.com', '$2y$10$oWBK3vUqAFtNZqrctVu84e8rJDlOcoXFZ0HP6XvBiUc2IRpr.50X.', 4),
+(4, 'Alice', 'Brown', 'abrown', 'alice.brown@example.com', '$2y$10$oWBK3vUqAFtNZqrctVu84e8rJDlOcoXFZ0HP6XvBiUc2IRpr.50X.', 2),
+(5, 'Bob', 'Johnson', 'bjohnson', 'bob.johnson@example.com', '$2y$10$oWBK3vUqAFtNZqrctVu84e8rJDlOcoXFZ0HP6XvBiUc2IRpr.50X.', 1),
+(6, 'Charlie', 'White', 'cwhite', 'charlie.white@example.com', '$2y$10$oWBK3vUqAFtNZqrctVu84e8rJDlOcoXFZ0HP6XvBiUc2IRpr.50X.', 3),
+(7, 'David', 'Black', 'dblack', 'david.black@example.com', '$2y$10$oWBK3vUqAFtNZqrctVu84e8rJDlOcoXFZ0HP6XvBiUc2IRpr.50X.', 4),
+(8, 'Eve', 'Green', 'egreen', 'eve.green@example.com', '$2y$10$oWBK3vUqAFtNZqrctVu84e8rJDlOcoXFZ0HP6XvBiUc2IRpr.50X.', 2),
+(9, 'Frank', 'Blue', 'fblue', 'frank.blue@example.com', '$2y$10$oWBK3vUqAFtNZqrctVu84e8rJDlOcoXFZ0HP6XvBiUc2IRpr.50X.', 3),
+(10, 'Grace', 'Red', 'gred', 'grace.red@example.com', '$2y$10$oWBK3vUqAFtNZqrctVu84e8rJDlOcoXFZ0HP6XvBiUc2IRpr.50X.', 4),
+(11, 'Hank', 'Yellow', 'hyellow', 'hank.yellow@example.com', '$2y$10$oWBK3vUqAFtNZqrctVu84e8rJDlOcoXFZ0HP6XvBiUc2IRpr.50X.', 1),
+(13, 'Md Asif', 'Chowdhury', 'Nocilla', 'asiff@gmail.com', '$2y$10$uuVIjBuzaUd2lH3d98864emFt2Kh/1J8Hd3X/TT1j72/ZXbqEY7Se', 3),
+(14, 'Md Asif', 'Chowdhury', '123456', 'as@gmail.com', '$2y$10$aKB9ZZUrDouzWCy56VZqW.PuS3fdauF1lzoHZkJ.aUThJTh2YFm9m', 4),
+(15, 'Md Asif', 'Chowdhury', '1111123456', '`1234567@gmail.com', '$2y$10$w2D9WQIxO.w4isHLnoDeZ..pN8Ts.j0BZV7kxAWhDPITH2xZqdqOu', 4),
+(16, '12345', '1243567', '234567', '124356576@ghjg.awds', '$2y$10$dvr/Cqnkw6pxHpy4KZS9luw.F9mFR8AAtdFx6RvyKGRmlEX3UGXVu', 4),
+(17, 'Md Asif', 'Chowdhury', '123443', '13245@gmail.com', '$2y$10$YGekWSwWjSjyfQkMbyo1Z.6Cuw1y./cFPYg06/rA5xfPxuKVuX28C', 4),
+(18, 'Md Asif', 'Chowdhury', '12345', '1234567890@gmail.com', '$2y$10$D5fqpd0TP5m5incBXG6Hj.d2pr7QW96fAK/nsyx9SRAjxkTpg2bzG', 4),
+(20, 'Md Asif', 'Chowdhury', '13245677', '1234568@gmail.com', '$2y$10$RgJVCreHPiVSCjgcfV1uDuoYcZ42hDSlXKEYzH/FSB5lX9F6gFWIO', 3),
+(21, 'MD ASIF', 'CHO', '123123231', '132231123@gmail.com', '$2y$10$j4wye3069ytNG8bhZ2NBkeyQDXGz/FQLI.OeHCMPkPjN7F.J2z7t2', 4),
+(22, '213213213', '213231123', '123231231123', '123213312@gmail.com', '$2y$10$LAlW0iK/FdWIJ3N0sppD2O/LjkU1u.NqrJGrkr/2ED447crx4x0EG', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usr_role`
+--
+
+CREATE TABLE `usr_role` (
+  `roleid` int(11) NOT NULL,
+  `rolename` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `usr_role`
+--
+
+INSERT INTO `usr_role` (`roleid`, `rolename`) VALUES
+(1, 'Admin'),
+(2, 'ProjectManager'),
+(3, 'Developer'),
+(4, 'Client');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`comment_id`),
+  ADD KEY `task_id` (`task_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `files`
+--
+ALTER TABLE `files`
+  ADD PRIMARY KEY (`file_id`),
+  ADD KEY `task_id` (`task_id`),
+  ADD KEY `developer_id` (`developer_id`);
+
+--
+-- Indexes for table `projects`
+--
+ALTER TABLE `projects`
+  ADD PRIMARY KEY (`project_id`),
+  ADD KEY `client_id` (`client_id`),
+  ADD KEY `pm_id` (`pm_id`);
 
 --
 -- Indexes for table `tasks`
@@ -136,8 +301,40 @@ ALTER TABLE `tasks`
   ADD KEY `developer_id` (`developer_id`);
 
 --
+-- Indexes for table `usr`
+--
+ALTER TABLE `usr`
+  ADD PRIMARY KEY (`userid`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `fk_usr_role` (`roleid`);
+
+--
+-- Indexes for table `usr_role`
+--
+ALTER TABLE `usr_role`
+  ADD PRIMARY KEY (`roleid`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `files`
+--
+ALTER TABLE `files`
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `projects`
+--
+ALTER TABLE `projects`
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tasks`
@@ -146,8 +343,41 @@ ALTER TABLE `tasks`
   MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `usr`
+--
+ALTER TABLE `usr`
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `usr_role`
+--
+ALTER TABLE `usr_role`
+  MODIFY `roleid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`),
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `usr` (`userid`);
+
+--
+-- Constraints for table `files`
+--
+ALTER TABLE `files`
+  ADD CONSTRAINT `files_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`),
+  ADD CONSTRAINT `files_ibfk_2` FOREIGN KEY (`developer_id`) REFERENCES `usr` (`userid`);
+
+--
+-- Constraints for table `projects`
+--
+ALTER TABLE `projects`
+  ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `usr` (`userid`),
+  ADD CONSTRAINT `projects_ibfk_2` FOREIGN KEY (`pm_id`) REFERENCES `usr` (`userid`);
 
 --
 -- Constraints for table `tasks`
@@ -155,6 +385,12 @@ ALTER TABLE `tasks`
 ALTER TABLE `tasks`
   ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`),
   ADD CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`developer_id`) REFERENCES `usr` (`userid`);
+
+--
+-- Constraints for table `usr`
+--
+ALTER TABLE `usr`
+  ADD CONSTRAINT `fk_usr_role` FOREIGN KEY (`roleid`) REFERENCES `usr_role` (`roleid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
