@@ -107,4 +107,3 @@ function updateTaskStatus($taskId, $status) {
 }
 
 ?>
-
