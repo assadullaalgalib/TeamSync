@@ -8,39 +8,58 @@
 </head>
 <body>
 
-<h1>Welcome, Project Manager!</h1>
-<p>Hello, <?php echo $pmName; ?>. Here's an overview of your current projects and pending task approvals.</p>
+<h1>Welcome, <?php echo $pmName; ?>!</h1>
 
 <h2>Projects Overview</h2>
+
+<h3>Ongoing Projects</h3>
 <ul>
     <?php foreach ($projects as $project) { ?>
         <li>
-            <?php echo $project['name']; ?>
-            <a href="../controller/pm-tasks-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">Manage Tasks</a>
+            <strong><?php echo $project['name']; ?></strong>
+            <div>Progress: <?php echo $project['progress']; ?>%</div>
+            <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
         </li>
     <?php } ?>
+</ul>
+
+<h3>Completed Projects</h3>
+<ul>
+    <?php foreach ($projects as $project) { 
+        if ($project['status'] == 'Completed') { ?>
+        <li>
+            <strong><?php echo $project['name']; ?></strong>
+            <div>Progress: <?php echo $project['progress']; ?>%</div>
+            <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
+        </li>
+    <?php } } ?>
 </ul>
 
 <h2>Pending Task Approvals</h2>
-<ul>
-    <?php foreach ($pendingTaskApprovals as $task) { ?>
-        <li>
-            <?php echo $task['name']; ?>
-            <a href="../controller/pm-approvals-controller.php?action=view&task_id=<?php echo $task['task_id']; ?>">Review Task</a>
-        </li>
-    <?php } ?>
-</ul>
+<?php
+$projectTasks = [];
+foreach ($pendingTaskApprovals as $task) {
+    $projectTasks[$task['project_id']][] = $task;
+}
+
+foreach ($projects as $project) {
+    if (isset($projectTasks[$project['project_id']])) {
+        echo "<h3>{$project['name']}</h3>";
+        echo "<ul>";
+        foreach ($projectTasks[$project['project_id']] as $task) {
+            echo "<li>{$task['name']} <a href='../controller/pm-task-controller.php?action=view&task_id={$task['task_id']}'>Review Task</a></li>";
+        }
+        echo "</ul>";
+    }
+}
+?>
 
 <h2>Navigation</h2>
 <ul>
-    <!-- Project Management Links -->
-    <li><a href="../controller/pm-projects-controller.php?action=create">Create New Project</a></li>
-    <li><a href="../controller/pm-projects-controller.php?action=view">Manage Projects</a></li>
-
-    <!-- Task Management Links -->
-    <li><a href="../controller/pm-tasks-controller.php?action=create">Create New Task</a></li>
-    <li><a href="../controller/pm-tasks-controller.php?action=view">Manage Tasks</a></li>
-    <li><a href="../controller/pm-approvals-controller.php?action=view">Pending Task Approvals</a></li>
+    <li><a href="../controller/pm-project-controller.php?action=view">Projects</a></li>
+    <li><a href="../controller/pm-task-controller.php?action=view">Tasks</a></li>
+    <li><a href="../controller/profile-controller.php?action=view">Profile</a></li>
+    <li><a href="../controller/user-logout-controller.php">Logout</a></li>
 </ul>
 
 </body>

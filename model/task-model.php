@@ -1,6 +1,52 @@
 <?php
 include_once 'db-connection-model.php';
 
+function approveTask($taskId, $pmComment) {
+    $conn = getDbConnection();
+    $sql = "UPDATE tasks SET status = 'Completed', pm_comment = ? WHERE task_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $pmComment, $taskId);
+    $result = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
+function rejectTask($taskId, $pmComment) {
+    $conn = getDbConnection();
+    $sql = "UPDATE tasks SET status = 'In Progress', pm_comment = ? WHERE task_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $pmComment, $taskId);
+    $result = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
+
+function getPendingTaskApprovals($pmId) {
+    $conn = getDbConnection(); 
+    $sql = "SELECT t.* 
+            FROM tasks t 
+            JOIN projects p ON t.project_id = p.project_id
+            WHERE p.pm_id = ? AND t.status = 'Waiting For Approval'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $pmId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $pendingTaskApprovals = [];
+    while ($row = $result->fetch_assoc()) {
+        $pendingTaskApprovals[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $pendingTaskApprovals;
+}
+
+
 function getActiveTasks($developerId) {
     $conn = getDbConnection();
     $sql = "SELECT t.*, p.name AS project_name, u.firstname AS pm_name
@@ -68,6 +114,26 @@ function getTaskDetails($taskId) {
 
     return $task;
 }
+
+function getTasksForProject($projectId) {
+    $conn = getDbConnection();
+    $sql = "SELECT * FROM tasks WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $projectId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $tasks = [];
+    while ($row = $result->fetch_assoc()) {
+        $tasks[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $tasks;
+}
+
 
 function saveFileData($taskId, $fileData, $fileName, $fileType) {
     $conn = getDbConnection();

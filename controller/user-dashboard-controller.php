@@ -64,5 +64,11 @@ function showPMdashboard($pmId)
     $projects = getPMProjects($pmId);
     $pendingTaskApprovals = getPendingTaskApprovals($pmId);
 
+    // Calculate progress for each project
+    foreach ($projects as &$project) {
+        $project['progress'] = calculateProjectProgress($project['project_id']);
+    }
+    unset($project); // Break reference
+
     include '../view/pm-dashboard.php';
 }

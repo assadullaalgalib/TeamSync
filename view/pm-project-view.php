@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Project - TeamSync</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<h1><?php echo $project['name']; ?></h1>
+
+<p><strong>Client Name:</strong> <?php echo $clientName; ?></p>
+<p><strong>Description:</strong> <?php echo $project['description']; ?></p>
+<p><strong>Start Date:</strong> <?php echo $project['start_date']; ?></p>
+<p><strong>Deadline:</strong> <?php echo $project['deadline']; ?></p>
+<p><strong>Status:</strong> <?php echo $project['status']; ?></p>
+<p><strong>Progress:</strong> <?php echo $project['progress']; ?>%</p>
+<p><strong>Client Feedback:</strong> <?php echo $project['client_feedback']; ?></p>
+
+<h2>Tasks</h2>
+<ul>
+    <?php foreach ($tasks as $task) { ?>
+        <li>
+            <a href="../controller/pm-task-controller.php?action=view&task_id=<?php echo $task['task_id']; ?>"><?php echo $task['name']; ?></a>
+        </li>
+    <?php } ?>
+</ul>
+
+</body>
+</html>

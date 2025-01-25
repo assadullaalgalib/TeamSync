@@ -1,6 +1,47 @@
 <?php
 include_once 'db-connection-model.php';
 
+function getProjectInfo($projectId) {
+    $conn = getDbConnection();
+    $sql = "SELECT * FROM projects WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $projectId);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $projectInfo = $result->fetch_assoc();
+
+    $stmt->close();
+    $conn->close();
+
+    return $projectInfo;
+}
+
+function getProjectName($projectId) {
+    $projectInfo = getProjectInfo($projectId); 
+    return $projectInfo['name'];
+}
+
+function getPMProjects($pmId) {
+    $conn = getDbConnection(); 
+    $sql = "SELECT * FROM projects WHERE pm_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $pmId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $projects = [];
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $projects;
+}
+
+
 function getClientProjects($clientId) {
     $conn = getDbConnection();
     $sql = "SELECT project_id, name, description, status, deadline, progress FROM projects WHERE client_id = ? ORDER BY project_id DESC";
@@ -23,7 +64,7 @@ function getClientProjects($clientId) {
 
 function getActiveProjectsCount($clientId) {
     $conn = getDbConnection();
-    $sql = "SELECT COUNT(*) as count FROM projects WHERE client_id = ? AND status = 'Approved'";
+    $sql = "SELECT COUNT(*) as count FROM projects WHERE client_id = ? AND status = 'Approved' OR status = 'In Progress'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $clientId);
     $stmt->execute();
@@ -95,7 +136,9 @@ function calculateProjectProgress($projectId) {
     }
 
     $progress = ($completedTasks * 100) / $totalTasks;
-    return $progress;
+
+    // Format the progress to 2 decimal places
+    return number_format($progress, 2);
 }
 
 function submitNewProposal($clientId, $name, $description, $deadline) {
