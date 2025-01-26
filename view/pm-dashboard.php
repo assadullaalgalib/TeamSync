@@ -14,7 +14,7 @@
 
 <h3>Ongoing Projects</h3>
 <ul>
-    <?php foreach ($projects as $project) { ?>
+    <?php foreach ($ongoingProjects as $project) { ?>
         <li>
             <strong><?php echo $project['name']; ?></strong>
             <div>Progress: <?php echo $project['progress']; ?>%</div>
@@ -25,7 +25,7 @@
 
 <h3>Completed Projects</h3>
 <ul>
-    <?php foreach ($projects as $project) { 
+    <?php foreach ($completedProjects as $project) { 
         if ($project['status'] == 'Completed') { ?>
         <li>
             <strong><?php echo $project['name']; ?></strong>
@@ -35,6 +35,16 @@
     <?php } } ?>
 </ul>
 
+<h2>Pending Project Approvals</h2>
+<ul>
+    <?php foreach ($pendingProposals as $project) { ?>
+        <li>
+            <strong><?php echo $project['name']; ?></strong>
+            <a href="../controller/pm-project-controller.php?action=view_proposal&project_id=<?php echo $project['project_id']; ?>">View Proposal</a>
+        </li>
+    <?php } ?>
+</ul>
+
 <h2>Pending Task Approvals</h2>
 <?php
 $projectTasks = [];
@@ -42,7 +52,7 @@ foreach ($pendingTaskApprovals as $task) {
     $projectTasks[$task['project_id']][] = $task;
 }
 
-foreach ($projects as $project) {
+foreach ($ongoingProjects as $project) {
     if (isset($projectTasks[$project['project_id']])) {
         echo "<h3>{$project['name']}</h3>";
         echo "<ul>";

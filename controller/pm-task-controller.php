@@ -7,18 +7,27 @@ include_once '../model/user-model.php';
 $action = $_GET['action'] ?? '';
 
 switch ($action) {
-/*     case 'create':
-        handleCreateTask();
-        break;
 
     case 'edit':
-        handleEditTask();
+        showEditTaskForm();
+        break;
+
+    case 'update':
+        handleUpdateTask();
         break;
 
     case 'delete':
         handleDeleteTask();
         break;
- */
+
+    case 'create':
+        handleCreateTask();
+        break;
+
+    case 'add':
+        showAddTaskForm();
+        break;
+        
     case 'view':
         handleViewTask();
         break;
@@ -30,10 +39,55 @@ switch ($action) {
     case 'download_file':
         handleFileDownload();
         break;
-
+        
+// change after all things are working
     default:
-        header("Location: ../view/pm-dashboard.php");
+        header("Location: ../controller/user-dashboard-controller.php");
         break;
+}
+
+function showEditTaskForm() {
+    $taskId = $_REQUEST['task_id'];
+    $task = getTaskDetails($taskId);
+    $developers = getDevelopersWithTaskCounts();
+    include '../view/pm-task-edit.php';
+}
+
+function handleUpdateTask() {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $taskId = $_POST['task_id'];
+        $taskName = $_POST['task_name'];
+        $taskDescription = $_POST['task_description'];
+        $startDate = $_POST['start_date'];
+        $deadline = $_POST['deadline'];
+        $developerId = $_POST['developer_id'];
+        $projectId = $_POST['project_id'];
+
+        if (empty($developerId)) {
+            $status = "Not Started";
+            $developerId = NULL;
+        } else {
+            $status = "In Progress";
+        }
+        
+        $taskUpdated = updateTask($taskId, $taskName, $taskDescription, $startDate, $deadline, $developerId, $status);
+
+        if ($taskUpdated) {
+            $_SESSION['successMessage'] = "Task updated successfully.";
+        } else {
+            $_SESSION['errorMessage'] = "Failed to update task.";
+        }
+
+        header("Location: ../controller/pm-project-controller.php?action=view&project_id=$projectId");
+        exit();
+    }
+}
+
+function showAddTaskForm() {
+    $projectId = $_GET['project_id'];
+    $project = getProjectInfo($projectId);
+    $developers = getDevelopersWithTaskCounts();
+    include '../view/pm-task-add.php';
 }
 
 
@@ -85,83 +139,74 @@ function handleApproveRejectTask() {
         }
     }
 
+    // Recalculate project status based on task status changes
+    $projectId = getProjectIdByTaskId($taskId);
+    updateProjectStatusBasedOnTasks($projectId);
+
     header("Location: ../controller/user-dashboard-controller.php");
     exit();
 }
 
+
 function handleViewTask() {
+    
     $taskId = $_GET['task_id'];
     $task = getTaskDetails($taskId);
     $projectName = getProjectName($task['project_id']);
     $developerName = getUserName($task['developer_id']);
-
     include '../view/pm-task-view.php';
 }
 
-/* function handleCreateTask() {
+function handleCreateTask() {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $projectId = $_POST['project_id'];
         $taskName = $_POST['task_name'];
         $taskDescription = $_POST['task_description'];
+        $startDate = $_POST['start_date'];
         $deadline = $_POST['deadline'];
         $developerId = $_POST['developer_id'];
-        $priority = $_POST['priority'];
 
-        $taskCreated = createTask($projectId, $taskName, $taskDescription, $deadline, $developerId, $priority);
+        // Determine the status based on whether developerId is set
+        if (empty($developerId)) {
+            $status = "Not Started";
+            $developerId = NULL; // Ensure $developerId is NULL if not set
+        } else {
+            $status = "In Progress";
+        }
+
+        $taskCreated = createTask($projectId, $taskName, $taskDescription, $startDate, $deadline, $developerId, $status);
 
         if ($taskCreated) {
+            // Change project status to "In Progress"
+            updateProjectStatus($projectId, 'In Progress');
             $_SESSION['successMessage'] = "Task created successfully.";
         } else {
             $_SESSION['errorMessage'] = "Failed to create task.";
         }
 
-        header("Location: ../controller/pm-tasks-controller.php?action=view&project_id=$projectId");
+        header("Location: ../controller/pm-project-controller.php?action=view&project_id=$projectId");
         exit();
     }
-    include '../view/pm-task-create.php';
-}
-
-
-
-function handleEditTask() {
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $taskId = $_POST['task_id'];
-        $taskName = $_POST['task_name'];
-        $taskDescription = $_POST['task_description'];
-        $deadline = $_POST['deadline'];
-        $developerId = $_POST['developer_id'];
-        $priority = $_POST['priority'];
-
-        $taskUpdated = updateTask($taskId, $taskName, $taskDescription, $deadline, $developerId, $priority);
-
-        if ($taskUpdated) {
-            $_SESSION['successMessage'] = "Task updated successfully.";
-        } else {
-            $_SESSION['errorMessage'] = "Failed to update task.";
-        }
-
-        header("Location: ../controller/pm-tasks-controller.php?action=view&project_id=" . $_POST['project_id']);
-        exit();
-    }
-    $taskId = $_GET['task_id'];
-    $task = getTaskDetails($taskId);
-    include '../view/pm-task-edit.php';
 }
 
 function handleDeleteTask() {
-    $taskId = $_GET['task_id'];
-    $projectId = $_GET['project_id'];
-    $taskDeleted = deleteTask($taskId);
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $projectId = $_POST['project_id'];
+        $taskId = $_POST['task_id'];
+        $taskDeleted = deleteTask($taskId);
 
-    if ($taskDeleted) {
-        $_SESSION['successMessage'] = "Task deleted successfully.";
-    } else {
-        $_SESSION['errorMessage'] = "Failed to delete task.";
+        if ($taskDeleted) {
+            $_SESSION['successMessage'] = "Task deleted successfully.";
+        } else {
+            $_SESSION['errorMessage'] = "Failed to delete task.";
+        }
+
+        // Redirect to the project view page or a relevant page after deletion
+        header("Location: ../controller/pm-project-controller.php?action=view&project_id=$projectId");
+        exit();
     }
+}
 
-    header("Location: ../controller/pm-tasks-controller.php?action=view&project_id=$projectId");
-    exit();
-} */
 
 
 ?>

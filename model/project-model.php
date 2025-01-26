@@ -1,6 +1,99 @@
 <?php
 include_once 'db-connection-model.php';
 
+function getPendingProjectProposals($pmId) {
+    $conn = getDbConnection();
+    $sql = "SELECT * FROM projects WHERE type = 'Proposal' AND status = 'Pending Approval' AND pm_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $pmId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $projects;
+}
+
+
+
+function updateProject($projectId, $projectName, $description, $startDate, $deadline) {
+    $conn = getDbConnection();
+    $sql = "UPDATE projects SET name = ?, description = ?, start_date = ?, deadline = ? WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssi", $projectName, $description, $startDate, $deadline, $projectId);
+    $result = $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
+function deleteProject($projectId) {
+    $conn = getDbConnection();
+    $sql = "DELETE FROM projects WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $projectId);
+    $result = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
+function updateProjectStatusBasedOnTasks($projectId) {
+    $conn = getDbConnection();
+
+    $sql = "SELECT progress, status FROM projects WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $projectId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+
+    $progress = $row['progress'];
+    $status = $row['status'];
+
+    if ($progress < 100) {
+        $status = 'In Progress';
+    }
+
+    $sql = "UPDATE projects SET status = ? WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $status, $projectId);
+    $stmt->execute();
+    $stmt->close();
+    $conn->close();
+}
+
+
+function updateProjectStatus($projectId, $status) {
+    $conn = getDbConnection();
+    $sql = "UPDATE projects SET status = ? WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $status, $projectId);
+    $result = $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
+function updateProjectStatusAndType($projectId, $status, $type) {
+    $conn = getDbConnection();
+    $sql = "UPDATE projects SET status = ?, type = ? WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $status, $type, $projectId);
+    $result = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
 function getProjectInfo($projectId) {
     $conn = getDbConnection();
     $sql = "SELECT * FROM projects WHERE project_id = ?";
@@ -25,6 +118,44 @@ function getProjectName($projectId) {
 function getPMProjects($pmId) {
     $conn = getDbConnection(); 
     $sql = "SELECT * FROM projects WHERE pm_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $pmId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $projects = [];
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $projects;
+}
+
+function getPMOngoingProjects($pmId) {
+    $conn = getDbConnection(); 
+    $sql = "SELECT * FROM projects WHERE pm_id = ? AND status != 'Completed' AND status != 'Rejected'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $pmId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $projects = [];
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $projects;
+}
+
+function getPMCompletedProjects($pmId) {
+    $conn = getDbConnection(); 
+    $sql = "SELECT * FROM projects WHERE pm_id = ? AND status = 'Completed'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $pmId);
     $stmt->execute();

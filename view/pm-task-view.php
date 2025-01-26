@@ -11,7 +11,7 @@
 <h1><?php echo $task['name']; ?></h1>
 
 <p><strong>Project Name:</strong> <?php echo $projectName; ?></p>
-<p><strong>Developer Name:</strong> <?php echo $developerName; ?></p>
+<p><strong>Developer Name:</strong> <?php echo $developerName ? $developerName : "Unassigned"; ?></p>
 <p><strong>Task Description:</strong> <?php echo $task['description']; ?></p>
 <p><strong>Start Date:</strong> <?php echo $task['start_date']; ?></p>
 <p><strong>Deadline:</strong> <?php echo $task['deadline']; ?></p>
@@ -33,6 +33,19 @@
 
     <button type="submit" name="action" value="approve">Approve</button>
     <button type="submit" name="action" value="reject">Reject</button>
+</form>
+
+<h3>Delete Task</h3>
+<form action="../controller/pm-task-controller.php?action=delete" method="post">
+    <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
+    <input type="hidden" name="project_id" value="<?php echo $task['project_id']; ?>">
+    <button type="submit">Delete Task</button>
+</form>
+
+<h3>Edit Task</h3>
+<form action="../controller/pm-task-controller.php?action=edit" method="post">
+    <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
+    <button type="submit">Edit Task</button>
 </form>
 
 </body>

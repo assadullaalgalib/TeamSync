@@ -62,6 +62,9 @@ function showPMdashboard($pmId)
 {
     $pmName = getUserName($pmId);
     $projects = getPMProjects($pmId);
+    $ongoingProjects = getPMOngoingProjects($pmId);
+    $completedProjects = getPMCompletedProjects($pmId);
+    $pendingProposals = getPendingProjectProposals($pmId);
     $pendingTaskApprovals = getPendingTaskApprovals($pmId);
 
     // Calculate progress for each project

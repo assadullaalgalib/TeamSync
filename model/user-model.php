@@ -62,8 +62,32 @@ function getUserInfo($userId)
 function getUserName($userId)
 {
     $userInfo = getUserInfo($userId);
-    return $userInfo['firstname'] . ' ' . $userInfo['lastname'];
+
+    $firstname = $userInfo['firstname'] ?? 'Unassigned';
+    $lastname = $userInfo['lastname'] ?? '';
+
+    return trim("$firstname $lastname");
 }
+
+function getDevelopersWithTaskCounts() {
+    $conn = getDbConnection();
+    $sql = "SELECT u.userid, u.firstname, u.lastname, COUNT(t.task_id) AS task_count
+            FROM usr u
+            LEFT JOIN tasks t ON u.userid = t.developer_id AND t.status != 'Completed'
+            WHERE u.roleid = 3
+            GROUP BY u.userid, u.firstname, u.lastname";
+    $result = $conn->query($sql);
+    
+    $developers = [];
+    while ($row = $result->fetch_assoc()) {
+        $developers[] = $row;
+    }
+
+    $conn->close();
+    return $developers;
+}
+
+
 
 
 ?>

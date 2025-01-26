@@ -27,5 +27,32 @@
     <?php } ?>
 </ul>
 
+<?php if ($project['status'] != 'Completed') { ?>
+    <a href="../controller/pm-task-controller.php?action=add&project_id=<?php echo $project['project_id']; ?>">Add Task</a>
+<?php } ?>
+
+<br>
+
+<!-- Handover Project Link -->
+<?php if ($project['progress'] == 100 && $project['status'] != 'Completed') { ?>
+    <a href="../controller/pm-project-controller.php?action=handover&project_id=<?php echo $project['project_id']; ?>">Handover Project</a>
+<?php } ?>
+
+<!-- Edit Project Form -->
+<h3>Edit Project</h3>
+<form action="../controller/pm-project-controller.php?action=edit" method="post">
+    <input type="hidden" name="project_id" value="<?php echo $project['project_id']; ?>">
+    <button type="submit">Edit Project</button>
+</form>
+
+<!-- Delete Project Form -->
+<h3>Delete Project</h3>
+<form action="../controller/pm-project-controller.php?action=delete" method="post">
+    <input type="hidden" name="project_id" value="<?php echo $project['project_id']; ?>">
+    <button type="submit">Delete Project</button>
+</form>
+
+
+
 </body>
 </html>

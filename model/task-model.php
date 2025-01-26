@@ -1,12 +1,74 @@
 <?php
 include_once 'db-connection-model.php';
 
+function getProjectIdByTaskId($taskId) {
+    $conn = getDbConnection();
+    $sql = "SELECT project_id FROM tasks WHERE task_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $taskId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    
+    $stmt->close();
+    $conn->close();
+
+    return $row['project_id'];
+}
+
+function deleteTasksByProjectId($projectId) {
+    $conn = getDbConnection();
+    $sql = "DELETE FROM tasks WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $projectId);
+    $result = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
+function updateTask($taskId, $taskName, $taskDescription, $startDate, $deadline, $developerId, $status) {
+    $conn = getDbConnection();
+    $sql = "UPDATE tasks SET name = ?, description = ?, start_date = ?, deadline = ?, developer_id = ?, status = ? WHERE task_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssssi", $taskName, $taskDescription, $startDate, $deadline, $developerId, $status, $taskId);
+    $result = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
+function deleteTask($taskId) {
+    $conn = getDbConnection();
+    $sql = "DELETE FROM tasks WHERE task_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $taskId);
+    $result = $stmt->execute();
+    
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
+function createTask($projectId, $taskName, $taskDescription, $startDate, $deadline, $developerId, $status) {
+    $conn = getDbConnection();
+    $sql = "INSERT INTO tasks (project_id, name, description, start_date, deadline, developer_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bind_param("issssis", $projectId, $taskName, $taskDescription, $startDate, $deadline, $developerId, $status);
+    $result = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
 function approveTask($taskId, $pmComment) {
     $conn = getDbConnection();
     $sql = "UPDATE tasks SET status = 'Completed', pm_comment = ? WHERE task_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $pmComment, $taskId);
     $result = $stmt->execute();
+    
     $stmt->close();
     $conn->close();
     return $result;
@@ -22,7 +84,6 @@ function rejectTask($taskId, $pmComment) {
     $conn->close();
     return $result;
 }
-
 
 function getPendingTaskApprovals($pmId) {
     $conn = getDbConnection(); 
@@ -109,7 +170,6 @@ function getTaskDetails($taskId) {
     $stmt->close();
     $conn->close();
 
-    // Combine first and last name
     $task['pm_name'] = $task['pm_name'] . ' ' . $task['pm_lastname'];
 
     return $task;
