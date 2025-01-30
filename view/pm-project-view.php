@@ -16,7 +16,9 @@
 <p><strong>Deadline:</strong> <?php echo $project['deadline']; ?></p>
 <p><strong>Status:</strong> <?php echo $project['status']; ?></p>
 <p><strong>Progress:</strong> <?php echo $project['progress']; ?>%</p>
-<p><strong>Client Feedback:</strong> <?php echo $project['client_feedback']; ?></p>
+<?php if (!empty($project['client_feedback'])) { ?>
+    <p><strong>Client Feedback:</strong> <?php echo $project['client_feedback']; ?></p>
+<?php } ?>
 
 <h2>Tasks</h2>
 <ul>
@@ -52,7 +54,7 @@
     <button type="submit">Delete Project</button>
 </form>
 
-
+<a href="../controller/user-dashboard-controller.php">Home</a>
 
 </body>
 </html>

@@ -1,6 +1,28 @@
 <?php
 include_once 'db-connection-model.php';
 
+function searchPMTasks($query, $userid) {
+    $conn = getDbConnection();
+    $sql = "SELECT t.task_id, t.name 
+            FROM tasks t
+            JOIN projects p ON t.project_id = p.project_id
+            WHERE LOWER(t.name) LIKE ? AND p.pm_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $query, $userid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $tasks = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $tasks[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $tasks;
+}
+
+
 function getProjectIdByTaskId($taskId) {
     $conn = getDbConnection();
     $sql = "SELECT project_id FROM tasks WHERE task_id = ?";

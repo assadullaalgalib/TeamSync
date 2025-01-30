@@ -4,6 +4,7 @@
 <head>
     <title>Active Task - TeamSync</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/scripts.js" defer></script>
 </head>
 <body>
 
@@ -70,8 +71,8 @@
         </tr>
     </table>
 </form>
+<a href="../controller/user-dashboard-controller.php">Home</a>
 
 
-<script src="../js/scripts.js"></script>
 </body>
 </html>

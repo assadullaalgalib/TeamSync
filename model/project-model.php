@@ -1,9 +1,205 @@
 <?php
 include_once 'db-connection-model.php';
 
+function assignProjectManager($projectId, $pmId) {
+    $conn = getDbConnection();
+    $sql = "UPDATE projects 
+            SET pm_id = ?, status = 'Approved', type = 'Project' 
+            WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $pmId, $projectId);
+    $result = $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
+
+function getTotalProjects() {
+    $conn = getDbConnection();
+    $sql = "SELECT p.project_id, CONCAT(c.firstname, ' ', c.lastname) AS client_name, CONCAT(pm.firstname, ' ', pm.lastname) AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.comment, p.client_feedback
+            FROM projects p
+            JOIN usr c ON p.client_id = c.userid
+            JOIN usr pm ON p.pm_id = pm.userid";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $projects;
+}
+
+
+
+function getAllActiveProjects() {
+    $conn = getDbConnection();
+    $sql = "SELECT p.project_id, c.name AS client_name, pm.name AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.comment, p.client_feedback
+            FROM projects p
+            JOIN usr c ON p.client_id = c.userid
+            JOIN usr pm ON p.pm_id = pm.userid
+            WHERE p.status = 'Approved' OR p.status = 'In Progress'";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $projects;
+}
+
+
+function getAllPendingProjects() {
+    $conn = getDbConnection();
+    $sql = "SELECT p.project_id, CONCAT(c.firstname, ' ', c.lastname) AS client_name, CONCAT(pm.firstname, ' ', pm.lastname) AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.comment, p.client_feedback
+            FROM projects p
+            JOIN usr c ON p.client_id = c.userid
+            LEFT JOIN usr pm ON p.pm_id = pm.userid
+            WHERE p.status = 'Pending Approval'";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $projects;
+}
+
+
+
+function getAllCompletedProjects() {
+    $conn = getDbConnection();
+    $sql = "SELECT p.project_id, c.name AS client_name, pm.name AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.comment, p.client_feedback
+            FROM projects p
+            JOIN usr c ON p.client_id = c.userid
+            JOIN usr pm ON p.pm_id = pm.userid
+            WHERE p.status = 'Completed'";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $projects;
+}
+
+
+function acceptHandedoverProject($projectId, $clientFeedback) {
+    $conn = getDbConnection();
+    $status = 'Completed';
+    $sql = "UPDATE projects 
+            SET status = ?, client_feedback = ? 
+            WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $status, $clientFeedback, $projectId);
+    $result = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
+function rejectHandedoverProject($projectId, $clientFeedback) {
+    $conn = getDbConnection();
+    $status = 'In Progress';
+    $sql = "UPDATE projects 
+            SET status = ?, client_feedback = ? 
+            WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $status, $clientFeedback, $projectId);
+    $result = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
+
+function getAllProjectsWithClientNames($pmId) {
+    $conn = getDbConnection();
+    $sql = "SELECT p.project_id, c.name AS client_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.comment, p.client_feedback
+            FROM projects p
+            JOIN usr c ON p.client_id = c.userid
+            WHERE p.pm_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $pmId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $conn->close();
+    return $projects;
+}
+
+function searchClientProjects($query, $userid) {
+    $conn = getDbConnection();
+    $sql = "SELECT project_id, name 
+            FROM projects 
+            WHERE client_id = ? AND LOWER(name) LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $userid, $query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $projects;
+}
+
+function searchPMProjects($query, $userid) {
+    $conn = getDbConnection();
+    $sql = "SELECT project_id, name 
+            FROM projects 
+            WHERE pm_id = ? AND LOWER(name) LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $userid, $query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $projects;
+}
+
+
 function getPendingProjectProposals($pmId) {
     $conn = getDbConnection();
-    $sql = "SELECT * FROM projects WHERE type = 'Proposal' AND status = 'Pending Approval' AND pm_id = ?";
+    $sql = "SELECT * 
+            FROM projects 
+            WHERE type = 'Proposal' AND status = 'Pending Approval' AND pm_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $pmId);
     $stmt->execute();
@@ -23,7 +219,9 @@ function getPendingProjectProposals($pmId) {
 
 function updateProject($projectId, $projectName, $description, $startDate, $deadline) {
     $conn = getDbConnection();
-    $sql = "UPDATE projects SET name = ?, description = ?, start_date = ?, deadline = ? WHERE project_id = ?";
+    $sql = "UPDATE projects 
+            SET name = ?, description = ?, start_date = ?, deadline = ? 
+            WHERE project_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssi", $projectName, $description, $startDate, $deadline, $projectId);
     $result = $stmt->execute();
@@ -35,7 +233,9 @@ function updateProject($projectId, $projectName, $description, $startDate, $dead
 
 function deleteProject($projectId) {
     $conn = getDbConnection();
-    $sql = "DELETE FROM projects WHERE project_id = ?";
+    $sql = "DELETE 
+            FROM projects 
+            WHERE project_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $projectId);
     $result = $stmt->execute();
@@ -47,7 +247,9 @@ function deleteProject($projectId) {
 function updateProjectStatusBasedOnTasks($projectId) {
     $conn = getDbConnection();
 
-    $sql = "SELECT progress, status FROM projects WHERE project_id = ?";
+    $sql = "SELECT progress, status 
+            FROM projects 
+            WHERE project_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $projectId);
     $stmt->execute();
@@ -62,7 +264,9 @@ function updateProjectStatusBasedOnTasks($projectId) {
         $status = 'In Progress';
     }
 
-    $sql = "UPDATE projects SET status = ? WHERE project_id = ?";
+    $sql = "UPDATE projects 
+            SET status = ? 
+            WHERE project_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $status, $projectId);
     $stmt->execute();
@@ -73,7 +277,9 @@ function updateProjectStatusBasedOnTasks($projectId) {
 
 function updateProjectStatus($projectId, $status) {
     $conn = getDbConnection();
-    $sql = "UPDATE projects SET status = ? WHERE project_id = ?";
+    $sql = "UPDATE projects 
+            SET status = ? 
+            WHERE project_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $status, $projectId);
     $result = $stmt->execute();
@@ -85,7 +291,9 @@ function updateProjectStatus($projectId, $status) {
 
 function updateProjectStatusAndType($projectId, $status, $type) {
     $conn = getDbConnection();
-    $sql = "UPDATE projects SET status = ?, type = ? WHERE project_id = ?";
+    $sql = "UPDATE projects 
+            SET status = ?, type = ? 
+            WHERE project_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssi", $status, $type, $projectId);
     $result = $stmt->execute();
@@ -96,7 +304,9 @@ function updateProjectStatusAndType($projectId, $status, $type) {
 
 function getProjectInfo($projectId) {
     $conn = getDbConnection();
-    $sql = "SELECT * FROM projects WHERE project_id = ?";
+    $sql = "SELECT * 
+            FROM projects 
+            WHERE project_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $projectId);
     $stmt->execute();
@@ -117,7 +327,9 @@ function getProjectName($projectId) {
 
 function getPMProjects($pmId) {
     $conn = getDbConnection(); 
-    $sql = "SELECT * FROM projects WHERE pm_id = ?";
+    $sql = "SELECT * 
+            FROM projects 
+            WHERE pm_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $pmId);
     $stmt->execute();
@@ -136,7 +348,30 @@ function getPMProjects($pmId) {
 
 function getPMOngoingProjects($pmId) {
     $conn = getDbConnection(); 
-    $sql = "SELECT * FROM projects WHERE pm_id = ? AND status != 'Completed' AND status != 'Rejected'";
+    $sql = "SELECT * 
+            FROM projects 
+            WHERE pm_id = ? AND (status = 'Approved' OR status = 'In Progress')";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $pmId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $projects = [];
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $projects;
+}
+
+function getPMHandedoverProjects($pmId) {
+    $conn = getDbConnection(); 
+    $sql = "SELECT * 
+            FROM projects 
+            WHERE pm_id = ? AND (status = 'Handed Over')";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $pmId);
     $stmt->execute();
@@ -155,7 +390,9 @@ function getPMOngoingProjects($pmId) {
 
 function getPMCompletedProjects($pmId) {
     $conn = getDbConnection(); 
-    $sql = "SELECT * FROM projects WHERE pm_id = ? AND status = 'Completed'";
+    $sql = "SELECT * 
+            FROM projects 
+            WHERE pm_id = ? AND status = 'Completed'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $pmId);
     $stmt->execute();
@@ -175,7 +412,10 @@ function getPMCompletedProjects($pmId) {
 
 function getClientProjects($clientId) {
     $conn = getDbConnection();
-    $sql = "SELECT project_id, name, description, status, deadline, progress FROM projects WHERE client_id = ? ORDER BY project_id DESC";
+    $sql = "SELECT * 
+            FROM projects 
+            WHERE client_id = ? 
+            ORDER BY project_id DESC";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $clientId);
     $stmt->execute();
@@ -193,56 +433,121 @@ function getClientProjects($clientId) {
 }
 
 
-function getActiveProjectsCount($clientId) {
+function getClientActiveProjects($clientId) {
     $conn = getDbConnection();
-    $sql = "SELECT COUNT(*) as count FROM projects WHERE client_id = ? AND status = 'Approved' OR status = 'In Progress'";
+    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, comment, client_feedback 
+            FROM projects 
+            WHERE client_id = ? AND (status = 'Approved' OR status = 'In Progress')";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $clientId);
     $stmt->execute();
     $result = $stmt->get_result();
-    $count = $result->fetch_assoc()['count'];
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
 
     $stmt->close();
     $conn->close();
 
-    return $count;
+    return $projects;
 }
 
-function getPendingProjectsCount($clientId) {
+
+function getClientPendingProjects($clientId) {
     $conn = getDbConnection();
-    $sql = "SELECT COUNT(*) as count FROM projects WHERE client_id = ? AND status = 'Pending Approval'";
+    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, comment, client_feedback 
+            FROM projects 
+            WHERE client_id = ? AND status = 'Pending Approval'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $clientId);
     $stmt->execute();
     $result = $stmt->get_result();
-    $count = $result->fetch_assoc()['count'];
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
 
     $stmt->close();
     $conn->close();
 
-    return $count;
+    return $projects;
 }
 
-function getCompletedProjectsCount($clientId) {
+function getClientHandedoverProjects($clientId) {
     $conn = getDbConnection();
-    $sql = "SELECT COUNT(*) as count FROM projects WHERE client_id = ? AND status = 'Completed'";
+    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, comment, client_feedback 
+            FROM projects 
+            WHERE client_id = ? AND status = 'Handed Over'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $clientId);
     $stmt->execute();
     $result = $stmt->get_result();
-    $count = $result->fetch_assoc()['count'];
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
 
     $stmt->close();
     $conn->close();
 
-    return $count;
+    return $projects;
 }
+
+
+function getClientCompletedProjects($clientId) {
+    $conn = getDbConnection();
+    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, comment, client_feedback 
+            FROM projects 
+            WHERE client_id = ? AND status = 'Completed'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $clientId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $projects;
+}
+
+function getClientRejectedProjects($clientId) {
+    $conn = getDbConnection();
+    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, comment, client_feedback 
+            FROM projects 
+            WHERE client_id = ? AND status = 'Rejected'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $clientId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $projects;
+}
+
 
 function calculateProjectProgress($projectId) {
     $conn = getDbConnection();
 
     // Total tasks for the project
-    $sqlTotal = "SELECT COUNT(*) as total FROM tasks WHERE project_id = ?";
+    $sqlTotal = "SELECT COUNT(*) AS total 
+                FROM tasks 
+                WHERE project_id = ?";
     $stmtTotal = $conn->prepare($sqlTotal);
     $stmtTotal->bind_param("i", $projectId);
     $stmtTotal->execute();
@@ -250,7 +555,9 @@ function calculateProjectProgress($projectId) {
     $totalTasks = $resultTotal->fetch_assoc()['total'];
 
     // Completed tasks for the project
-    $sqlCompleted = "SELECT COUNT(*) as completed FROM tasks WHERE project_id = ? AND status = 'Completed'";
+    $sqlCompleted = "SELECT COUNT(*) AS completed 
+                    FROM tasks 
+                    WHERE project_id = ? AND status = 'Completed'";
     $stmtCompleted = $conn->prepare($sqlCompleted);
     $stmtCompleted->bind_param("i", $projectId);
     $stmtCompleted->execute();
@@ -276,7 +583,8 @@ function submitNewProposal($clientId, $name, $description, $deadline) {
     $conn = getDbConnection();
     
 
-    $sql = "INSERT INTO projects (client_id, name, description, deadline, status, type) VALUES (?, ?, ?, ?, 'Pending Approval', 'Proposal')";
+    $sql = "INSERT INTO projects (client_id, name, description, deadline, status, type) 
+            VALUES (?, ?, ?, ?, 'Pending Approval', 'Proposal')";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("isss", $clientId, $name, $description, $deadline);
     

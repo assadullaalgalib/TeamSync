@@ -143,7 +143,7 @@ function handleApproveRejectTask() {
     $projectId = getProjectIdByTaskId($taskId);
     updateProjectStatusBasedOnTasks($projectId);
 
-    header("Location: ../controller/user-dashboard-controller.php");
+    header("Location: ../controller/pm-project-controller.php?action=view&project_id=$projectId");
     exit();
 }
 

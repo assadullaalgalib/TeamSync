@@ -41,6 +41,7 @@
     <button type="submit">Update Task</button>
 </form>
 
+<a href="../controller/user-dashboard-controller.php">Home</a>
 
 </body>
 </html>

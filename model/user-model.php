@@ -1,15 +1,95 @@
 <?php
 include_once 'db-connection-model.php';
 
-function registerUser($first_name, $last_name, $username, $email, $password, $roleid)
+
+
+function getAllUsers()
+{
+    $conn = getDbConnection();
+    $sql = "SELECT * FROM usr";
+    $result = $conn->query($sql);
+
+    $users = [];
+    while ($row = $result->fetch_assoc()) {
+        $users[] = $row;
+    }
+
+    $conn->close();
+    return $users;
+}
+
+function getAllClients()
+{
+    $conn = getDbConnection();
+    $sql = "SELECT * FROM usr WHERE roleid = 4";
+    $result = $conn->query($sql);
+
+    $clients = [];
+    while ($row = $result->fetch_assoc()) {
+        $clients[] = $row;
+    }
+
+    $conn->close();
+    return $clients;
+}
+
+function getAllPMs()
+{
+    $conn = getDbConnection();
+    $sql = "SELECT * FROM usr WHERE roleid = 2";
+    $result = $conn->query($sql);
+
+    $pms = [];
+    while ($row = $result->fetch_assoc()) {
+        $pms[] = $row;
+    }
+
+    $conn->close();
+    return $pms;
+}
+
+function getAllDevelopers()
+{
+    $conn = getDbConnection();
+    $sql = "SELECT * FROM usr WHERE roleid = 3";
+    $result = $conn->query($sql);
+
+    $developers = [];
+    while ($row = $result->fetch_assoc()) {
+        $developers[] = $row;
+    }
+
+    $conn->close();
+    return $developers;
+}
+
+function searchDevelopers($query) {
+    $conn = getDbConnection();
+    $sql = "SELECT userid, name FROM usr WHERE LOWER(name) LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $developers = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $developers[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $developers;
+}
+
+function registerUser($first_name, $last_name, $name, $email, $password, $roleid)
 {
     $conn = getDbConnection();
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO usr (firstname, lastname, username, email, password, roleid) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO usr (firstname, lastname, name, email, password, roleid) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssi", $first_name, $last_name, $username, $email, $hashedPassword, $roleid);
+    $stmt->bind_param("sssssi", $first_name, $last_name, $name, $email, $hashedPassword, $roleid);
 
     if ($stmt->execute()) {
         $stmt->close();
@@ -87,7 +167,26 @@ function getDevelopersWithTaskCounts() {
     return $developers;
 }
 
+function getPMWithProjectCount() {
+    $conn = getDbConnection();
+    $sql = "SELECT u.userid, u.firstname, u.lastname, COUNT(p.project_id) AS project_count
+            FROM usr u
+            LEFT JOIN projects p ON u.userid = p.pm_id AND p.status != 'Completed'
+            WHERE u.roleid = 2
+            GROUP BY u.userid, u.firstname, u.lastname";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $pms = [];
 
+    while ($row = $result->fetch_assoc()) {
+        $pms[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $pms;
+}
 
 
 ?>

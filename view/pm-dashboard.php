@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PM Dashboard - TeamSync</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/pm-dashboard.js" defer></script>
 </head>
 <body>
 
@@ -12,12 +13,36 @@
 
 <h2>Projects Overview</h2>
 
+<!-- Search Section -->
+<!-- Store the userid in a hidden element -->
+<input type="hidden" id="userid" value="<?php echo $_SESSION['userid']; ?>">
+
+<h3>Search</h3>
+<input type="text" id="searchQuery" placeholder="Search...">
+<select id="searchFilter">
+    <option value="all">All</option>
+    <option value="projects">Projects</option>
+    <option value="tasks">Tasks</option>
+    <option value="developers">Developers</option>
+</select>
+<div id="searchResults"></div>
+
 <h3>Ongoing Projects</h3>
 <ul>
     <?php foreach ($ongoingProjects as $project) { ?>
         <li>
             <strong><?php echo $project['name']; ?></strong>
             <div>Progress: <?php echo $project['progress']; ?>%</div>
+            <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
+        </li>
+    <?php } ?>
+</ul>
+
+<h3>Handed Over Projects</h3>
+<ul>
+    <?php foreach ($handedoverProjects as $project) { ?>
+        <li>
+            <strong><?php echo $project['name']; ?></strong>
             <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
         </li>
     <?php } ?>
@@ -35,7 +60,7 @@
     <?php } } ?>
 </ul>
 
-<h2>Pending Project Approvals</h2>
+<h3>Pending Project Approvals</h3>
 <ul>
     <?php foreach ($pendingProposals as $project) { ?>
         <li>
@@ -45,7 +70,7 @@
     <?php } ?>
 </ul>
 
-<h2>Pending Task Approvals</h2>
+<h3>Pending Task Approvals</h3>
 <?php
 $projectTasks = [];
 foreach ($pendingTaskApprovals as $task) {
@@ -66,8 +91,8 @@ foreach ($ongoingProjects as $project) {
 
 <h2>Navigation</h2>
 <ul>
-    <li><a href="../controller/pm-project-controller.php?action=view">Projects</a></li>
-    <li><a href="../controller/pm-task-controller.php?action=view">Tasks</a></li>
+    <li><a href="../controller/user-dashboard-controller.php">Home</a></li>
+    <li><a href="../controller/pm-project-controller.php?action=show_all">Show All Projects</a></li>
     <li><a href="../controller/profile-controller.php?action=view">Profile</a></li>
     <li><a href="../controller/user-logout-controller.php">Logout</a></li>
 </ul>

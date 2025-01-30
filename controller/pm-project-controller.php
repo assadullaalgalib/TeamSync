@@ -8,6 +8,10 @@ $action = $_GET['action'] ?? '';
 
 switch ($action) {
 
+    case 'show_all':
+        showAllProjects();
+        break;
+
     case 'view_proposal':
         showProjectProposal();
         break;
@@ -41,6 +45,12 @@ switch ($action) {
     default:
         header("Location: ../controller/user-dashboard-controller.php");
         break;
+}
+
+function showAllProjects() {
+    $pmId = $_SESSION['userid'];
+    $projects = getAllProjectsWithClientNames($pmId); // Fetch project details with client names
+    include '../view/pm-show-all-projects.php';
 }
 
 function showProjectProposal() {
@@ -146,7 +156,7 @@ function handleHandoverProject() {
     $project = getProjectInfo($projectId);
 
     if ($project['progress'] == 100) {
-        $statusUpdated = updateProjectStatus($projectId, 'Completed');
+        $statusUpdated = updateProjectStatus($projectId, 'Handed Over');
 
         if ($statusUpdated) {
             $_SESSION['successMessage'] = "Project handed over successfully.";

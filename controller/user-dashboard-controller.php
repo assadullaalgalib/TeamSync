@@ -12,10 +12,10 @@ if (sessionExists('userid') && sessionExists('roleid')) {
 
     switch ($roleId) {
         case 1: // Admin
-            header('Location: ../view/admin_dashboard.php');
+            showAdminDashboard($userId);
             break;
         case 2: // Project Manager
-            showPMdashboard($userId);
+            showPMDashboard($userId);
             break;
         case 3: // Developer
             showDeveloperDashboard($userId);
@@ -29,11 +29,38 @@ if (sessionExists('userid') && sessionExists('roleid')) {
             // Invalid role, redirect to login with an error
             header('Location: ../view/user-login.php?error=invalid_role');
     }
+
     exit();
+
 } else {
     // Not authenticated, redirect to login
     header('Location: ../view/user-login.php?error=not_authenticated');
     exit();
+}
+
+function showAdminDashboard($adminId)
+{
+    $totalProjects = getTotalProjects();
+    $activeProjects = getAllActiveProjects();
+    $pendingProjects = getAllPendingProjects();
+    $completedProjects = getAllCompletedProjects();
+
+    $allUsers = getAllUsers();
+    $allClients = getAllClients();
+    $allPMs = getAllPMs();
+    $allDevelopers = getAllDevelopers();
+
+    $totalProjectsCount = count($totalProjects);
+    $activeProjectsCount = count($activeProjects);
+    $pendingProjectsCount = count($pendingProjects);
+    $completedProjectsCount = count($completedProjects);
+
+    $allUsersCount = count($allUsers);
+    $allClientsCount = count($allClients);
+    $allPMsCount = count($allPMs);
+    $allDevelopersCount = count($allDevelopers);
+
+    include '../view/admin-dashboard.php';
 }
 
 function showDeveloperDashboard($developerId)
@@ -49,22 +76,34 @@ function showDeveloperDashboard($developerId)
 
 function showClientDashboard($clientId)
 {
-    $projects = getClientProjects($clientId);
-    $activeCount = getActiveProjectsCount($clientId);
-    $pendingCount = getPendingProjectsCount($clientId);
-    $completedCount = getCompletedProjectsCount($clientId);
     $clientName = getUserName($clientId);
 
-    include '../view/client-dashboard.php';
+    /* $projects = getClientProjects($clientId);
+    $activeProjects = getClientActiveProjects($clientId);
+    $pendingProjects = getClientPendingProjects($clientId);
+    $completedProjects = getClientCompletedProjects($clientId);
+
+    $activeProjectsCount = count($activeProjects);
+    $pendingProjectsCount = count($pendingProjects);
+    $completedProjectsCount = count($completedProjects);
+
+    include '../view/client-dashboard.php'; */
+
+    header("Location: ../controller/client-dashboard-controller.php");
+    exit();
+
+
 }
 
-function showPMdashboard($pmId)
+function showPMDashboard($pmId)
 {
     $pmName = getUserName($pmId);
     $projects = getPMProjects($pmId);
     $ongoingProjects = getPMOngoingProjects($pmId);
     $completedProjects = getPMCompletedProjects($pmId);
     $pendingProposals = getPendingProjectProposals($pmId);
+    $handedoverProjects = getPMHandedOverProjects($pmId);
+
     $pendingTaskApprovals = getPendingTaskApprovals($pmId);
 
     // Calculate progress for each project

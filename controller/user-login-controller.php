@@ -42,6 +42,7 @@ if ($user !== null) {
     setSession('roleid', $user['roleid']);
     setSession('firstname', $user['firstname']);
     setSession('lastname', $user['lastname']);
+    setSession('name', $user['name']);
 
     header("Location: ../controller/user-dashboard-controller.php");
     exit();
