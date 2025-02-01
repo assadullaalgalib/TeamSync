@@ -1,0 +1,302 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    background: #f8f9fa;
+    padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* PM Name Styling in Navbar */
+.navbar .pm-name {
+    font-weight: bold;
+    color: #333;
+    padding: 10px;
+    margin-right: 10px;
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+
+/* Main Container */
+.container {
+    padding: 100px 20px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Search Section */
+.search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-container input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-container select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Search Results Styling */
+#searchResults {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-top: 10px;
+    max-width: 1200px;
+    border: 1px solid #ddd;
+}
+
+#searchResults ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#searchResults li {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    transition: background 0.3s ease-in-out, padding-left 0.3s ease-in-out;
+    font-size: 16px;
+}
+
+#searchResults li:last-child {
+    border-bottom: none;
+}
+
+#searchResults li:hover {
+    background: #f5f5f5;
+    padding-left: 15px;
+}
+
+#searchResults a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 600;
+    transition: color 0.3s ease-in-out;
+}
+
+#searchResults a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+
+/* Project Sections */
+.project-section {
+    margin-top: 30px;
+}
+
+.project-section h2 {
+    margin-bottom: 15px;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Project Cards */
+.project-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+.project-card h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.project-card p {
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.project-card a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.project-card.completed {
+    background: #e3fcef;
+    border-left: 4px solid #28a745;
+}
+
+.project-card.pending {
+    background: #fffbe6; /* Light yellow to indicate pending */
+    border-left: 4px solid #f4c542;
+}
+
+.project-card.pending-task {
+    background: #e6f7ff; /* Light blue to indicate pending tasks */
+    border-left: 4px solid #1890ff;
+}
+
+/* Repeating Background Colors for Ongoing Projects */
+.project-card:nth-child(4n+1) {
+    background: #fff5e6; /* Light Orange */
+    border-left: 4px solid #ffa500;
+}
+
+.project-card:nth-child(4n+2) {
+    background: #f0f8ff; /* Light Cyan */
+    border-left: 4px solid #00bcd4;
+}
+
+.project-card:nth-child(4n+3) {
+    background: #f5e6ff; /* Light Purple */
+    border-left: 4px solid #8a2be2;
+}
+
+.project-card:nth-child(4n+4) {
+    background: #e6ffe6; /* Light Mint Green */
+    border-left: 4px solid #2ecc71;
+}
+
+
+/* Repeating Background Colors for Completed Projects */
+.project-card.completed:nth-child(4n+1) {
+    background: #e3fcef; /* Light Green */
+    border-left: 4px solid #28a745;
+}
+
+.project-card.completed:nth-child(4n+2) {
+    background: #e6f7ff; /* Light Blue */
+    border-left: 4px solid #1890ff;
+}
+
+.project-card.completed:nth-child(4n+3) {
+    background: #fffbe6; /* Light Yellow */
+    border-left: 4px solid #f4c542;
+}
+
+.project-card.completed:nth-child(4n+4) {
+    background: #fde8e8; /* Light Red */
+    border-left: 4px solid #f5222d;
+}
+
+/* Repeating Background Colors for Pending Project Approvals */
+.project-card.pending:nth-child(4n+1) {
+    background: #fff3e6; /* Light Peach */
+    border-left: 4px solid #ff7f50;
+}
+
+.project-card.pending:nth-child(4n+2) {
+    background: #e6f7ff; /* Light Sky Blue */
+    border-left: 4px solid #1e90ff;
+}
+
+.project-card.pending:nth-child(4n+3) {
+    background: #fff0f5; /* Light Pink */
+    border-left: 4px solid #ff1493;
+}
+
+.project-card.pending:nth-child(4n+4) {
+    background: #f9ffe6; /* Light Lemon */
+    border-left: 4px solid #ffd700;
+}
+
+/* Repeating Background Colors for Pending Task Approvals */
+.project-card.pending-task:nth-child(4n+1) {
+    background: #e6f7ff; /* Light Cyan */
+    border-left: 4px solid #00bcd4;
+}
+
+.project-card.pending-task:nth-child(4n+2) {
+    background: #fff5e6; /* Light Orange */
+    border-left: 4px solid #ff9800;
+}
+
+.project-card.pending-task:nth-child(4n+3) {
+    background: #f5e6ff; /* Light Purple */
+    border-left: 4px solid #8a2be2;
+}
+
+.project-card.pending-task:nth-child(4n+4) {
+    background: #e6ffe6; /* Light Mint Green */
+    border-left: 4px solid #2ecc71;
+}
+
+/* PM show all projects */
+/* Grid Layout for All Projects */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Project Cards for All Projects */
+.project-card.all-projects {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.project-card.all-projects:hover {
+    transform: translateY(-5px);
+}
+
+.project-card.all-projects h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.project-card.all-projects p {
+    margin-bottom: 8px;
+    color: #666;
+}
+
