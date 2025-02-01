@@ -45,18 +45,20 @@
                     <th>Deadline</th>
                     <th>Status</th>
                     <th>Progress</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($projects as $project) { ?>
                 <tr>
                     <td><?php echo $project['project_id']; ?></td>
-                    <td><a href="../controller/client-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>"><?php echo $project['name']; ?></a>
+                    <td><?php echo $project['name']; ?></a>
                     <td><?php echo $project['description']; ?></td>
                     <td><?php echo $project['start_date']; ?></td>
                     <td><?php echo $project['deadline']; ?></td>
                     <td><?php echo $project['status']; ?></td>
                     <td><?php echo $project['progress']; ?>%</td>
+                    <td><a href="../controller/client-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a></td>
                 </tr>
                 <?php } ?>
             </tbody>
