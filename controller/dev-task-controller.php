@@ -81,7 +81,7 @@ function handleFileUpload() {
             setSession('fileMessage', "File upload failed, please try again.");
         }
         
-        header("Location: ../controller/dev-task-controller.php?action=view_active&task_id=$taskId");
+        header("Location: ../controller/dev-task-controller.php?action=view_all_tasks&task_id=$taskId");
         exit();
     }
 }
@@ -109,7 +109,7 @@ function handleFileDownload() {
         exit;
     } else {
         setSession('fileMessage', "File not found.");
-        header("Location: ../controller/dev-task-controller.php?action=view_completed&task_id=$taskId");
+        header("Location: ../controller/dev-task-controller.php?action=view_all_tasks&task_id=$taskId");
         exit;
     }
 }
