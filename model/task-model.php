@@ -22,6 +22,27 @@ function searchPMTasks($query, $userid) {
     return $tasks;
 }
 
+function searchDevTasks($query, $userid) {
+    $conn = getDbConnection();
+    $sql = "SELECT t.task_id, t.name 
+            FROM tasks t
+            JOIN projects p ON t.project_id = p.project_id
+            WHERE LOWER(t.name) LIKE ? AND t.developer_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $query, $userid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $tasks = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $tasks[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $tasks;
+}
+
 
 function getProjectIdByTaskId($taskId) {
     $conn = getDbConnection();
@@ -173,6 +194,28 @@ function getCompletedTasks($developerId) {
     $stmt->close();
     $conn->close();
 
+    return $tasks;
+}
+
+function getAllTasksByUserId($userId) {
+    $conn = getDbConnection();
+    $sql = "SELECT t.*, p.name AS project_name, u.firstname AS pm_name
+            FROM tasks t
+            JOIN projects p ON t.project_id = p.project_id
+            JOIN usr u ON p.pm_id = u.userid
+            WHERE t.developer_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $tasks = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $tasks[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
     return $tasks;
 }
 
