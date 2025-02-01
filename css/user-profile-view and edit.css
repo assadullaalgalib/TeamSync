@@ -1,0 +1,140 @@
+/*  General Styles  */
+body {
+    font-family: Arial, sans-serif;
+    color: rgb(10, 10, 10);
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/*  Page Title  */
+h1 {
+    font-size: 2.2em;
+    text-align: center;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+/*  Profile & Form Container  */
+.profile-container, .form-container {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+/*  Prevent Double Shadows  */
+form {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    text-align: left;
+}
+
+/*  Profile Picture  */
+.profile-picture {
+    display: block;
+    margin: 10px auto;
+    border-radius: 50%;
+    border: 4px solid #ddd;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+
+/*  Profile Information  */
+.profile-info p {
+    font-size: 1.1em;
+    color: #242222;
+    margin: 10px 0;
+    text-align: left;
+}
+
+/*  Labels for Input Fields  */
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/*  Input Fields  */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+/*  Profile Actions  */
+.profile-actions {
+    margin-top: 15px;
+    text-align: center;
+}
+
+/*  Button Styling  */
+.button-link, button {
+    display: inline-block;
+    padding: 12px 18px;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin: 5px;
+}
+
+/*  Primary Blue Buttons  */
+.button-primary {
+    background: #007BFF;
+    color: white;
+}
+
+.button-primary:hover {
+    background: #0056b3;
+}
+
+/*  Danger Red Buttons  */
+.button-danger {
+    background: #FF0000;
+    color: white;
+}
+
+.button-danger:hover {
+    background: #cc0000;
+}
+
+/*  Dark Gray Buttons  */
+.button-dark {
+    background: #333;
+    color: white;
+}
+
+.button-dark:hover {
+    background: #555;
+}
+
+/*  File Input (Hidden)  */
+.hidden-input {
+    display: none;
+}
+
+/*  Form Buttons  */
+.form-buttons {
+    text-align: center;
+    margin-top: 20px;
+}

@@ -4,28 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile - TeamSync</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/user-profile-view and edit.css">
 </head>
 <body>
 
-<h1>User Profile</h1>
+    <div class="profile-container">
+        <h1>User Profile</h1>
 
-<?php if ($user['profile_picture']) { ?>
-    <p><strong>Profile Picture:</strong></p>
-    <img src="data:image/jpeg;base64,<?php echo base64_encode($user['profile_picture']); ?>" alt="Profile Picture" width="150">
-<?php } ?>
+        <?php if ($user['profile_picture']) { ?>
+            <img class="profile-picture" src="data:image/jpeg;base64,<?php echo base64_encode($user['profile_picture']); ?>" alt="Profile Picture">
+        <?php } ?>
 
-<p><strong>Role: <?php echo $user['role_name']; ?></strong></p>
+        <div class="profile-info">
+            <p><span class="label">Role:</span> <?php echo $user['role_name']; ?></p>
+            <p><span class="label">First Name:</span> <?php echo $user['firstname']; ?></p>
+            <p><span class="label">Last Name:</span> <?php echo $user['lastname']; ?></p>
+            <p><span class="label">Username:</span> <?php echo $user['name']; ?></p>
+            <p><span class="label">Email:</span> <?php echo $user['email']; ?></p>
+        </div>
 
-<p><strong>First Name:</strong> <?php echo $user['firstname']; ?></p>
-<p><strong>Last Name:</strong> <?php echo $user['lastname']; ?></p>
-<p><strong>Username:</strong> <?php echo $user['name']; ?></p>
-<p><strong>Email:</strong> <?php echo $user['email']; ?></p>
-
-
-<a href="../controller/user-profile-controller.php?action=edit_profile">Edit Profile</a>
-<a href="../controller/user-profile-controller.php?action=delete_account">Delete My Account</a>
-<a href="../controller/user-dashboard-controller.php">Back to Dashboard</a>
+        <div class="profile-actions">
+            <a href="../controller/user-profile-controller.php?action=edit_profile" class="button-link button-primary">Edit Profile</a>
+            <a href="../controller/user-profile-controller.php?action=delete_account" class="button-link button-danger">Delete My Account</a>
+            <a href="../controller/user-dashboard-controller.php" class="button-link button-dark">Back to Dashboard</a>
+        </div>
+    </div>
 
 </body>
 </html>
