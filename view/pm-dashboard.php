@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/pm-dashboard.css">
-    <script src="../js/pm-dashboard.js" defer></script>
+    <script src="../js/pm.js" defer></script>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
         <a href="../controller/user-dashboard-controller.php">Home</a>
         <a href="../controller/pm-project-controller.php?action=show_all">Projects</a>
         <a href="../controller/user-logout-controller.php">Logout</a>
-        <a href="../controller/profile-controller.php?action=view" class="welcome-link">Welcome, <?php echo $pmName; ?>!</a>
+        <a href="../controller/user-profile-controller.php?action=view_profile" class="welcome-link">Welcome, <?php echo $pmName; ?>!</a>
         
     </div>
 </nav>

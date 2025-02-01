@@ -52,7 +52,7 @@ function assignProjectManager($projectId, $pmId) {
 
 function getTotalProjects() {
     $conn = getDbConnection();
-    $sql = "SELECT p.project_id, CONCAT(c.firstname, ' ', c.lastname) AS client_name, CONCAT(pm.firstname, ' ', pm.lastname) AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.comment, p.client_feedback
+    $sql = "SELECT p.project_id, CONCAT(c.firstname, ' ', c.lastname) AS client_name, CONCAT(pm.firstname, ' ', pm.lastname) AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback
             FROM projects p
             JOIN usr c ON p.client_id = c.userid
             JOIN usr pm ON p.pm_id = pm.userid";
@@ -74,7 +74,7 @@ function getTotalProjects() {
 
 function getAllActiveProjects() {
     $conn = getDbConnection();
-    $sql = "SELECT p.project_id, c.name AS client_name, pm.name AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.comment, p.client_feedback
+    $sql = "SELECT p.project_id, c.name AS client_name, pm.name AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback
             FROM projects p
             JOIN usr c ON p.client_id = c.userid
             JOIN usr pm ON p.pm_id = pm.userid
@@ -96,7 +96,7 @@ function getAllActiveProjects() {
 
 function getAllPendingProjects() {
     $conn = getDbConnection();
-    $sql = "SELECT p.project_id, CONCAT(c.firstname, ' ', c.lastname) AS client_name, CONCAT(pm.firstname, ' ', pm.lastname) AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.comment, p.client_feedback
+    $sql = "SELECT p.project_id, CONCAT(c.firstname, ' ', c.lastname) AS client_name, CONCAT(pm.firstname, ' ', pm.lastname) AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback
             FROM projects p
             JOIN usr c ON p.client_id = c.userid
             LEFT JOIN usr pm ON p.pm_id = pm.userid
@@ -119,7 +119,7 @@ function getAllPendingProjects() {
 
 function getAllCompletedProjects() {
     $conn = getDbConnection();
-    $sql = "SELECT p.project_id, c.name AS client_name, pm.name AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.comment, p.client_feedback
+    $sql = "SELECT p.project_id, c.name AS client_name, pm.name AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback
             FROM projects p
             JOIN usr c ON p.client_id = c.userid
             JOIN usr pm ON p.pm_id = pm.userid
@@ -170,7 +170,7 @@ function rejectHandedoverProject($projectId, $clientFeedback) {
 
 function getAllProjectsWithClientNames($pmId) {
     $conn = getDbConnection();
-    $sql = "SELECT p.project_id, c.name AS client_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.comment, p.client_feedback
+    $sql = "SELECT p.project_id, c.name AS client_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback
             FROM projects p
             JOIN usr c ON p.client_id = c.userid
             WHERE p.pm_id = ?";
@@ -469,7 +469,7 @@ function getClientProjects($clientId) {
 
 function getClientActiveProjects($clientId) {
     $conn = getDbConnection();
-    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, comment, client_feedback 
+    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, client_feedback 
             FROM projects 
             WHERE client_id = ? AND (status = 'Approved' OR status = 'In Progress')";
     $stmt = $conn->prepare($sql);
@@ -491,7 +491,7 @@ function getClientActiveProjects($clientId) {
 
 function getClientPendingProjects($clientId) {
     $conn = getDbConnection();
-    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, comment, client_feedback 
+    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, client_feedback 
             FROM projects 
             WHERE client_id = ? AND status = 'Pending Approval'";
     $stmt = $conn->prepare($sql);
@@ -512,7 +512,7 @@ function getClientPendingProjects($clientId) {
 
 function getClientHandedoverProjects($clientId) {
     $conn = getDbConnection();
-    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, comment, client_feedback 
+    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, client_feedback 
             FROM projects 
             WHERE client_id = ? AND status = 'Handed Over'";
     $stmt = $conn->prepare($sql);
@@ -534,7 +534,7 @@ function getClientHandedoverProjects($clientId) {
 
 function getClientCompletedProjects($clientId) {
     $conn = getDbConnection();
-    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, comment, client_feedback 
+    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, client_feedback 
             FROM projects 
             WHERE client_id = ? AND status = 'Completed'";
     $stmt = $conn->prepare($sql);
@@ -555,7 +555,7 @@ function getClientCompletedProjects($clientId) {
 
 function getClientRejectedProjects($clientId) {
     $conn = getDbConnection();
-    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, comment, client_feedback 
+    $sql = "SELECT project_id, name, description, start_date, deadline, status, progress, client_feedback 
             FROM projects 
             WHERE client_id = ? AND status = 'Rejected'";
     $stmt = $conn->prepare($sql);

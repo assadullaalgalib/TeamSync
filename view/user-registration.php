@@ -20,7 +20,7 @@ if (sessionExists('errorMessages')) {
 <head>
     <title>TeamSync Registration</title>
     <link rel="stylesheet" href="../css/user-registration.css">
-    <script src="../js/scripts.js" defer></script>
+    <script src="../js/user.js" defer></script>
 </head>
 <body>
     <div class="registration-box">

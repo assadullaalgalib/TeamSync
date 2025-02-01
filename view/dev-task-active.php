@@ -4,7 +4,7 @@
 <head>
     <title>Active Task - TeamSync</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <script src="../js/scripts.js" defer></script>
+
 </head>
 <body>
 

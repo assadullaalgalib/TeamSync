@@ -24,6 +24,10 @@ switch ($action) {
     case 'delete':
         deleteUser();
         break;
+    
+    case 'delete_profile_picture':
+        deleteProfilePicture();
+        break;
 
     case 'show_all':
         showAllUsers();
@@ -86,23 +90,50 @@ function updateUser() {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $roleid = $_POST['role'];
+    $password = $_POST['password'];
 
-    if (!empty($_POST['password'])) {
-        $password = $_POST['password'];
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    } else {
-        $hashed_password = null; // No password change
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $profile_picture = null;
+    
+        if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK) {
+            $fileType = mime_content_type($_FILES['profile_picture']['tmp_name']);
+            $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+            $maxFileSize = 5 * 1024 * 1024; // 5MB
+    
+            if (in_array($fileType, $allowedTypes) && $_FILES['profile_picture']['size'] <= $maxFileSize) {
+                $profile_picture = file_get_contents($_FILES['profile_picture']['tmp_name']);
+            } else {
+                $_SESSION['error'] = "Invalid file type or file too large. Please upload a JPEG, PNG, or GIF image under 5MB.";
+                header("Location: ../controller/admin-user-controller.php?action=edit&userid=$userid");
+                exit();
+            }
+        }
+    
+        // If no new profile picture is uploaded, keep the existing one
+        if ($profile_picture === null) {
+            // Fetch existing profile picture from database
+            $existingUser = getUserById($userid); // Assuming this function exists to get user details by ID
+            $profile_picture = $existingUser['profile_picture'];
+        }
+
+        // Hash the password if it is provided
+        if (!empty($password)) {
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        } else {
+            $hashed_password = null; // No password change
+        }
+    
+        $success = editUserAdmin($userid, $first_name, $last_name, $name, $email, $hashed_password, $roleid, $profile_picture);
+    
+        if ($success) {
+            $_SESSION['message'] = "User updated successfully";
+            header("Location: ../controller/admin-user-controller.php?action=show_all");
+        } else {
+            $_SESSION['error'] = "Failed to update user";
+            header("Location: ../controller/admin-user-controller.php?action=edit&userid=$userid");
+        }
     }
 
-    $success = editUser($userid, $first_name, $last_name, $name, $email, $hashed_password, $roleid);
-
-    if ($success) {
-        $_SESSION['message'] = "User updated successfully";
-        header("Location: ../controller/admin-user-controller.php?action=show_all");
-    } else {
-        $_SESSION['error'] = "Failed to update user";
-        header("Location: ../controller/admin-user-controller.php?action=edit&userid=$userid");
-    }
 }
 
 function deleteUser() {
@@ -116,4 +147,20 @@ function deleteUser() {
         $_SESSION['error'] = "Failed to delete user";
         header("Location: ../controller/admin-user-controller.php?action=show_all");
     }
+}
+
+function deleteProfilePicture() {
+    $userid = $_POST['userid'];
+    $profile_picture = file_get_contents('../images/default-profile.png');
+
+    $success = updateProfilePicture($userid, $profile_picture);
+
+    if ($success) {
+        $_SESSION['message'] = "Profile picture deleted successfully";
+    } else {
+        $_SESSION['error'] = "Failed to delete profile picture";
+    }
+
+    header("Location: ../controller/admin-user-controller.php?action=edit&userid=$userid");
+    exit();
 }

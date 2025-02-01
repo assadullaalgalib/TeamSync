@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Client Dashboard - TeamSync</title>
-    <script src="../js/client-dashboard.js" defer></script>
+    <script src="../js/client.js" defer></script>
 </head>
 <body>
 
@@ -62,7 +62,8 @@
             </tbody>
         </table>
     </section>
-
+    
+    <a href="../controller/user-profile-controller.php?action=view_profile">Profile</a>
     <a href="../controller/user-logout-controller.php">Logout</a>
 
 </body>

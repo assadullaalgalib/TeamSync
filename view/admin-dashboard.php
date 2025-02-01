@@ -48,6 +48,7 @@
         <a href="../controller/admin-user-controller.php?action=show_all">View Users</a>
         <a href="../controller/admin-project-controller.php?action=show_all_proposals">View Proposals</a>
         <a href="../controller/admin-project-controller.php?action=show_all_projects">View Projects</a>
+        <a href="../controller/user-profile-controller.php?action=view_profile">Profile</a>
         <a href="../controller/user-logout-controller.php">Logout</a>
     </section>
 </body>

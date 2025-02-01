@@ -95,11 +95,12 @@ function registerUser($first_name, $last_name, $name, $email, $password, $roleid
     $conn = getDbConnection();
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $profile_picture = file_get_contents('../images/default-profile.png');
 
-    $sql = "INSERT INTO usr (firstname, lastname, name, email, password, roleid) 
-            VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO usr (firstname, lastname, name, email, password, roleid, profile_picture) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssi", $first_name, $last_name, $name, $email, $hashedPassword, $roleid);
+    $stmt->bind_param("sssssis", $first_name, $last_name, $name, $email, $hashedPassword, $roleid, $profile_picture);
 
     if ($stmt->execute()) {
         $stmt->close();
@@ -221,6 +222,24 @@ function getAllUserDetails() {
     return $users;
 }
 
+function getUserDetailsById($userid) {
+    $conn = getDbConnection();
+    $sql = "SELECT u.userid, u.firstname, u.lastname, u.name, u.email, r.rolename AS role_name, u.profile_picture
+            FROM usr u
+            JOIN usr_role r ON u.roleid = r.roleid
+            WHERE u.userid = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    $stmt->close();
+    $conn->close();
+    return $user;
+}
+
+
 function getUserById($userid) {
     $conn = getDbConnection();
     $sql = "SELECT * 
@@ -237,27 +256,52 @@ function getUserById($userid) {
     return $user;
 }
 
-function editUser($userid, $first_name, $last_name, $username, $email, $password, $roleid) {
+function editUserAdmin($userid, $first_name, $last_name, $username, $email, $password, $roleid, $profile_picture) {
     $conn = getDbConnection();
     if ($password) {
         $sql = "UPDATE usr 
-                SET firstname = ?, lastname = ?, name = ?, email = ?, password = ?, roleid = ? 
+                SET firstname = ?, lastname = ?, name = ?, email = ?, password = ?, roleid = ?, profile_picture = ? 
                 WHERE userid = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssii", $first_name, $last_name, $username, $email, $password, $roleid, $userid);
+        $stmt->bind_param("sssssisi", $first_name, $last_name, $username, $email, $password, $roleid, $profile_picture, $userid);
     } else {
         $sql = "UPDATE usr 
-                SET firstname = ?, lastname = ?, name = ?, email = ?, roleid = ? 
+                SET firstname = ?, lastname = ?, name = ?, email = ?, roleid = ?, profile_picture = ?
                 WHERE userid = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssii", $first_name, $last_name, $username, $email, $roleid, $userid);
+        $stmt->bind_param("ssssisi", $first_name, $last_name, $username, $email, $roleid, $profile_picture, $userid);
     }
+
     $success = $stmt->execute();
 
     $stmt->close();
     $conn->close();
     return $success;
 }
+
+function editUser($userid, $first_name, $last_name, $username, $email, $password, $profile_picture) {
+    $conn = getDbConnection();
+    if ($password) {
+        $sql = "UPDATE usr 
+                SET firstname = ?, lastname = ?, name = ?, email = ?, password = ?, profile_picture = ? 
+                WHERE userid = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssssi", $first_name, $last_name, $username, $email, $password, $profile_picture, $userid);
+    } else {
+        $sql = "UPDATE usr 
+                SET firstname = ?, lastname = ?, name = ?, email = ?, profile_picture = ?
+                WHERE userid = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssi", $first_name, $last_name, $username, $email, $profile_picture, $userid);
+    }
+
+    $success = $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+    return $success;
+}
+
 
 function removeUser($userid) {
     $conn = getDbConnection();
@@ -273,7 +317,16 @@ function removeUser($userid) {
     return $success;
 }
 
+function updateProfilePicture($userid, $profile_picture) {
+    $conn = getDbConnection();
+    $sql = "UPDATE usr SET profile_picture = ? WHERE userid = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $profile_picture, $userid);
+    $success = $stmt->execute();
 
-
+    $stmt->close();
+    $conn->close();
+    return $success;
+}
 
 ?>

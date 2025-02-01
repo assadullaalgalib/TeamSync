@@ -17,7 +17,7 @@
     </tr>
     <tr>
         <td><a href="../controller/user-dashboard-controller.php">Dashboard</a></td>
-        <td><a href="profile.php">Profile</a></td>
+        <td><a href="../controller/user-profile-controller.php?action=view_profile">Profile</a></td>
         <td><a href="../controller/user-logout-controller.php">Logout</a></td>
     </tr>
 </table>

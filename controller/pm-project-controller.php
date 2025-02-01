@@ -50,7 +50,7 @@ switch ($action) {
 function showAllProjects() {
     $pmId = $_SESSION['userid'];
     $projects = getAllProjectsWithClientNames($pmId); // Fetch project details with client names
-    include '../view/pm-show-all-projects.php';
+    include '../view/pm-project-showall.php';
 }
 
 function showProjectProposal() {
