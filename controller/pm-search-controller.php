@@ -35,17 +35,6 @@ if (!empty($query)) {
             ];
         }
     }
-    if ($filter == 'all' || $filter == 'developers') {
-        $developers = searchDevelopers($query, $userid);
-        foreach ($developers as $developer) {
-            $results[] = [
-                'type' => 'developer',
-                'id' => $developer['userid'],
-                'name' => $developer['name'],
-                'formatted_name' => $developer['name'] . ' - [Developer]'
-            ];
-        }
-    }
 }
 
 // Sort results to show best matches first
@@ -63,9 +52,6 @@ foreach ($results as $result) {
             break;
         case 'task':
             $link = "../controller/pm-task-controller.php?action=view&task_id=" . $result['id'];
-            break;
-        case 'developer':
-            $link = "../controller/pm-developer-controller.php?action=view&developer_id=" . $result['id'];
             break;
     }
     echo "<li><a href='{$link}'>" . htmlspecialchars($result['formatted_name']) . "</a></li>";

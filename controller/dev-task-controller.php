@@ -10,28 +10,61 @@ include_once '../model/task-model.php';
 
 $action = $_GET['action'] ?? '';
 
-if ($action == 'view_active') {
-    $taskId = $_GET['task_id'];
-    $task = getTaskDetails($taskId);
-    include '../view/dev-task-active.php';
+switch ($action) {
 
-} elseif ($action == 'view_completed') {
-    $taskId = $_GET['task_id'];
-    $task = getTaskDetails($taskId);
-    include '../view/dev-task-completed.php';
+    case 'view_all_tasks':
+        handleViewAllTask();
+        break;
 
-} elseif ($action == 'submit_task') {
-    handleFileUpload();
+    case 'view_active_tasks':
+        handleViewActiveTask();
+        break;
 
-} elseif ($action == 'download_file') {
-    handleFileDownload();
+    case 'view_completed_tasks':
+        handleViewCompletedTask();
+        break;
 
-}else {
-    header("Location: ../controller/user-dashboard-controller.php");
-    exit();
+    case 'view_task':
+        handleViewTask();
+        break;
+
+    case 'submit_task':
+        handleFileUpload();
+        break;
+
+    case 'download_file':
+        handleFileDownload();
+        break;
+
+    default:
+        header("Location: ../controller/user-dashboard-controller.php");
+        exit();
+        break;
 }
 
+function handleViewCompletedTask() {
+    $userId = $_SESSION['userid'];
+    $tasks = getCompletedTasks($userId);
+    include '../view/dev-task-showall.php';
+}
 
+function handleViewActiveTask() {
+    $userId = $_SESSION['userid'];
+    $tasks = getActiveTasks($userId);
+    include '../view/dev-task-showall.php';
+}
+
+function handleViewAllTask() {
+    $userId = $_SESSION['userid'];
+    $tasks = getAllTasksByUserId($userId);
+    include '../view/dev-task-showall.php';
+}
+
+function handleViewTask() {
+    $taskId = $_GET['task_id'];
+    $task = getTaskDetails($taskId);
+    include '../view/dev-task-view.php';
+}
 
 function handleFileUpload() {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
