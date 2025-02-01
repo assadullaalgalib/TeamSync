@@ -53,5 +53,7 @@
     <button type="submit">Update Project</button>
 </form>
 
+<a href="../controller/admin-project-controller.php?action=view_project&project_id=<?php echo $project['project_id']; ?>">Back to Project</a>
+
 </body>
 </html>

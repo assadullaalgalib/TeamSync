@@ -1,10 +1,44 @@
 <?php
 include_once 'db-connection-model.php';
 
+function getProjectById($projectId) {
+    $conn = getDbConnection();
+    $sql = "SELECT p.project_id, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback, 
+                   CONCAT(u.firstname, ' ', u.lastname) AS client_name, CONCAT(pm.firstname, ' ', pm.lastname) AS pm_name
+            FROM projects p
+            JOIN usr u ON p.client_id = u.userid
+            LEFT JOIN usr pm ON p.pm_id = pm.userid
+            WHERE p.project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $projectId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $project = $result->fetch_assoc();
+
+    $stmt->close();
+    $conn->close();
+    return $project;
+}
+
+function updateProjectAdmin($projectId, $name, $description, $start_date, $deadline, $status, $pm_id) {
+    $conn = getDbConnection();
+    $sql = "UPDATE projects 
+            SET name = ?, description = ?, start_date = ?, deadline = ?, status = ?, pm_id = ? 
+            WHERE project_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssii", $name, $description, $start_date, $deadline, $status, $pm_id, $projectId);
+    $success = $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+    return $success;
+}
+
+
 function assignProjectManager($projectId, $pmId) {
     $conn = getDbConnection();
     $sql = "UPDATE projects 
-            SET pm_id = ?, status = 'Approved', type = 'Project' 
+            SET pm_id = ? 
             WHERE project_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $pmId, $projectId);

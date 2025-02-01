@@ -1,9 +1,9 @@
 function setupSearch(roleid) {
     function loadDoc() {
         var xhr = new XMLHttpRequest();
-        var searchQuery = document.getElementById("searchQuery").value.trim();
+        var searchQuery = document.getElementById("searchQuery").value;
         var searchFilter = document.getElementById("searchFilter").value;
-        var useridElement = document.getElementById("userid");
+        var userid = document.getElementById("userid").value;
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -15,12 +15,11 @@ function setupSearch(roleid) {
         xhr.send();
     }
 
-    // Add event listeners for live search updates
     document.getElementById('searchQuery').addEventListener('input', loadDoc);
     document.getElementById('searchFilter').addEventListener('change', loadDoc);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const roleid = 2;  // Make sure this matches the correct role ID for your use case
+    const roleid = 2;
     setupSearch(roleid);
 });

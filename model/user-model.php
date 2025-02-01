@@ -6,7 +6,8 @@ include_once 'db-connection-model.php';
 function getAllUsers()
 {
     $conn = getDbConnection();
-    $sql = "SELECT * FROM usr";
+    $sql = "SELECT * 
+            FROM usr";
     $result = $conn->query($sql);
 
     $users = [];
@@ -21,7 +22,9 @@ function getAllUsers()
 function getAllClients()
 {
     $conn = getDbConnection();
-    $sql = "SELECT * FROM usr WHERE roleid = 4";
+    $sql = "SELECT * 
+            FROM usr 
+            WHERE roleid = 4";
     $result = $conn->query($sql);
 
     $clients = [];
@@ -36,7 +39,9 @@ function getAllClients()
 function getAllPMs()
 {
     $conn = getDbConnection();
-    $sql = "SELECT * FROM usr WHERE roleid = 2";
+    $sql = "SELECT * 
+            FROM usr 
+            WHERE roleid = 2";
     $result = $conn->query($sql);
 
     $pms = [];
@@ -51,7 +56,9 @@ function getAllPMs()
 function getAllDevelopers()
 {
     $conn = getDbConnection();
-    $sql = "SELECT * FROM usr WHERE roleid = 3";
+    $sql = "SELECT * 
+            FROM usr 
+            WHERE roleid = 3";
     $result = $conn->query($sql);
 
     $developers = [];
@@ -65,7 +72,9 @@ function getAllDevelopers()
 
 function searchDevelopers($query) {
     $conn = getDbConnection();
-    $sql = "SELECT userid, name FROM usr WHERE LOWER(name) LIKE ?";
+    $sql = "SELECT userid, name 
+            FROM usr 
+            WHERE LOWER(name) LIKE ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $query);
     $stmt->execute();
@@ -87,7 +96,8 @@ function registerUser($first_name, $last_name, $name, $email, $password, $roleid
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO usr (firstname, lastname, name, email, password, roleid) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO usr (firstname, lastname, name, email, password, roleid) 
+            VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssssi", $first_name, $last_name, $name, $email, $hashedPassword, $roleid);
 
@@ -108,7 +118,9 @@ function authenticateUser($email, $password)
 {
     $conn = getDbConnection();
 
-    $sql = "SELECT * FROM usr WHERE email = ?";
+    $sql = "SELECT * 
+            FROM usr 
+            WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -126,7 +138,9 @@ function authenticateUser($email, $password)
 function getUserInfo($userId)
 {
     $conn = getDbConnection();
-    $sql = "SELECT userid, firstname, lastname, email, roleid FROM usr WHERE userid = ?";
+    $sql = "SELECT userid, firstname, lastname, name, email, roleid 
+            FROM usr 
+            WHERE userid = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $userId);
     $stmt->execute();
@@ -187,6 +201,79 @@ function getPMWithProjectCount() {
     $conn->close();
     return $pms;
 }
+
+function getAllUserDetails() {
+    $conn = getDbConnection();
+    $sql = "SELECT u.userid, u.firstname, u.lastname, u.name, u.email, r.rolename AS role_name
+            FROM usr u
+            JOIN usr_role r ON u.roleid = r.roleid";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $users = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $users[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $users;
+}
+
+function getUserById($userid) {
+    $conn = getDbConnection();
+    $sql = "SELECT * 
+            FROM usr 
+            WHERE userid = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    $stmt->close();
+    $conn->close();
+    return $user;
+}
+
+function editUser($userid, $first_name, $last_name, $username, $email, $password, $roleid) {
+    $conn = getDbConnection();
+    if ($password) {
+        $sql = "UPDATE usr 
+                SET firstname = ?, lastname = ?, name = ?, email = ?, password = ?, roleid = ? 
+                WHERE userid = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssii", $first_name, $last_name, $username, $email, $password, $roleid, $userid);
+    } else {
+        $sql = "UPDATE usr 
+                SET firstname = ?, lastname = ?, name = ?, email = ?, roleid = ? 
+                WHERE userid = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssii", $first_name, $last_name, $username, $email, $roleid, $userid);
+    }
+    $success = $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+    return $success;
+}
+
+function removeUser($userid) {
+    $conn = getDbConnection();
+    $sql = "DELETE 
+            FROM usr 
+            WHERE userid = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userid);
+    $success = $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+    return $success;
+}
+
+
 
 
 ?>
