@@ -18,17 +18,21 @@
             <th>Description</th>
             <th>Deadline</th>
             <th>Status</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($projects as $project) { ?>
         <tr>
             <td><?php echo $project['project_id']; ?></td>
-            <td><a href="../controller/admin-project-controller.php?action=view_proposal&project_id=<?php echo $project['project_id']; ?>"><?php echo $project['name']; ?></a></td>
+            <td><?php echo $project['name']; ?></td>
             <td><?php echo $project['client_name']; ?></td>
             <td><?php echo $project['description']; ?></td>
             <td><?php echo $project['deadline']; ?></td>
             <td><?php echo $project['status']; ?></td>
+            <td>
+                <a href="../controller/admin-project-controller.php?action=view_proposal&project_id=<?php echo $project['project_id']; ?>">View</a>
+            </td>
         </tr>
         <?php } ?>
     </tbody>

@@ -16,12 +16,11 @@
             <th>Project Name</th>
             <th>Client Name</th>
             <th>Project Manager Name</th>
-            <th>Description</th>
             <th>Start Date</th>
             <th>Deadline</th>
             <th>Status</th>
             <th>Progress</th>
-            <th>Client Feedback</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -31,12 +30,14 @@
             <td><?php echo $project['name']; ?></td>
             <td><?php echo $project['client_name']; ?></td>
             <td><?php echo $project['pm_name']; ?></td>
-            <td><?php echo $project['description']; ?></td>
             <td><?php echo $project['start_date']; ?></td>
             <td><?php echo $project['deadline']; ?></td>
             <td><?php echo $project['status']; ?></td>
             <td><?php echo $project['progress']; ?>%</td>
-            <td><?php echo $project['client_feedback']; ?></td>
+            <td>
+                <a href="../controller/admin-project-controller.php?action=view_project&project_id=<?php echo $project['project_id']; ?>">View</a>
+                <a href="../controller/admin-project-controller.php?action=delete_project&project_id=<?php echo $project['project_id']; ?>" onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
+            </td>
         </tr>
         <?php } ?>
     </tbody>

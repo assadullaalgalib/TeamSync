@@ -30,5 +30,10 @@
     <button type="submit">Assign PM</button>
 </form>
 
+<a href="../controller/admin-project-controller.php?action=show_all_proposals">Back to Proposals</a>
+<a href="../controller/user-dashboard-controller.php">Home</a>
+
 </body>
 </html>
+
+

@@ -40,6 +40,8 @@ if (sessionExists('userid') && sessionExists('roleid')) {
 
 function showAdminDashboard($adminId)
 {
+    $adminName = getUserName($adminId);
+
     $totalProjects = getTotalProjects();
     $activeProjects = getAllActiveProjects();
     $pendingProjects = getAllPendingProjects();
