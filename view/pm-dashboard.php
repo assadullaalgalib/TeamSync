@@ -40,7 +40,6 @@
                 <option value="all">All</option>
                 <option value="projects">Projects</option>
                 <option value="tasks">Tasks</option>
-                <option value="developers">Developers</option>
             </select>
         </div>
         <div id="searchResults"></div>
