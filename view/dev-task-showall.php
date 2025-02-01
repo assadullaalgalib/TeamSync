@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Developer Dashboard - TeamSync</title>
+    <title>All Tasks - TeamSync</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <script src="../js/dev.js" defer></script>
-    
 </head>
 <body>
 
@@ -14,32 +12,25 @@
 <table>
     <tr>
         <td colspan="3">
-            <h1>Welcome, <?php echo $developerName; ?>!</h1>
+            <h1>All Tasks</h1>
         </td>
     </tr>
     <tr>
         <td><a href="../controller/user-dashboard-controller.php">Dashboard</a></td>
         <td><a href="../controller/user-profile-controller.php?action=view_profile">Profile</a></td>
         <td><a href="../controller/user-logout-controller.php">Logout</a></td>
-        <td><a href="../controller/dev-task-controller.php?action=view_all_tasks">All Tasks</a></td>
     </tr>
 </table>
 
-<!-- Overview Section -->
-<table>
-    <tr>
-        <td>Active Tasks: <?php echo $activeTasksCount; ?></td>
-        <td>Completed Tasks: <?php echo $completedTasksCount; ?></td>
-    </tr>
-</table>
+<!-- Task Filters -->
+<div>
+    <a href="../controller/dev-task-controller.php?action=view_all_tasks">All Tasks</a>
+    <a href="../controller/dev-task-controller.php?action=view_active_tasks">Active Tasks</a>
+    <a href="../controller/dev-task-controller.php?action=view_completed_tasks">Completed Tasks</a>
+</div>
 
-<input type="hidden" id="userid" value="<?php echo $_SESSION['userid']; ?>">    
-<h3>Search Tasks</h3>
-<input type="text" id="searchQuery" placeholder="Search Tasks...">
-<div id="searchResults"></div>
-
-<!-- Active Tasks Section -->
-<h2>Active Tasks</h2>
+<!-- All Tasks Section -->
+<h2>All Tasks</h2>
 <table border="1">
     <thead>
         <tr>
@@ -54,7 +45,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($activeTasks as $task) { ?>
+        <?php foreach ($tasks as $task) { ?>
         <tr>
             <td><?php echo $task['name']; ?></td>
             <td><?php echo $task['project_name']; ?></td>
@@ -70,6 +61,8 @@
         <?php } ?>
     </tbody>
 </table>
+
+<a href="../controller/project-controller.php?action=view_all_projects">All Projects</a>
 
 </body>
 </html>
