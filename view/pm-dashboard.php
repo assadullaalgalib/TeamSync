@@ -1,101 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PM Dashboard - TeamSync</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/pm-dashboard.css">
     <script src="../js/pm-dashboard.js" defer></script>
 </head>
+
 <body>
 
-<h1>Welcome, <?php echo $pmName; ?>!</h1>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">TeamSync</div>
+    <div class="nav-links">
+        <a href="../controller/user-dashboard-controller.php">Home</a>
+        <a href="../controller/pm-project-controller.php?action=show_all">Projects</a>
+        <a href="../controller/user-logout-controller.php">Logout</a>
+        <a href="../controller/profile-controller.php?action=view" class="welcome-link">Welcome, <?php echo $pmName; ?>!</a>
+        
+    </div>
+</nav>
 
-<h2>Projects Overview</h2>
 
-<!-- Search Section -->
-<!-- Store the userid in a hidden element -->
-<input type="hidden" id="userid" value="<?php echo $_SESSION['userid']; ?>">
+    <!-- Main Container -->
+    <div class="container">
 
-<h3>Search</h3>
-<input type="text" id="searchQuery" placeholder="Search...">
-<select id="searchFilter">
-    <option value="all">All</option>
-    <option value="projects">Projects</option>
-    <option value="tasks">Tasks</option>
-    <option value="developers">Developers</option>
-</select>
-<div id="searchResults"></div>
+        <h2>Projects Overview</h2>
 
-<h3>Ongoing Projects</h3>
-<ul>
-    <?php foreach ($ongoingProjects as $project) { ?>
-        <li>
-            <strong><?php echo $project['name']; ?></strong>
-            <div>Progress: <?php echo $project['progress']; ?>%</div>
-            <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
-        </li>
-    <?php } ?>
-</ul>
+        <!-- Search Section -->
+        <div class="search-container">
+            <input type="hidden" id="userid" value="<?php echo $_SESSION['userid']; ?>">
+            <input type="text" id="searchQuery" placeholder="Search...">
+            <select id="searchFilter">
+                <option value="all">All</option>
+                <option value="projects">Projects</option>
+                <option value="tasks">Tasks</option>
+                <option value="developers">Developers</option>
+            </select>
+        </div>
+        <div id="searchResults"></div>
 
-<h3>Handed Over Projects</h3>
-<ul>
-    <?php foreach ($handedoverProjects as $project) { ?>
-        <li>
-            <strong><?php echo $project['name']; ?></strong>
-            <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
-        </li>
-    <?php } ?>
-</ul>
+        <!-- Ongoing Projects -->
+        <div class="project-section">
+            <h2>Ongoing Projects</h2>
+            <div class="project-grid">
+                <?php foreach ($ongoingProjects as $project) { ?>
+                    <div class="project-card">
+                        <h3><?php echo $project['name']; ?></h3>
+                        <p>Progress: <?php echo $project['progress']; ?>%</p>
+                        <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
 
-<h3>Completed Projects</h3>
-<ul>
-    <?php foreach ($completedProjects as $project) { 
-        if ($project['status'] == 'Completed') { ?>
-        <li>
-            <strong><?php echo $project['name']; ?></strong>
-            <div>Progress: <?php echo $project['progress']; ?>%</div>
-            <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
-        </li>
-    <?php } } ?>
-</ul>
+        <!-- Handed Over Projects -->
+        <div class="project-section">
+            <h2>Handed Over Projects</h2>
+            <div class="project-grid">
+                <?php foreach ($handedoverProjects as $project) { ?>
+                    <div class="project-card pending">
+                        <h3><?php echo $project['name']; ?></h3>
+                        <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
 
-<h3>Pending Project Approvals</h3>
-<ul>
-    <?php foreach ($pendingProposals as $project) { ?>
-        <li>
-            <strong><?php echo $project['name']; ?></strong>
-            <a href="../controller/pm-project-controller.php?action=view_proposal&project_id=<?php echo $project['project_id']; ?>">View Proposal</a>
-        </li>
-    <?php } ?>
-</ul>
+        <!-- Completed Projects -->
+        <div class="project-section">
+            <h2>Completed Projects</h2>
+            <div class="project-grid">
+                <?php foreach ($completedProjects as $project) {
+                    if ($project['status'] == 'Completed') { ?>
+                        <div class="project-card completed">
+                            <h3><?php echo $project['name']; ?></h3>
+                            <p>Progress: <?php echo $project['progress']; ?>%</p>
+                            <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
+                        </div>
+                <?php }
+                } ?>
+            </div>
+        </div>
 
-<h3>Pending Task Approvals</h3>
-<?php
-$projectTasks = [];
-foreach ($pendingTaskApprovals as $task) {
-    $projectTasks[$task['project_id']][] = $task;
-}
+        <!-- Pending Project Approvals -->
+        <div class="project-section">
+            <h2>Pending Project Approvals</h2>
+            <div class="project-grid">
+                <?php foreach ($pendingProposals as $project) { ?>
+                    <div class="project-card pending">
+                        <h3><?php echo $project['name']; ?></h3>
+                        <a href="../controller/pm-project-controller.php?action=view_proposal&project_id=<?php echo $project['project_id']; ?>">View Proposal</a>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
 
-foreach ($ongoingProjects as $project) {
-    if (isset($projectTasks[$project['project_id']])) {
-        echo "<h3>{$project['name']}</h3>";
-        echo "<ul>";
-        foreach ($projectTasks[$project['project_id']] as $task) {
-            echo "<li>{$task['name']} <a href='../controller/pm-task-controller.php?action=view&task_id={$task['task_id']}'>Review Task</a></li>";
-        }
-        echo "</ul>";
-    }
-}
-?>
+        <!-- Pending Task Approvals -->
+        <div class="project-section">
+            <h2>Pending Task Approvals</h2>
+            <?php
+            $projectTasks = [];
+            foreach ($pendingTaskApprovals as $task) {
+                $projectTasks[$task['project_id']][] = $task;
+            }
 
-<h2>Navigation</h2>
-<ul>
-    <li><a href="../controller/user-dashboard-controller.php">Home</a></li>
-    <li><a href="../controller/pm-project-controller.php?action=show_all">Show All Projects</a></li>
-    <li><a href="../controller/profile-controller.php?action=view">Profile</a></li>
-    <li><a href="../controller/user-logout-controller.php">Logout</a></li>
-</ul>
+            foreach ($ongoingProjects as $project) {
+                if (isset($projectTasks[$project['project_id']])) {
+                    echo "<h3>{$project['name']}</h3>";
+                    echo "<div class='project-grid'>";
+                    foreach ($projectTasks[$project['project_id']] as $task) {
+                        echo "<div class='project-card pending-task'>";
+                        echo "<h3>{$task['name']}</h3>";
+                        echo "<a href='../controller/pm-task-controller.php?action=view&task_id={$task['task_id']}'>Review Task</a>";
+                        echo "</div>";
+                    }
+                    echo "</div>";
+                }
+            }
+            ?>
+        </div>
+
+    </div>
 
 </body>
+
 </html>
