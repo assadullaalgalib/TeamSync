@@ -1,5 +1,8 @@
+
 <?php
 include_once '../model/project-model.php';
+
+header('Content-Type: application/json');
 
 $query = $_GET['query'] ?? '';
 $userid = $_GET['userid'] ?? '';
@@ -24,11 +27,9 @@ usort($results, function($a, $b) {
     return strcmp($a['name'], $b['name']);
 });
 
-// Return the results as HTML
-echo "<ul>";
-foreach ($results as $result) {
-    $link = "../controller/client-project-controller.php?action=view&project_id=" . $result['id'];
-    echo "<li><a href='{$link}'>" . htmlspecialchars($result['formatted_name']) . "</a></li>";
-}
-echo "</ul>";
+// Limit the results to the first 5 items
+$limitedResults = array_slice($results, 0, 5);
+
+// Return the results as JSON
+echo json_encode($limitedResults);
 ?>

@@ -3,6 +3,8 @@ include_once '../model/project-model.php';
 include_once '../model/task-model.php';
 include_once '../model/user-model.php';
 
+header('Content-Type: application/json');
+
 $query = $_GET['query'] ?? '';
 $filter = $_GET['filter'] ?? 'all';
 $roleid = $_GET['roleid'] ?? '';
@@ -42,7 +44,9 @@ usort($results, function($a, $b) {
     return strcmp($a['name'], $b['name']);
 });
 
-// Return the results as HTML
+
+
+/* // Return the results as HTML
 foreach ($results as $result) {
     echo "<ul>";
     $link = "";
@@ -57,3 +61,11 @@ foreach ($results as $result) {
     echo "<li><a href='{$link}'>" . htmlspecialchars($result['formatted_name']) . "</a></li>";
     echo "</ul>";
 }
+ */
+
+ // Limit the results to the first 5 items
+$limitedResults = array_slice($results, 0, 5);
+
+// Return the results as JSON
+echo json_encode($limitedResults);
+?>
