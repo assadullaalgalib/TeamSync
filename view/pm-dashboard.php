@@ -49,11 +49,12 @@
             <h2>Ongoing Projects</h2>
             <div class="project-grid">
                 <?php foreach ($ongoingProjects as $project) { ?>
-                    <div class="project-card">
-                        <h3><?php echo $project['name']; ?></h3>
-                        <p>Progress: <?php echo $project['progress']; ?>%</p>
-                        <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
-                    </div>
+                    <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
+                        <div class="project-card">
+                            <h3><?php echo $project['name']; ?></h3>
+                            <p>Progress: <?php echo $project['progress']; ?>%</p>
+                        </div>
+                    </a>
                 <?php } ?>
             </div>
         </div>
@@ -63,39 +64,42 @@
             <h2>Handed Over Projects</h2>
             <div class="project-grid">
                 <?php foreach ($handedoverProjects as $project) { ?>
-                    <div class="project-card pending">
-                        <h3><?php echo $project['name']; ?></h3>
-                        <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
-                    </div>
+                    <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
+                        <div class="project-card pending">
+                            <h3><?php echo $project['name']; ?></h3>
+                        </div>
+                    </a>
                 <?php } ?>
             </div>
         </div>
 
         <!-- Completed Projects -->
-        <div class="project-section">
+        <!-- <div class="project-section">
             <h2>Completed Projects</h2>
             <div class="project-grid">
                 <?php foreach ($completedProjects as $project) {
                     if ($project['status'] == 'Completed') { ?>
-                        <div class="project-card completed">
-                            <h3><?php echo $project['name']; ?></h3>
-                            <p>Progress: <?php echo $project['progress']; ?>%</p>
-                            <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>">View</a>
-                        </div>
+                        <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
+                            <div class="project-card completed">
+                                <h3><?php echo $project['name']; ?></h3>
+                                <p>Progress: <?php echo $project['progress']; ?>%</p>
+                            </div>
+                        </a>
                 <?php }
                 } ?>
             </div>
-        </div>
+        </div> -->
 
         <!-- Pending Project Approvals -->
         <div class="project-section">
             <h2>Pending Project Approvals</h2>
             <div class="project-grid">
                 <?php foreach ($pendingProposals as $project) { ?>
-                    <div class="project-card pending">
-                        <h3><?php echo $project['name']; ?></h3>
-                        <a href="../controller/pm-project-controller.php?action=view_proposal&project_id=<?php echo $project['project_id']; ?>">View Proposal</a>
-                    </div>
+                    <a href="../controller/pm-project-controller.php?action=view_proposal&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
+                        <div class="project-card pending">
+                            <h3><?php echo $project['name']; ?></h3>
+                        </div>
+                    </a>
                 <?php } ?>
             </div>
         </div>
@@ -114,10 +118,11 @@
                     echo "<h3>{$project['name']}</h3>";
                     echo "<div class='project-grid'>";
                     foreach ($projectTasks[$project['project_id']] as $task) {
+                        echo "<a href='../controller/pm-task-controller.php?action=view&task_id={$task['task_id']}' class='project-card-link'>";
                         echo "<div class='project-card pending-task'>";
                         echo "<h3>{$task['name']}</h3>";
-                        echo "<a href='../controller/pm-task-controller.php?action=view&task_id={$task['task_id']}'>Review Task</a>";
                         echo "</div>";
+                        echo "</a>";
                     }
                     echo "</div>";
                 }
