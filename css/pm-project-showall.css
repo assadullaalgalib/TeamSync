@@ -6,10 +6,66 @@ body {
     padding: 20px;
 }
 
+/* Navbar */
+.navbar {
+    width: 100%;
+    background: #007bff; /* Blue background color */
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure the navbar stays on top */
+}
+
+.navbar .logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff; /* White text */
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff; /* White text */
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ffdd57;
+}
+
+.nav-links .welcome-link {
+    color: #ffffff; /* White text */
+    font-weight: bold;
+    background-color: #0056b3; /* Slightly darker blue for the welcome message */
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.nav-links .welcome-link:hover {
+    background-color: #003f7f; /* Darker blue on hover */
+    color: #ffffff;
+}
+
+
 /* Page Title */
 h1 {
     font-size: 2em;
+    text-align: left;
     margin-bottom: 20px;
+    margin-left: 20px;
+    margin-top: 50px;
     color: #333;
 }
 
@@ -22,6 +78,7 @@ h1 {
     max-width: 1200px;
     margin: auto;
     padding: 20px;
+    margin-top: 20px; /* Add this to avoid overlap with navbar */
 }
 
 /* Project Card */
@@ -40,6 +97,32 @@ h1 {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
+
+/* View Link Styling */
+.project-card a {
+    color: #2196F3; /* Button color blue */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+.project-card a:hover {
+    color: #1976D2; /* Slightly darker blue on hover */
+}
+
+/* Project Card Link */
+.project-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit; /* Inherit text color */
+}
+
+.project-card-link:hover .project-card {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+
 
 /* Card Header */
 .card-header {
@@ -71,9 +154,10 @@ h1 {
 /* Status Colors - Matches Exact Database Values */
 .status[data-status="Completed"] { background: #4CAF50; color: white; }
 .status[data-status="In Progress"] { background: #FF9800; color: white; }
-.status[data-status="Pending"] { background: #F44336; color: white; }
+.status[data-status="Pending Approval"] { background: #F44336; color: white; }
 .status[data-status="Handed Over"] { background: #2196F3; color: white; }  /* Blue */
 .status[data-status="Approved"] { background: #673AB7; color: white; } /* Purple */
+
 
 /* Project Details */
 .project-card p {
