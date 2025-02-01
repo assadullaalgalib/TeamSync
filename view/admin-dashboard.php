@@ -6,7 +6,7 @@
 </head>
 <body>
     <header>
-        <h1>Admin Dashboard</h1>
+    <h1>Welcome, <?php echo $adminName; ?>!</h1>
     </header>
 
     <section id="projects">
@@ -45,10 +45,10 @@
 
     <section>
         <h2>Quick Links</h2>
-        <a href="create-user.php">Create New User</a>
-        <a href="assign-projects.php">Assign/Reassign Projects</a>
+        <a href="../controller/admin-user-controller.php?action=show_all">View Users</a>
         <a href="../controller/admin-project-controller.php?action=show_all_proposals">View Proposals</a>
         <a href="../controller/admin-project-controller.php?action=show_all_projects">View Projects</a>
+        <a href="../controller/user-logout-controller.php">Logout</a>
     </section>
 </body>
 </html>
