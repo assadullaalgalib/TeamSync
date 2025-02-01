@@ -4,20 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Proposal - TeamSync</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/pm-task-view-edit-projectproposal.css">
 </head>
 <body>
 
-<h1><?php echo $project['name']; ?></h1>
-<p><strong>Client Name:</strong> <?php echo $clientName; ?></p>
-<p><strong>Description:</strong> <?php echo $project['description']; ?></p>
-<p><strong>Deadline:</strong> <?php echo $project['deadline']; ?></p>
+<div class="project-container">
+    <h1><?php echo $project['name']; ?></h1>
+    <div class="project-details">
+        <p><strong>Client Name:</strong> <?php echo $clientName; ?></p>
+        <p><strong>Description:</strong> <?php echo $project['description']; ?></p>
+        <p><strong>Deadline:</strong> <?php echo $project['deadline']; ?></p>
+    </div>
 
-<form action="../controller/pm-project-controller.php?action=approve_reject_proposal" method="post">
+    <form action="../controller/pm-project-controller.php?action=approve_reject_proposal" method="post">
     <input type="hidden" name="project_id" value="<?php echo $project['project_id']; ?>">
-    <button type="submit" name="action" value="approve">Approve</button>
-    <button type="submit" name="action" value="reject">Reject</button>
+    <div class="form-buttons">
+        <button type="submit" name="action" value="approve" class="button-primary">Approve</button>
+        <button type="submit" name="action" value="reject" class="button-danger">Reject</button>
+    </div>
 </form>
+
+</div>
 
 </body>
 </html>
