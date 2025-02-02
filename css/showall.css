@@ -1,0 +1,127 @@
+/* show-all.css */
+
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif; /* Sets a clean and readable font */
+    margin: 0; /* Removes default margin for a controlled layout */
+    background-color: #f4f4f4; /* Light grey background for overall page */
+}
+
+/* Project Container Styles */
+.project-container,
+.user-container {
+    padding: 20px; /* Padding for containers */
+    display: flex; /* Flexbox for layout */
+    flex-direction: column; /* Vertical stacking */
+}
+
+/* Heading Styles */
+h1 {
+    color: #333; /* Dark grey color for section headings */
+    margin-bottom: 10px; /* Space below headings */
+    margin-left: 20px; /* Indent headings for hierarchy */
+}
+
+/* Project and User Card Styles */
+.project-card,
+.user-card {
+    background-color: #fff; /* White background for cards */
+    padding: 15px; /* Padding inside cards */
+    border-radius: 6px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 20px; /* Space below cards */
+    transition: transform 0.1s; /* Minimal animation for scale */
+}
+
+.project-card-link,
+.user-card-link {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit color from parent */
+}
+
+.project-card:hover,
+.user-card:hover {
+    transform: translateY(-2px); /* Slightly raise the card on hover */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+/* Card Header Styles */
+.card-header {
+    display: flex; /* Flexbox for card header */
+    justify-content: space-between; /* Space between elements */
+}
+
+h2 {
+    color: #2e2e2e; /* Dark grey color for section headings */
+
+}
+
+.project-id,
+.user-id {
+    font-weight: bold;
+    color: #007BFF; /* Grey color for project ID */
+}
+
+
+/* Status Styles */
+.status {
+    font-weight: bold; /* Bold text for emphasis */
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3); /* Shadow for text visibility */
+}
+
+/* Using attribute selectors to style based on the data-status attribute */
+.status[data-status="Completed"] {
+    color: green; /* Green background for completed status */
+}
+
+.status[data-status="In Progress"] {
+    color: rgb(223, 145, 0); /* Orange background for in-progress status */
+}
+
+.status[data-status="Approved"] {
+    color: blue; /* Blue background for approved status */
+}
+
+.status[data-status="Pending Approval"] {
+    color: purple; /* Purple background for pending approval status */
+}
+
+.status[data-status="Rejected"] {
+    color: red; /* Red background for rejected status */
+}
+
+/* Button Styles in Cards */
+.card-actions, .user-actions {
+    margin-top: 10px; /* Space above actions */
+}
+
+.button-primary,
+.button-danger {
+    padding: 8px 12px; /* Internal padding for buttons */
+    border-radius: 4px; /* Rounded corners */
+    color: #fff; /* White text */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.button-primary {
+    background-color: #007BFF; /* Primary button color */
+}
+
+.button-danger {
+    background-color: #dc3545; /* Danger button color */
+}
+
+.button-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.button-danger:hover {
+    background-color: #c82333; /* Darker shade on hover */
+}
+
+.form-buttons {
+    margin-top: 20px; /* Space above button container */
+    margin-left: 20px; /* Indent buttons for alignment */
+    margin-bottom: 10px; /* Space below button container */
+}

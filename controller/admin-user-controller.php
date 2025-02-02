@@ -1,6 +1,8 @@
 <?php
 session_start();
-include_once '../model/user-model.php';
+include '../model/user-model.php';
+include '../model/project-model.php';
+include '../model/task-model.php';
 
 $action = $_GET['action'] ?? '';
 
@@ -11,6 +13,10 @@ switch ($action) {
 
     case 'create_user':
         createUser();
+        break;
+    
+    case 'view_user':
+        viewUser();
         break;
 
     case 'edit':
@@ -33,6 +39,22 @@ switch ($action) {
         showAllUsers();
         break;
 
+    case 'all_clients':
+        showAllClients();
+        break;
+
+    case 'all_pms':
+        showAllPMs();
+        break;
+
+    case 'all_devs':
+        showAllDevs();
+        break;    
+    
+    case 'all_admins':
+        showAllAdmins();
+        break;
+
     // Other actions...
 
     default:
@@ -40,11 +62,27 @@ switch ($action) {
         break;
 }
 
+function viewUser() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
+    $userid = $_GET['userid'];
+    $user = getUserDetailsById($userid);
+    include '../view/admin-user-view.php';
+}
+
 function showCreateUser() {
-    header("Location: ../view/admin-user-create.php");
+
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
+    include '../view/admin-user-create.php';
 }
 
 function createUser() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $first_name = $_POST['firstname'];
     $last_name = $_POST['lastname'];
     $name = $_POST['name'];
@@ -72,18 +110,59 @@ function createUser() {
 
 }
 
+function showAllClients() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
+    $users = getAllClientDetails();
+    include '../view/admin-user-showall.php';
+}
+
+function showAllPMs() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
+    $users = getAllPMDetails();
+    include '../view/admin-user-showall.php';
+}
+
+function showAllDevs() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
+    $users = getAllDevDetails();
+    include '../view/admin-user-showall.php';
+}
+
+function showAllAdmins() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
+    $users = getAllAdminDetails();
+    include '../view/admin-user-showall.php';
+}
+
 function showAllUsers() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $users = getAllUserDetails();
     include '../view/admin-user-showall.php';
 }
 
 function showEditUserForm() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $userid = $_GET['userid'];
     $user = getUserById($userid);
     include '../view/admin-user-edit.php';
 }
 
 function updateUser() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $userid = $_POST['userid'];
     $first_name = $_POST['firstname'];
     $last_name = $_POST['lastname'];
@@ -137,6 +216,9 @@ function updateUser() {
 }
 
 function deleteUser() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $userid = $_GET['userid'];
     $success = removeUser($userid);
 
@@ -150,6 +232,9 @@ function deleteUser() {
 }
 
 function deleteProfilePicture() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $userid = $_POST['userid'];
     $profile_picture = file_get_contents('../images/default-profile.png');
 

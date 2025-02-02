@@ -49,11 +49,16 @@ switch ($action) {
 
 function showAllProjects() {
     $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     $projects = getAllProjectsWithClientNames($pmId); // Fetch project details with client names
     include '../view/pm-project-showall.php';
 }
 
 function showProjectProposal() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     $projectId = $_GET['project_id'];
     $project = getProjectInfo($projectId);
     $clientName = getUserName($project['client_id']); // Assuming you have this function
@@ -62,6 +67,9 @@ function showProjectProposal() {
 }
 
 function handleApproveRejectProposal() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $projectId = $_POST['project_id'];
         $action = $_POST['action'];
@@ -89,6 +97,9 @@ function handleApproveRejectProposal() {
 
 
 function showEditProjectForm() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     $projectId = $_POST['project_id'];
     $project = getProjectInfo($projectId);
     $clientName = getUserName($project['client_id']);
@@ -97,6 +108,9 @@ function showEditProjectForm() {
 }
 
 function handleUpdateProject() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $projectId = $_POST['project_id'];
         $projectName = $_POST['project_name'];
@@ -118,6 +132,9 @@ function handleUpdateProject() {
 }
 
 function handleDeleteProject() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $projectId = $_POST['project_id'];
 
@@ -144,6 +161,9 @@ function handleDeleteProject() {
 
 
 function handleViewProject() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     $projectId = $_GET['project_id'];
     $project = getProjectInfo($projectId);
     $clientName = getUserName($project['client_id']);
@@ -152,6 +172,9 @@ function handleViewProject() {
 }
 
 function handleHandoverProject() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+    
     $projectId = $_GET['project_id'];
     $project = getProjectInfo($projectId);
 

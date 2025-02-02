@@ -1,0 +1,151 @@
+/* dashboard.css */
+
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif; /* Sets a clean and readable font */
+    margin: 0; /* Removes default margin for a controlled layout */
+    background-color: #f4f4f4; /* Light grey background for overall page */
+}
+
+/* Main Container Styles */
+.container {
+    padding: 20px; /* Padding for main container */
+}
+
+/* Section Styles */
+.overview-section,
+.project-section,
+.task-section {
+    background-color: #fff; /* White background for sections */
+    margin-bottom: 20px; /* Space below each section */
+    padding: 20px; /* Padding inside sections */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Heading Styles */
+h2, h3 {
+    color: #333; /* Dark grey color for section headings */
+    margin-bottom: 10px; /* Space below headings */
+}
+
+/* Stats Section Styles */
+.stats-section {
+    display: flex; /* Flexbox for stats display */
+    flex-wrap: wrap; /* Allow wrapping */
+    gap: 20px; /* Space between stats cards */
+}
+
+.stats-card {
+    background-color: #e9ecef; /* Light grey background for stats cards */
+    padding: 15px; /* Padding inside cards */
+    border-radius: 6px; /* Rounded corners for cards */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    flex: 1; /* Flex-grow to take available space */
+    text-align: center; /* Center text in cards */
+    transition: background-color 0.3s; /* Animation for background on hover */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.stats-card:hover {
+    background-color: #dedede; /* Darker grey on hover */
+    transform: translateY(-2px); /* Slightly raise the card on hover */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+/* Project and User Card Styles */
+.project-card,
+.task-card {
+    background-color: #fff; /* White background for cards */
+    padding: 15px; /* Padding inside cards */
+    border-radius: 6px; /* Rounded corners for cards */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 20px; /* Space below each card */
+    transition: transform 0.1s, box-shadow 0.1s; /* Minimal animation for scale */
+}
+
+.project-card:hover,
+.task-card:hover {
+    transform: translateY(-2px); /* Slightly raise the card on hover */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+/* Button Styles */
+.button-primary,
+.button-dark,
+.button-danger {
+    padding: 10px 15px; /* Internal padding for buttons */
+    border-radius: 4px; /* Rounded corners for buttons */
+    color: #fff; /* White text */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.button-primary {
+    background-color: #007BFF; /* Primary button color */
+}
+
+.button-dark {
+    background-color: #333; /* Dark button color */
+}
+
+.button-danger {
+    background-color: #dc3545; /* Danger button color */
+}
+
+.button-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.button-dark:hover {
+    background-color: #555; /* Lighter shade on hover */
+}
+
+.button-danger:hover {
+    background-color: #c82333; /* Darker shade on hover */
+}
+
+/* Search and Input Styles */
+.search-container {
+    margin-top: 20px; /* Space above search container */
+}
+
+.search-container input[type="text"] {
+    width: 100%; /* Full width for search input */
+    padding: 10px; /* Internal padding */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 4px; /* Rounded corners */
+    box-sizing: border-box; /* Ensure padding doesn't affect total width */
+}
+
+/* Task Filter Styles */
+.filter-container {
+    margin: 20px 0; /* Space above and below filter container */
+    display: flex; /* Flexbox for filter links */
+    gap: 10px; /* Space between filter links */
+}
+
+/* User Info Styles */
+.user-container {
+    display: flex; /* Flexbox for user cards */
+    flex-wrap: wrap; /* Allow wrapping */
+    gap: 20px; /* Space between user cards */
+}
+
+.user-card {
+    background-color: #fff; /* White background for user cards */
+    padding: 15px; /* Padding inside user cards */
+    border-radius: 6px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.1s; /* Minimal animation for scale */
+}
+
+.user-card:hover {
+    transform: translateY(-2px); /* Slightly raise the card on hover */
+}
+
+.user-actions {
+    margin-top: 10px; /* Space above actions */
+    display: flex; /* Flexbox for buttons */
+    gap: 10px; /* Space between buttons */
+}

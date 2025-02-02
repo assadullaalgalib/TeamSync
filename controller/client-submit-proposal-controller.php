@@ -41,6 +41,8 @@ if (!empty($errorMessages)) {
 
 // Call the model function to submit the new proposal
 $clientId = getSession('userid');
+$clientName = getUserName($clientId);
+
 $submitSuccess = submitNewProposal($clientId, $name, $description, $deadline);
 
 if ($submitSuccess) {

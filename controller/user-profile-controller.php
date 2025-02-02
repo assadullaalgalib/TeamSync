@@ -32,17 +32,24 @@ switch ($action) {
 
 function showProfilePage() {
     $userid = $_SESSION['userid'];
+    $userName = getUserName($userid);
+
     $user = getUserDetailsById($userid);
     include('../view/user-profile-view.php');
 }
 
 function showEditProfilePage() {
     $userid = $_SESSION['userid'];
+    $userName = getUserName($userid);
+
     $user = getUserDetailsById($userid);
     include('../view/user-profile-edit.php');
 }
 
 function updateUser() {
+    $userId = $_SESSION['userid'];
+    $userName = getUserName($userId);
+
     $userid = $_POST['userid'];
     $first_name = $_POST['firstname'];
     $last_name = $_POST['lastname'];
@@ -89,6 +96,10 @@ function updateUser() {
 }
 
 function deleteProfilePicture() {
+
+    $userId = $_SESSION['userid'];
+    $userName = getUserName($userId);
+
     $userid = $_POST['userid'];
     $profile_picture = file_get_contents('../images/default-profile.png');
 
@@ -105,6 +116,9 @@ function deleteProfilePicture() {
 }
 
 function deleteAccount() {
+    $userId = $_SESSION['userid'];
+    $userName = getUserName($userId);
+    
     $userid = $_POST['userid'];
 
     $success = removeUser($userid);

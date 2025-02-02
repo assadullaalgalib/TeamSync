@@ -4,46 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Projects - TeamSync</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/showall.css">
+
 </head>
 <body>
 
-<h1>All Projects</h1>
-<table border=1>
-    <thead>
-        <tr>
-            <th>Project ID</th>
-            <th>Project Name</th>
-            <th>Client Name</th>
-            <th>Project Manager Name</th>
-            <th>Start Date</th>
-            <th>Deadline</th>
-            <th>Status</th>
-            <th>Progress</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($projects as $project) { ?>
-        <tr>
-            <td><?php echo $project['project_id']; ?></td>
-            <td><?php echo $project['name']; ?></td>
-            <td><?php echo $project['client_name']; ?></td>
-            <td><?php echo $project['pm_name']; ?></td>
-            <td><?php echo $project['start_date']; ?></td>
-            <td><?php echo $project['deadline']; ?></td>
-            <td><?php echo $project['status']; ?></td>
-            <td><?php echo $project['progress']; ?>%</td>
-            <td>
-                <a href="../controller/admin-project-controller.php?action=view_project&project_id=<?php echo $project['project_id']; ?>">View</a>
-                <a href="../controller/admin-project-controller.php?action=delete_project&project_id=<?php echo $project['project_id']; ?>" onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
-            </td>
-        </tr>
-        <?php } ?>
-    </tbody>
-</table>
+<?php include 'admin-navbar.php'; ?>
 
-<a href="../controller/user-dashboard-controller.php">Home</a>
+<h1>All Projects</h1>
+
+<div class="project-container">
+    <?php foreach ($projects as $project) { ?>
+        <a href="../controller/admin-project-controller.php?action=view_project&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
+            <div class="project-card">
+                <div class="card-header">
+                    <span class="project-id">#<?php echo $project['project_id']; ?></span>
+
+                    <span class="status" data-status="<?php echo $project['status']; ?>">
+                        <?php echo $project['status']; ?>
+                    </span>
+                    
+                </div>
+                <h2><?php echo $project['name']; ?></h2>
+                <p>Client: <?php echo $project['client_name']; ?></p>
+                <p>Project Manager: <?php echo $project['pm_name']; ?></p>
+                <p>Start Date: <?php echo $project['start_date']; ?></p>
+                <p>Deadline: <?php echo $project['deadline']; ?></p>
+                <p>Progress: <span class="progress-text"><?php echo $project['progress']; ?>%</span></p>
+            </div>
+        </a>
+    <?php } ?>
+</div>
 
 </body>
 </html>

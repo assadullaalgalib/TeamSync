@@ -1,6 +1,9 @@
 <?php
 // Include the session manager
 require_once '../model/session-manager-model.php';
+include_once '../model/task-model.php';
+include_once '../model/project-model.php';
+include_once '../model/user-model.php';
 
 // Start the session using the session manager
 startSession();
@@ -44,29 +47,41 @@ switch ($action) {
 
 function handleViewCompletedTask() {
     $userId = $_SESSION['userid'];
+    $devName = getUserName($userId);
+
     $tasks = getCompletedTasks($userId);
     include '../view/dev-task-showall.php';
 }
 
 function handleViewActiveTask() {
     $userId = $_SESSION['userid'];
+    $devName = getUserName($userId);
+    
     $tasks = getActiveTasks($userId);
     include '../view/dev-task-showall.php';
 }
 
 function handleViewAllTask() {
     $userId = $_SESSION['userid'];
+    $devName = getUserName($userId);
+    
     $tasks = getAllTasksByUserId($userId);
     include '../view/dev-task-showall.php';
 }
 
 function handleViewTask() {
+    $userId = $_SESSION['userid'];
+    $devName = getUserName($userId);
+    
     $taskId = $_GET['task_id'];
     $task = getTaskDetails($taskId);
     include '../view/dev-task-view.php';
 }
 
 function handleFileUpload() {
+    $userId = $_SESSION['userid'];
+    $devName = getUserName($userId);
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $taskId = $_POST['task_id'];
         $fileData = file_get_contents($_FILES["file"]["tmp_name"]);
@@ -88,6 +103,9 @@ function handleFileUpload() {
 
 
 function handleFileDownload() {
+    $userId = $_SESSION['userid'];
+    $devName = getUserName($userId);
+    
     $taskId = $_GET['task_id'];
     $fileDetails = getFileDetails($taskId);
 

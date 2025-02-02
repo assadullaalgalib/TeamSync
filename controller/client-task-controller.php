@@ -17,6 +17,9 @@ switch ($action) {
 }
 
 function handleViewTask() {
+    $userId = $_SESSION['userid'];
+    $clientName = getUserName($userId);
+
     $taskId = $_GET['task_id'];
     $task = getTaskDetails($taskId); // Assuming this function fetches a task by its ID
     $projectName = getProjectName($task['project_id']); // Assuming this function fetches the project name by ID

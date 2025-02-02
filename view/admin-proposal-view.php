@@ -4,36 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Proposal - TeamSync</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
 
-<h1><?php echo $project['name']; ?></h1>
-<p><strong>Client Name:</strong> <?php echo $clientName; ?></p>
-<p><strong>Description:</strong> <?php echo $project['description']; ?></p>
-<p><strong>Deadline:</strong> <?php echo $project['deadline']; ?></p>
+<?php include 'admin-navbar.php'; ?>
 
-<form action="../controller/admin-project-controller.php?action=assign_pm" method="post">
-    <input type="hidden" name="project_id" value="<?php echo $project['project_id']; ?>">
+<div class="project-container">
+    <h1><?php echo $project['name']; ?></h1>
+    <div class="project-details">
+        <p><strong>Client Name:</strong> <?php echo $clientName; ?></p>
+        <p><strong>Description:</strong> <?php echo $project['description']; ?></p>
+        <p><strong>Deadline:</strong> <?php echo $project['deadline']; ?></p>
+    </div>
 
-    <label for="pm_id">Assign Project Manager:</label>
-    <select id="pm_id" name="pm_id" required>
-        <option value="">Select Project Manager</option>
-        <?php
-        // Populate the dropdown with PMs from the controller
-        foreach ($pms as $pm) {
-            echo "<option value='{$pm['userid']}'>[{$pm['userid']}] {$pm['firstname']} {$pm['lastname']} - Ongoing Projects: {$pm['project_count']}</option>";
-        }
-        ?>
-    </select><br><br>
+    <form action="../controller/admin-project-controller.php?action=assign_pm" method="post" class="assign-pm-form">
+        <input type="hidden" name="project_id" value="<?php echo $project['project_id']; ?>">
 
-    <button type="submit">Assign PM</button>
-</form>
+        <div class="form-group">
+            <label for="pm_id">Assign Project Manager:</label>
+        </div>
 
-<a href="../controller/admin-project-controller.php?action=show_all_proposals">Back to Proposals</a>
-<a href="../controller/user-dashboard-controller.php">Home</a>
+        <div class="form-group">
+            <select id="pm_id" name="pm_id" required>
+                <option value="">Select Project Manager</option>
+                <?php
+                foreach ($pms as $pm) {
+                    echo "<option value='{$pm['userid']}'>#{$pm['userid']} {$pm['firstname']} {$pm['lastname']} - Ongoing Projects: {$pm['project_count']}</option>";
+                }
+                ?>
+            </select>
+        </div>        
+
+        <div class="form-buttons">
+            <button type="submit" class="button-primary">Assign PM</button>
+        </div>
+    </form>
+
+</div>
 
 </body>
 </html>
-
-

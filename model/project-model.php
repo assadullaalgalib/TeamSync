@@ -74,7 +74,7 @@ function getTotalProjects() {
 
 function getAllActiveProjects() {
     $conn = getDbConnection();
-    $sql = "SELECT p.project_id, c.name AS client_name, pm.name AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback
+    $sql = "SELECT p.project_id, CONCAT(c.firstname, ' ', c.lastname) AS client_name, pm.name AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback
             FROM projects p
             JOIN usr c ON p.client_id = c.userid
             JOIN usr pm ON p.pm_id = pm.userid
@@ -115,11 +115,32 @@ function getAllPendingProjects() {
     return $projects;
 }
 
+function getAllRejectedProjectProposals() {
+    $conn = getDbConnection();
+    $sql = "SELECT p.project_id, CONCAT(c.firstname, ' ', c.lastname) AS client_name, CONCAT(pm.firstname, ' ', pm.lastname) AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback
+            FROM projects p
+            JOIN usr c ON p.client_id = c.userid
+            LEFT JOIN usr pm ON p.pm_id = pm.userid
+            WHERE p.status = 'Rejected'";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $projects;
+}
+
 
 
 function getAllCompletedProjects() {
     $conn = getDbConnection();
-    $sql = "SELECT p.project_id, c.name AS client_name, pm.name AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback
+    $sql = "SELECT p.project_id, CONCAT(c.firstname, ' ', c.lastname) AS client_name, pm.name AS pm_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback
             FROM projects p
             JOIN usr c ON p.client_id = c.userid
             JOIN usr pm ON p.pm_id = pm.userid
@@ -170,7 +191,7 @@ function rejectHandedoverProject($projectId, $clientFeedback) {
 
 function getAllProjectsWithClientNames($pmId) {
     $conn = getDbConnection();
-    $sql = "SELECT p.project_id, c.name AS client_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback
+    $sql = "SELECT p.project_id, CONCAT(c.firstname, ' ', c.lastname) AS client_name, p.name, p.description, p.start_date, p.deadline, p.status, p.progress, p.client_feedback
             FROM projects p
             JOIN usr c ON p.client_id = c.userid
             WHERE p.pm_id = ?";
@@ -195,6 +216,46 @@ function searchClientProjects($query, $userid) {
             WHERE client_id = ? AND LOWER(name) LIKE ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("is", $userid, $query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $projects;
+}
+
+function searchAllProjects($query) {
+    $conn = getDbConnection();
+    $sql = "SELECT project_id, name 
+            FROM projects 
+            WHERE type = 'Project' AND LOWER(name) LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $projects = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $projects;
+}
+
+function searchAllProposals($query) {
+    $conn = getDbConnection();
+    $sql = "SELECT project_id, name 
+            FROM projects 
+            WHERE type = 'Proposal' AND LOWER(name) LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $query);
     $stmt->execute();
     $result = $stmt->get_result();
     $projects = [];
@@ -267,16 +328,38 @@ function updateProject($projectId, $projectName, $description, $startDate, $dead
 
 function deleteProject($projectId) {
     $conn = getDbConnection();
-    $sql = "DELETE 
-            FROM projects 
-            WHERE project_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $projectId);
-    $result = $stmt->execute();
-    $stmt->close();
-    $conn->close();
-    return $result;
+    
+    // Start a transaction
+    $conn->begin_transaction();
+
+    try {
+        // Delete associated tasks first
+        $sqlDeleteTasks = "DELETE FROM tasks WHERE project_id = ?";
+        $stmt = $conn->prepare($sqlDeleteTasks);
+        $stmt->bind_param("i", $projectId);
+        $stmt->execute();
+        $stmt->close();
+
+        // Delete the project
+        $sqlDeleteProject = "DELETE FROM projects WHERE project_id = ?";
+        $stmt = $conn->prepare($sqlDeleteProject);
+        $stmt->bind_param("i", $projectId);
+        $result = $stmt->execute();
+        $stmt->close();
+
+        // Commit the transaction
+        $conn->commit();
+
+        $conn->close();
+        return $result;
+    } catch (Exception $e) {
+        // Rollback the transaction if something goes wrong
+        $conn->rollback();
+        $conn->close();
+        return false;
+    }
 }
+
 
 function updateProjectStatusBasedOnTasks($projectId) {
     $conn = getDbConnection();

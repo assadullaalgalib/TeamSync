@@ -1,0 +1,210 @@
+/* project-edit.css */
+
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif; /* Sets a clean and readable font */
+    margin: 0; /* Removes default margin for a controlled layout */
+    background-color: #f4f4f4; /* Light grey background for overall page */
+}
+
+/* Project Container Styles */
+.project-container {
+    background-color: #fff; /* White background for the project form */
+    padding: 20px; /* Padding inside the container */
+    border-radius: 8px; /* Rounded corners for a softer look */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 600px; /* Limits the width of the form */
+    margin: auto; /* Centers the container horizontally */
+    transition: box-shadow 0.3s; /* Transition for box shadow on hover */
+}
+
+.project-container:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #333; /* Dark grey color for readability */
+    margin-bottom: 10px; /* Space below titles */
+}
+
+/* Form Elements */
+label {
+    display: block; /* Makes labels take full width and stack */
+    margin: 10px 0 5px; /* Space around labels */
+    font-weight: bold; /* Bold text for visibility */
+}
+
+/* Input, Textarea, and Select Styles */
+input[type="text"],
+input[type="date"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 100%; /* Full width for inputs */
+    padding: 10px; /* Internal spacing */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 4px; /* Slightly rounded corners */
+    box-sizing: border-box; /* Ensures padding doesn't affect total width */
+    transition: border-color 0.3s; /* Smooth border transition on focus */
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #007BFF; /* Change border color on focus */
+}
+
+/* Button Styles */
+.form-buttons {
+    margin-top: 20px; /* Space above button container */
+}
+
+.button-primary,
+.button-dark,
+.button-danger {
+    padding: 10px 15px; /* Internal spacing for buttons */
+    border: none; /* Removes default border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Shows pointer cursor on hover */
+    font-size: 16px; /* Clear text size for buttons */
+    transition: background-color 0.3s; /* Smooth background color transition */
+    text-decoration: none; /* Removes underline from buttons */
+}
+
+.button-primary {
+    background-color: #007BFF; /* Bootstrap primary color */
+    color: #fff; /* White text color */
+}
+
+.button-dark {
+    background-color: #333; /* Dark grey color */
+    color: #fff; /* White text color */
+}
+
+.button-danger {
+    background-color: #dc3545; /* Bootstrap danger color */
+    color: #fff; /* White text color */
+}
+
+.button-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.button-dark:hover {
+    background-color: #555; /* Lighter shade on hover */
+}
+
+.button-danger:hover {
+    background-color: #c82333; /* Darker shade on hover */
+}
+
+/* Form Group Styles */
+.form-group {
+    margin-bottom: 15px; /* Space below each form group */
+}
+
+.edit-project-form {
+    margin-bottom: 20px; /* Space above the form */
+}
+
+/* Radio Button Styles */
+.radio-group {
+    display: flex; /* Use flexbox to align radio buttons side by side */
+    gap: 5px; /* Space between radio buttons */
+    margin-left: 40px;
+}
+
+.radio-group label {
+    margin-right: 30px; /* Space between radio button and label */
+}
+
+
+/* Status and Progress Styles */
+.status {
+    font-weight: bold; /* Highlights status */
+    padding: 3px 7px; /* Padding inside the status */
+    border-radius: 4px; /* Rounded corners */
+    color: #fff; /* Default text color to ensure readability */
+    display: inline-block; /* Display as inline block */
+}
+
+/* Using attribute selectors to style based on the data-status attribute */
+.status[data-status="Completed"] {
+    background-color: green; /* Green background for completed status */
+}
+
+.status[data-status="In Progress"] {
+    background-color: orange; /* Orange background for in-progress status */
+}
+
+.status[data-status="Approved"] {
+    background-color: blue; /* Blue background for approved status */
+}
+
+.status[data-status="Pending Approval"] {
+    background-color: purple; /* Purple background for pending approval status */
+}
+
+.status[data-status="Rejected"] {
+    background-color: red; /* Red background for rejected status */
+}
+
+
+/* Task List Styles */
+.task-list {
+    list-style-type: none; /* Removes bullet points from the list */
+    padding: 0; /* Removes default padding */
+}
+
+/* Task Button Styles */
+/* Task Button Styles */
+.task-button {
+    text-decoration: none; /* Remove underline from links */
+    color: #007BFF; /* Blue color for text */
+    font-weight: bold; /* Bold font for text */
+    display: block; /* Make the link a block element */
+    padding: 10px; /* Padding inside the link */
+    border-radius: 4px; /* Rounded corners for links */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+    background-color: transparent; /* Initial transparent background */
+    cursor: pointer; /* Change cursor to pointer */
+    text-align: left; /* Align text to the left */
+    max-width: 250px; /* Limit the width of the button */
+}
+
+.task-button:hover {
+    background-color: #3e85d1; /* Background color on hover */
+    color: #fff; /* White text on hover */
+}
+
+
+
+
+/* Error Message Styles */
+.error-messages {
+    color: red; /* Red color for error messages */
+}
+
+/* File Details Styles */
+.file-details {
+    background-color: #f9f9f9; /* Light background for file details */
+    padding: 10px; /* Padding around file details */
+    border: 1px solid #e0e0e0; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    margin: 10px 0; /* Space around file details */
+}
+
+/* Proposal Form Styles */
+textarea.textarea-feedback {
+    height: auto; /* Allows for dynamic height */
+}
+
+/* Navigation Button Styles */
+.nav-button {
+    text-align: center; /* Centers navigation buttons */
+}

@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile - TeamSync</title>
-    <link rel="stylesheet" href="../css/user-profile-view-and-edit.css">
+    <link rel="stylesheet" href="../css/profile.css">
 </head>
 <body>
+
+<?php include 'user-navbar.php'; ?>
 
     <div class="profile-container">
         <h1>User Profile</h1>
@@ -24,9 +26,9 @@
         </div>
 
         <div class="profile-actions">
-            <a href="../controller/user-profile-controller.php?action=edit_profile" class="button-link button-primary">Edit Profile</a>
-            <a href="../controller/user-profile-controller.php?action=delete_account" class="button-link button-danger">Delete My Account</a>
-            <a href="../controller/user-dashboard-controller.php" class="button-link button-dark">Back to Dashboard</a>
+            <a href="../controller/user-profile-controller.php?action=edit_profile" class="button-primary">Edit Profile</a>
+            <a href="../controller/user-profile-controller.php?action=delete_account" class="button-danger">Delete My Account</a>
+
         </div>
     </div>
 

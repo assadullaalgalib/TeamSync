@@ -1,0 +1,151 @@
+/* user-profile-view-and-edit.css */
+
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif; /* Sets a clean and readable font */
+    margin: 0; /* Removes default margin for a controlled layout */
+    background-color: #f4f4f4; /* Light grey background for overall page */
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #007BFF; /* Navbar background color */
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between logo and links */
+    align-items: center; /* Vertically center items */
+    padding: 10px 20px; /* Padding around navbar */
+    color: #fff; /* White text color */
+}
+
+.logo {
+    font-size: 24px; /* Larger font size for the logo */
+    font-weight: bold; /* Bold font for emphasis */
+}
+
+.nav-links {
+    display: flex; /* Flexbox for nav items */
+}
+
+.nav-links a {
+    color: #fff; /* White color for links */
+    text-decoration: none; /* Removes underline from links */
+    margin-left: 20px; /* Space between links */
+}
+
+
+/* Profile Container Styles */
+.profile-container {
+    background-color: #fff; /* White background for profile container */
+    padding: 20px; /* Padding inside the container */
+    border-radius: 8px; /* Rounded corners for a softer look */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 600px; /* Limits the width of the profile container */
+    margin: auto; /* Centers the container horizontally */
+}
+
+/* Headings */
+h1 {
+    color: #333; /* Dark grey color for headings */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+/* Profile Picture Styles */
+.profile-picture {
+    width: 150px; /* Set a fixed width for the profile picture */
+    height: 150px; /* Set a fixed height */
+    border-radius: 50%; /* Makes the profile picture circular */
+    object-fit: cover; /* Ensures the image covers the entire element */
+    margin-bottom: 20px; /* Space below the profile picture */
+}
+
+/* Form Elements */
+form {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack elements vertically */
+}
+
+label {
+    margin-top: 15px; /* Space above labels */
+    font-weight: bold; /* Bold text for labels */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+    padding: 10px; /* Internal spacing for inputs */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 4px; /* Slightly rounded corners */
+    box-sizing: border-box; /* Ensure padding doesn't affect total width */
+    transition: border-color 0.3s; /* Smooth transition for border color */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #007BFF; /* Change border color on focus */
+}
+
+/* Hidden Input for File Upload */
+.hidden-input {
+    display: none; /* Hides the file input */
+}
+
+/* Form Buttons */
+.form-buttons {
+    margin-top: 20px; /* Space above the button container */
+}
+
+.button-primary,
+.button-danger,
+.button-link {
+    padding: 10px 15px; /* Internal padding for buttons */
+    border-radius: 4px; /* Rounded corners for buttons */
+    color: #fff; /* White text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Allows padding and width */
+    transition: background-color 0.3s; /* Smooth background color transition */
+    border: none; /* Remove any default border */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.button-primary {
+    background-color: #007BFF; /* Primary button color */
+}
+
+.button-danger {
+    background-color: #dc3545; /* Danger button color */
+}
+
+.button-link {
+    background-color: transparent; /* Transparent for link buttons */
+    color: #007BFF; /* Blue color for links */
+}
+
+.button-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.button-danger:hover {
+    background-color: #c82333; /* Darker shade on hover */
+}
+
+/* Profile Actions Styles */
+.profile-actions {
+    margin-top: 20px; /* Space above profile actions */
+}
+
+.profile-info {
+    margin-top: 20px; /* Space above profile info */
+}
+
+.label {
+    font-weight: bold; /* Bold text for labels within profile info */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .profile-container {
+        width: 90%; /* Use a percentage width on smaller screens */
+    }
+}

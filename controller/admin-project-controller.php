@@ -39,6 +39,18 @@ switch ($action) {
     case 'delete_project':
         handledeleteProject();
         break;
+
+    case 'all_active_projects':
+        showAllActiveProjects();
+        break;
+    
+    case 'all_completed_projects':
+        showAllCompletedProjects();
+        break;
+
+    case 'all_rejected_projects':
+        showAllRejectedProjectProposals();
+        break;
     // Other actions...
 
     default:
@@ -46,6 +58,9 @@ switch ($action) {
         break;
 }
 function viewProject() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $projectId = $_GET['project_id'];
     $project = getProjectById($projectId);
     $tasks = getTasksForProject($projectId);
@@ -53,6 +68,9 @@ function viewProject() {
 }
 
 function showEditProjectForm() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $projectId = $_POST['project_id'];
     $project = getProjectById($projectId);
     $pms = getPMWithProjectCount();
@@ -60,6 +78,9 @@ function showEditProjectForm() {
 }
 
 function editProject() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $projectId = $_POST['project_id'];
     $name = $_POST['project_name'];
     $description = $_POST['description'];
@@ -80,6 +101,9 @@ function editProject() {
 }
 
 function handledeleteProject() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $projectId = $_GET['project_id'];
     $success = deleteProject($projectId);
 
@@ -93,16 +117,49 @@ function handledeleteProject() {
 }
 
 function showAllProjects() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $projects = getTotalProjects();
     include '../view/admin-project-showall.php';
 }
 
+function showAllActiveProjects() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
+    $projects = getAllActiveProjects();
+    include '../view/admin-project-showall.php';
+}
+
+function showAllCompletedProjects() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
+    $projects = getAllCompletedProjects();
+    include '../view/admin-project-showall.php';
+}
+
+function showAllRejectedProjectProposals() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
+    $projects = getAllRejectedProjectProposals();
+    include '../view/admin-proposal-showall.php';
+}
+
 function showProjectProposal() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $projects = getAllPendingProjects();
     include '../view/admin-proposal-showall.php';
 }
 
 function handleViewProposal() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $projectId = $_GET['project_id'];
     $project = getProjectInfo($projectId);
     $clientName = getUserName($project['client_id']);
@@ -111,6 +168,9 @@ function handleViewProposal() {
 }
 
 function assignPMToProject() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     $projectId = $_POST['project_id'];
     $pmId = $_POST['pm_id'];
     assignProjectManager($projectId, $pmId);

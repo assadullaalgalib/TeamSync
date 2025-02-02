@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Task - TeamSync</title>
-    <link rel="stylesheet" href="../css/pm-task-view-edit-projectproposal.css">
+    <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
+
+<?php include 'pm-navbar.php'; ?>
 
 <div class="project-container">
     <h1><?php echo $task['name']; ?></h1>

@@ -46,28 +46,32 @@ function showAdminDashboard($adminId)
     $activeProjects = getAllActiveProjects();
     $pendingProjects = getAllPendingProjects();
     $completedProjects = getAllCompletedProjects();
+    $rejectedProjects = getAllRejectedProjectProposals();
 
     $allUsers = getAllUsers();
     $allClients = getAllClients();
     $allPMs = getAllPMs();
     $allDevelopers = getAllDevelopers();
+    $allAdmins = getAllAdminDetails();
 
     $totalProjectsCount = count($totalProjects);
     $activeProjectsCount = count($activeProjects);
     $pendingProjectsCount = count($pendingProjects);
     $completedProjectsCount = count($completedProjects);
+    $rejectedProjectsCount = count($rejectedProjects);
 
     $allUsersCount = count($allUsers);
     $allClientsCount = count($allClients);
     $allPMsCount = count($allPMs);
     $allDevelopersCount = count($allDevelopers);
+    $allAdminsCount = count($allAdmins);
 
     include '../view/admin-dashboard.php';
 }
 
 function showDeveloperDashboard($developerId)
 {
-    $developerName = getUserName($developerId);
+    $devName = getUserName($developerId);
     $activeTasks = getActiveTasks($developerId);
     $completedTasks = getCompletedTasks($developerId);
     $activeTasksCount = count($activeTasks);

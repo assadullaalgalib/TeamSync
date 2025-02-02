@@ -1,26 +1,57 @@
-function showFileInput() {
-    document.getElementById('profile_picture').style.display = 'block';
-}
+function setupSearch() {
+    function loadDoc() {
+        var xhr = new XMLHttpRequest();
+        var searchQuery = document.getElementById("searchQuery").value;
+        var searchFilter = document.getElementById("searchFilter").value;
+        var userid = document.getElementById("userid").value;
 
-function previewImage(event) {
-    var preview = document.getElementById('current-profile-pic');
-    var file = event.target.files[0];
+        console.log("Making request to server with query:", searchQuery, "filter:", searchFilter, "userid:", userid); // Debugging statement
 
-    if (file) {
-        var reader = new FileReader();
-        reader.onload = function () {
-            preview.src = reader.result;
-            preview.style.display = 'block';
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log("Response received from server:", xhr.responseText); // Debugging statement
+                try {
+                    var results = JSON.parse(xhr.responseText);
+
+                    // Limit the results to the first 5 items
+                    var limitedResults = results.slice(0, 5);
+
+                    var limitedResultsHTML = '<ul>';
+                    limitedResults.forEach(result => {
+                        var link = "";
+                        switch (result.type) {
+                            case 'project':
+                                link = "../controller/admin-project-controller.php?action=view_project&project_id=" + result.id;
+                                break;
+                            case 'task':
+                                link = "../controller/admin-task-controller.php?action=view&task_id=" + result.id;
+                                break;
+                            case 'user':
+                                link = "../controller/admin-user-controller.php?action=view_user&userid=" + result.id;
+                                break;
+                            case 'proposal':
+                                link = "../controller/admin-project-controller.php?action=view_proposal&project_id=" + result.id;
+                                break;
+                        }
+                        limitedResultsHTML += `<li><a href="${link}">${result.formatted_name}</a></li>`;
+                    });
+                    limitedResultsHTML += '</ul>';
+
+                    document.getElementById("searchResults").innerHTML = limitedResultsHTML;
+                } catch (e) {
+                    document.getElementById("searchResults").innerHTML = "<p>No results found.</p>";
+                }
+            }
         };
-        reader.readAsDataURL(file);
-    } else {
-        preview.src = '';
-        preview.style.display = 'none';
+
+        xhr.open('GET', `../controller/admin-search-controller.php?query=${encodeURIComponent(searchQuery)}&filter=${searchFilter}&userid=${userid}`, true);
+        xhr.send();
     }
+
+    document.getElementById('searchQuery').addEventListener('input', loadDoc);
+    document.getElementById('searchFilter').addEventListener('change', loadDoc);
 }
 
-function deleteProfilePicture() {
-    if (confirm('Are you sure you want to delete your profile picture?')) {
-        document.getElementById('delete-profile-picture-form').submit();
-    }
-}
+document.addEventListener('DOMContentLoaded', function() {
+    setupSearch();
+});

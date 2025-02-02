@@ -15,24 +15,35 @@ switch ($action) {
         handleAcceptRejectProject();
         break;
     case 'download_file':
-        handleFileDownload();
+        fileDownload();
         break;
-
     default:
         header("Location: ../controller/user-dashboard-controller.php");
         break;
 }
 
+function fileDownload(){
+    $userId = $_SESSION['userid'];
+    $clientName = getUserName($userId);
+
+    handleFileDownload();
+}
+
 function handleViewProject() {
+    $userId = $_SESSION['userid'];
+    $clientName = getUserName($userId);
+
     $projectId = $_GET['project_id'];
     $project = getProjectInfo($projectId); // Assuming this function fetches a project by its ID
     $tasks = getTasksForProject($projectId); // Assuming this function fetches tasks related to a project
-    $clientName = getUserName($project['client_id']);
     $pmName = getUserName($project['pm_id']);
     include '../view/client-project-view.php';
 }
 
 function handleAcceptRejectProject() {
+    $userId = $_SESSION['userid'];
+    $clientName = getUserName($userId);
+
     $projectId = $_POST['project_id'];
     $action = $_POST['action'];
     $clientFeedback = $_POST['client_feedback'];

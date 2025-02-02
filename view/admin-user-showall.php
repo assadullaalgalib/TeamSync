@@ -1,45 +1,38 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Users - TeamSync</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/showall.css">
 </head>
 <body>
 
-<h1>All Users</h1>
+<?php include 'admin-navbar.php'; ?>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($users as $user) { ?>
-        <tr>
-            <td><?php echo $user['firstname']; ?></td>
-            <td><?php echo $user['lastname']; ?></td>
-            <td><?php echo $user['name']; ?></td>
-            <td><?php echo $user['email']; ?></td>
-            <td><?php echo $user['role_name']; ?></td>
-            <td>
-                <a href="../controller/admin-user-controller.php?action=edit&userid=<?php echo $user['userid']; ?>">Edit</a>
-                <a href="../controller/admin-user-controller.php?action=delete&userid=<?php echo $user['userid']; ?>" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
-            </td>
-        </tr>
-        <?php } ?>
-    </tbody>
-</table>
-<a href="../controller/admin-user-controller.php?action=show_create_user">Create New User</a>
-<a href="../controller/user-dashboard-controller.php">Back to Dashboard</a>
+<h1>All Users</h1>
+<div class="form-buttons">
+    <a href="../controller/admin-user-controller.php?action=show_create_user" class="button-primary">Create New User</a>
+</div>
+
+<div class="user-container">
+    <?php foreach ($users as $user) { ?>
+        <a href="../controller/admin-user-controller.php?action=view_user&userid=<?php echo $user['userid']; ?>" class="user-card-link">
+            <div class="user-card">
+                <div class="user-info">
+                    <span class="user-id">#<?php echo $user['userid']; ?></span>
+                    <p><strong>Username:</strong> <?php echo $user['name']; ?></p>
+                    <p><strong>Email:</strong> <?php echo $user['email']; ?></p>
+                    <p><strong>Role:</strong> <?php echo $user['role_name']; ?></p>
+                </div>
+                
+            </div>
+        </a>
+    <?php } ?>
+</div>
+
+
+
 
 </body>
 </html>

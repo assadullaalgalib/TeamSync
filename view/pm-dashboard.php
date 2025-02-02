@@ -8,24 +8,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/pm-dashboard.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
     <script src="../js/pm.js" defer></script>
 </head>
 
 <body>
 
-<!-- Navbar -->
-<nav class="navbar">
-    <div class="logo">TeamSync</div>
-    <div class="nav-links">
-        <a href="../controller/user-dashboard-controller.php">Home</a>
-        <a href="../controller/pm-project-controller.php?action=show_all">Projects</a>
-        <a href="../controller/user-logout-controller.php">Logout</a>
-        <a href="../controller/user-profile-controller.php?action=view_profile" class="welcome-link">Welcome, <?php echo $pmName; ?>!</a>
-        
-    </div>
-</nav>
-
+<?php include 'pm-navbar.php'; ?>
 
     <!-- Main Container -->
     <div class="container">
@@ -49,12 +38,12 @@
             <h2>Ongoing Projects</h2>
             <div class="project-grid">
                 <?php foreach ($ongoingProjects as $project) { ?>
-                    <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
+                    <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link"></a>
                         <div class="project-card">
                             <h3><?php echo $project['name']; ?></h3>
                             <p>Progress: <?php echo $project['progress']; ?>%</p>
                         </div>
-                    </a>
+                    
                 <?php } ?>
             </div>
         </div>
@@ -64,42 +53,24 @@
             <h2>Handed Over Projects</h2>
             <div class="project-grid">
                 <?php foreach ($handedoverProjects as $project) { ?>
-                    <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
+                    <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link"></a>
                         <div class="project-card pending">
                             <h3><?php echo $project['name']; ?></h3>
                         </div>
-                    </a>
+                    
                 <?php } ?>
             </div>
         </div>
-
-        <!-- Completed Projects -->
-        <!-- <div class="project-section">
-            <h2>Completed Projects</h2>
-            <div class="project-grid">
-                <?php foreach ($completedProjects as $project) {
-                    if ($project['status'] == 'Completed') { ?>
-                        <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
-                            <div class="project-card completed">
-                                <h3><?php echo $project['name']; ?></h3>
-                                <p>Progress: <?php echo $project['progress']; ?>%</p>
-                            </div>
-                        </a>
-                <?php }
-                } ?>
-            </div>
-        </div> -->
-
         <!-- Pending Project Approvals -->
         <div class="project-section">
             <h2>Pending Project Approvals</h2>
             <div class="project-grid">
                 <?php foreach ($pendingProposals as $project) { ?>
-                    <a href="../controller/pm-project-controller.php?action=view_proposal&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
+                    <a href="../controller/pm-project-controller.php?action=view_proposal&project_id=<?php echo $project['project_id']; ?>" class="project-card-link"></a>
                         <div class="project-card pending">
                             <h3><?php echo $project['name']; ?></h3>
                         </div>
-                    </a>
+                    
                 <?php } ?>
             </div>
         </div>

@@ -18,6 +18,9 @@ switch ($action) {
 }
 
 function handleViewTask() {
+    $userId = $_SESSION['userid'];
+    $adminName = getUserName($userId);
+
     
     $taskId = $_GET['task_id'];
     $task = getTaskDetails($taskId);

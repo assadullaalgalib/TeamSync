@@ -47,6 +47,9 @@ switch ($action) {
 }
 
 function showEditTaskForm() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     $taskId = $_REQUEST['task_id'];
     $task = getTaskDetails($taskId);
     $developers = getDevelopersWithTaskCounts();
@@ -54,6 +57,9 @@ function showEditTaskForm() {
 }
 
 function handleUpdateTask() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $taskId = $_POST['task_id'];
         $taskName = $_POST['task_name'];
@@ -84,6 +90,9 @@ function handleUpdateTask() {
 }
 
 function showAddTaskForm() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     $projectId = $_GET['project_id'];
     $project = getProjectInfo($projectId);
     $developers = getDevelopersWithTaskCounts();
@@ -92,6 +101,9 @@ function showAddTaskForm() {
 
 
 function handleFileDownload() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     $taskId = $_POST['task_id'];
     $fileDetails = getFileDetails($taskId);
 
@@ -119,6 +131,9 @@ function handleFileDownload() {
 }
 
 function handleApproveRejectTask() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     $taskId = $_POST['task_id'];
     $pmComment = $_POST['pm_comment'];
     $action = $_POST['action'];
@@ -149,6 +164,8 @@ function handleApproveRejectTask() {
 
 
 function handleViewTask() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
     
     $taskId = $_GET['task_id'];
     $task = getTaskDetails($taskId);
@@ -158,6 +175,9 @@ function handleViewTask() {
 }
 
 function handleCreateTask() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $projectId = $_POST['project_id'];
         $taskName = $_POST['task_name'];
@@ -190,6 +210,9 @@ function handleCreateTask() {
 }
 
 function handleDeleteTask() {
+    $pmId = $_SESSION['userid'];
+    $pmName = getUserName($pmId);
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $projectId = $_POST['project_id'];
         $taskId = $_POST['task_id'];

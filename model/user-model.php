@@ -70,25 +70,26 @@ function getAllDevelopers()
     return $developers;
 }
 
-function searchDevelopers($query) {
+function searchAllUsers($query) {
     $conn = getDbConnection();
-    $sql = "SELECT userid, name 
+    $sql = "SELECT userid, concat(firstname, ' ', lastname) AS name 
             FROM usr 
             WHERE LOWER(name) LIKE ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $query);
     $stmt->execute();
     $result = $stmt->get_result();
-    $developers = [];
+    $users = [];
 
     while ($row = $result->fetch_assoc()) {
-        $developers[] = $row;
+        $users[] = $row;
     }
 
     $stmt->close();
     $conn->close();
-    return $developers;
+    return $users;
 }
+
 
 function registerUser($first_name, $last_name, $name, $email, $password, $roleid)
 {
@@ -208,6 +209,86 @@ function getAllUserDetails() {
     $sql = "SELECT u.userid, u.firstname, u.lastname, u.name, u.email, r.rolename AS role_name
             FROM usr u
             JOIN usr_role r ON u.roleid = r.roleid";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $users = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $users[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $users;
+}
+
+function getAllClientDetails() {
+    $conn = getDbConnection();
+    $sql = "SELECT u.userid, u.firstname, u.lastname, u.name, u.email, r.rolename AS role_name
+            FROM usr u
+            JOIN usr_role r ON u.roleid = r.roleid
+            WHERE u.roleid = 4";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $users = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $users[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $users;
+}
+
+function getAllPMDetails() {
+    $conn = getDbConnection();
+    $sql = "SELECT u.userid, u.firstname, u.lastname, u.name, u.email, r.rolename AS role_name
+            FROM usr u
+            JOIN usr_role r ON u.roleid = r.roleid
+            WHERE u.roleid = 2";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $users = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $users[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $users;
+}
+
+function getAllDevDetails() {
+    $conn = getDbConnection();
+    $sql = "SELECT u.userid, u.firstname, u.lastname, u.name, u.email, r.rolename AS role_name
+            FROM usr u
+            JOIN usr_role r ON u.roleid = r.roleid
+            WHERE u.roleid = 3";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $users = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $users[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+    return $users;
+}
+
+function getAllAdminDetails() {
+    $conn = getDbConnection();
+    $sql = "SELECT u.userid, u.firstname, u.lastname, u.name, u.email, r.rolename AS role_name
+            FROM usr u
+            JOIN usr_role r ON u.roleid = r.roleid
+            WHERE u.roleid = 1";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();

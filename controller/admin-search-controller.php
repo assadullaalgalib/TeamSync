@@ -7,7 +7,6 @@ header('Content-Type: application/json');
 
 $query = $_GET['query'] ?? '';
 $filter = $_GET['filter'] ?? 'all';
-$roleid = $_GET['roleid'] ?? '';
 $userid = $_GET['userid'] ?? '';
 
 $results = [];
@@ -16,7 +15,7 @@ if (!empty($query)) {
     $query = "%" . strtolower($query) . "%";
     
     if ($filter == 'all' || $filter == 'projects') {
-        $projects = searchPMProjects($query, $userid);
+        $projects = searchAllProjects($query);
         foreach ($projects as $project) {
             $results[] = [
                 'type' => 'project',
@@ -27,13 +26,35 @@ if (!empty($query)) {
         }
     }
     if ($filter == 'all' || $filter == 'tasks') {
-        $tasks = searchPMTasks($query, $userid);
+        $tasks = searchAllTasks($query);
         foreach ($tasks as $task) {
             $results[] = [
                 'type' => 'task',
                 'id' => $task['task_id'],
                 'name' => $task['name'],
                 'formatted_name' => $task['name'] . ' - [Task]'
+            ];
+        }
+    }
+    if ($filter == 'all' || $filter == 'users') {
+        $users = searchAllUsers($query);
+        foreach ($users as $user) {
+            $results[] = [
+                'type' => 'user',
+                'id' => $user['userid'],
+                'name' => $user['name'],
+                'formatted_name' => $user['name'] . ' - [User]'
+            ];
+        }
+    }
+    if ($filter == 'all' || $filter == 'proposals') {
+        $proposals = searchAllProposals($query);
+        foreach ($proposals as $proposal) {
+            $results[] = [
+                'type' => 'proposal',
+                'id' => $proposal['project_id'],
+                'name' => $proposal['name'],
+                'formatted_name' => $proposal['name'] . ' - [Proposal]'
             ];
         }
     }
@@ -44,7 +65,7 @@ usort($results, function($a, $b) {
     return strcmp($a['name'], $b['name']);
 });
 
- // Limit the results to the first 5 items
+// Limit the results to the first 5 items
 $limitedResults = array_slice($results, 0, 5);
 
 // Return the results as JSON
