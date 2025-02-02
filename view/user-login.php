@@ -1,19 +1,6 @@
 <?php
-/* require_once '../model/session-manager-model.php';
-
-if (sessionExists('errorMessages')) {
-    echo '<div class="error-message">';
-    echo '<ul>';
-    $errorMessages = getSession('errorMessages');
-    foreach ($errorMessages as $message) {
-        echo "<li>$message</li>";
-    }
-    echo '</ul>';
-    removeSession('errorMessages');
-    echo '</div>';
-} */
+session_start();
 ?>
-<!-- here the validation should work so that it check if the email or pass is incorrect it will show the error using the PHP Validation -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,12 +19,24 @@ if (sessionExists('errorMessages')) {
                 <div class="input-group">
                     <label for="email">Email:</label>
                     <input type="text" name="email" id="email">
-                    <p class="error-message" id="emailError"></p>
+                    <p class="error-message" id="emailError">
+                        <?php if (isset($_SESSION['errorMessages']) && in_array("Email is required.", $_SESSION['errorMessages'])) {
+                            echo "Email is required.";
+                        } elseif (isset($_SESSION['errorMessages']) && in_array("Invalid email format.", $_SESSION['errorMessages'])) {
+                            echo "Invalid email format.";
+                        } ?>
+                    </p>
                 </div>
                 <div class="input-group">
                     <label for="password">Password:</label>
                     <input type="password" name="password" id="password">
-                    <p class="error-message" id="passwordError"></p>
+                    <p class="error-message" id="passwordError">
+                        <?php if (isset($_SESSION['errorMessages']) && in_array("Password is required.", $_SESSION['errorMessages'])) {
+                            echo "Password is required.";
+                        } elseif (isset($_SESSION['errorMessages']) && in_array("Invalid email or password. Please try again.", $_SESSION['errorMessages'])) {
+                            echo "Incorrect username or password. Please try again.";
+                        } ?>
+                    </p>
                 </div>
                 <button type="submit">Login</button>
         </form>
@@ -45,4 +44,3 @@ if (sessionExists('errorMessages')) {
     </div>
 </body>
 </html>
-

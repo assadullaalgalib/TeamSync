@@ -85,14 +85,57 @@ function createUser() {
 
     $first_name = $_POST['firstname'];
     $last_name = $_POST['lastname'];
-    $name = $_POST['name'];
+    $name = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     $roleid = $_POST['role'];
 
+    $errorMessages = [];
+
+    // First Name validation
+    if (empty($first_name)) {
+        $errorMessages[] = "Please enter a First name.";
+    }
+
+    // Last Name validation
+    if (empty($last_name)) {
+        $errorMessages[] = "Please enter a Last name.";
+    }
+
+    // Username validation
+    if (empty($name)) {
+        $errorMessages[] = "Please enter a Username.";
+    }
+
+    // Email validation
+    if (empty($email)) {
+        $errorMessages[] = "Email is required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errorMessages[] = "Invalid email format.";
+    } elseif (emailExists($email)) {
+        $errorMessages[] = "Email already exists. Please enter a different email.";
+    }
+
+    // Password validation (only if password is provided)
+    if (!empty($password) && (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/[a-z]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password))) {
+        $errorMessages[] = "Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.";
+    }
+
+    // Confirm password validation
     if ($password !== $confirm_password) {
-        header("Location: ../view/admin-user-create.php?error=Passwords do not match");
+        $errorMessages[] = "Passwords do not match.";
+    }
+
+    // Role validation
+    if (empty($roleid)) {
+        $errorMessages[] = "Please select a role.";
+    }
+
+    // If there are validation errors, redirect to create user page with error messages
+    if (!empty($errorMessages)) {
+        $_SESSION['errorMessages'] = $errorMessages;
+        header("Location: ../controller/admin-user-controller.php?action=show_create_user");
         exit();
     }
 
@@ -107,8 +150,8 @@ function createUser() {
         $_SESSION['error'] = "Failed to create user";
         header("Location: ../controller/user-dashboard-controller.php");
     }
-
 }
+
 
 function showAllClients() {
     $userId = $_SESSION['userid'];
@@ -170,6 +213,45 @@ function updateUser() {
     $email = $_POST['email'];
     $roleid = $_POST['role'];
     $password = $_POST['password'];
+
+    $errorMessages = [];
+
+    // First Name validation
+    if (empty($first_name)) {
+        $errorMessages[] = "Please enter a First name.";
+    }
+
+    // Last Name validation
+    if (empty($last_name)) {
+        $errorMessages[] = "Please enter a Last name.";
+    }
+
+    // Username validation
+    if (empty($name)) {
+        $errorMessages[] = "Please enter a Username.";
+    }
+
+    // Email validation
+    $existingUser = getUserById($userid);
+    if (empty($email)) {
+        $errorMessages[] = "Email is required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errorMessages[] = "Invalid email format.";
+    } elseif ($email !== $existingUser['email'] && emailExists($email)) {
+        $errorMessages[] = "Email already exists. Please enter a different email.";
+    }
+
+    // Password validation (only if password is provided)
+    if (!empty($password) && (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/[a-z]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password))) {
+        $errorMessages[] = "Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.";
+    }
+
+    // If there are validation errors, redirect back to edit user page with error messages
+    if (!empty($errorMessages)) {
+        $_SESSION['errorMessages'] = $errorMessages;
+        header("Location: ../controller/admin-user-controller.php?action=edit&userid=$userid");
+        exit();
+    }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $profile_picture = null;

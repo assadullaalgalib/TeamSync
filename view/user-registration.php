@@ -1,19 +1,6 @@
-<!-- here the validation should work so that it check if the email or pass is incorrect it will show the error using the PHP Validation -->
-
 <?php
-require_once '../model/session-manager-model.php';
-
-if (sessionExists('errorMessages')) {
-    echo '<ul>';
-    $errorMessages = getSession('errorMessages');
-    foreach ($errorMessages as $message) {
-        echo "<li>$message</li>";
-    }
-    echo '</ul>';
-    removeSession('errorMessages');
-}
+session_start();
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -37,7 +24,13 @@ if (sessionExists('errorMessages')) {
                         <input type="radio" id="role_developer" name="role" value="developer"> Developer
                     </label>
                 </div>
-                <p class="error-message" id="roleError"></p>
+                <p class="error-message" id="roleError">
+                    <?php
+                    if (isset($_SESSION['errorMessages']) && in_array("Please select a role.", $_SESSION['errorMessages'])) {
+                        echo "Please select a role.";
+                    }
+                    ?>
+                </p>
             </div>
 
             <!-- Personal Information Section -->
@@ -46,32 +39,74 @@ if (sessionExists('errorMessages')) {
                 <div class="input-group">
                     <label for="firstName">First Name:</label>
                     <input type="text" id="firstName" name="first_name" placeholder="John">
-                    <p class="error-message" id="firstNameError"></p>
+                    <p class="error-message" id="firstNameError">
+                        <?php
+                        if (isset($_SESSION['errorMessages']) && in_array("Please enter a First name.", $_SESSION['errorMessages'])) {
+                            echo "Please enter a First name.";
+                        }
+                        ?>
+                    </p>
                 </div>
                 <div class="input-group">
                     <label for="lastName">Last Name:</label>
                     <input type="text" id="lastName" name="last_name" placeholder="Doe">
-                    <p class="error-message" id="lastNameError"></p>
+                    <p class="error-message" id="lastNameError">
+                        <?php
+                        if (isset($_SESSION['errorMessages']) && in_array("Please enter a Last name.", $_SESSION['errorMessages'])) {
+                            echo "Please enter a Last name.";
+                        }
+                        ?>
+                    </p>
                 </div>
                 <div class="input-group">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" placeholder="johndoe123">
-                    <p class="error-message" id="usernameError"></p>
+                    <p class="error-message" id="usernameError">
+                        <?php
+                        if (isset($_SESSION['errorMessages']) && in_array("Please enter a Username.", $_SESSION['errorMessages'])) {
+                            echo "Please enter a Username.";
+                        }
+                        ?>
+                    </p>
                 </div>
                 <div class="input-group">
                     <label for="emailAddress">Email:</label>
                     <input type="email" id="emailAddress" name="email" placeholder="email@example.com">
-                    <p class="error-message" id="emailError"></p>
+                    <p class="error-message" id="emailError">
+                        <?php
+                        if (isset($_SESSION['errorMessages'])) {
+                            if (in_array("Email is required.", $_SESSION['errorMessages'])) {
+                                echo "Email is required.";
+                            } elseif (in_array("Invalid email format.", $_SESSION['errorMessages'])) {
+                                echo "Invalid email format.";
+                            } elseif (in_array("Email already exists. Please enter a different email.", $_SESSION['errorMessages'])) {
+                                echo "Email already exists. Please enter a different email.";
+                            }
+                        }
+                        ?>
+                    </p>
                 </div>
                 <div class="input-group">
                     <label for="userPassword">Password:</label>
                     <input type="password" id="userPassword" name="password">
-                    <p class="error-message" id="passwordError"></p>
+                    <p class="error-message" id="passwordError">
+                        <?php
+                        if (isset($_SESSION['errorMessages']) && in_array("Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.", $_SESSION['errorMessages'])) {
+                            echo "Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.";
+                        }
+                        ?>
+                    </p>
                 </div>
                 <div class="input-group">
                     <label for="confirmPassword">Confirm Password:</label>
                     <input type="password" id="confirmPassword" name="confirm_password" placeholder="Retype Password">
-                    <p class="error-message" id="confirmPasswordError"></p>
+                    <p class="error-message" id="confirmPasswordError">
+                        <?php
+                        if (isset($_SESSION['errorMessages']) && in_array("Passwords do not match.", $_SESSION['errorMessages'])) {
+                            echo "Passwords do not match.";
+                        }
+                        ?>
+                    </p>
                 </div>
             </div>
 
@@ -84,7 +119,10 @@ if (sessionExists('errorMessages')) {
 
         <p>Already have an account? <a href="../view/user-login.php">Login here</a></p>
     </div>
+
 </body>
 </html>
 
-
+<?php
+    unset($_SESSION['errorMessages']);
+?>

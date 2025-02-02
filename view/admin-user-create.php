@@ -18,37 +18,79 @@
         <div class="form-group">
             <label for="firstname">First Name:</label>
             <input type="text" id="firstname" name="firstname">
-            <p class="error-message" id="firstnameError"></p>
+            <p class="error-message" id="firstnameError">
+                <?php
+                if (isset($_SESSION['errorMessages']) && in_array("Please enter a First name.", $_SESSION['errorMessages'])) {
+                    echo "Please enter a First name.";
+                }
+                ?>
+            </p>
         </div>
 
         <div class="form-group">
             <label for="lastname">Last Name:</label>
             <input type="text" id="lastname" name="lastname">
-            <p class="error-message" id="lastnameError"></p>
+            <p class="error-message" id="lastnameError">
+                <?php
+                if (isset($_SESSION['errorMessages']) && in_array("Please enter a Last name.", $_SESSION['errorMessages'])) {
+                    echo "Please enter a Last name.";
+                }
+                ?>
+            </p>
         </div>
 
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username">
-            <p class="error-message" id="usernameError"></p>
+            <p class="error-message" id="usernameError">
+                <?php
+                if (isset($_SESSION['errorMessages']) && in_array("Please enter a Username.", $_SESSION['errorMessages'])) {
+                    echo "Please enter a Username.";
+                }
+                ?>
+            </p>
         </div>
 
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="text" id="email" name="email">
-            <p class="error-message" id="emailError"></p>
+            <input type="email" id="email" name="email">
+            <p class="error-message" id="emailError">
+                <?php
+                if (isset($_SESSION['errorMessages'])) {
+                    if (in_array("Email is required.", $_SESSION['errorMessages'])) {
+                        echo "Email is required.";
+                    } elseif (in_array("Invalid email format.", $_SESSION['errorMessages'])) {
+                        echo "Invalid email format.";
+                    } elseif (in_array("Email already exists. Please enter a different email.", $_SESSION['errorMessages'])) {
+                        echo "Email already exists. Please enter a different email.";
+                    }
+                }
+                ?>
+            </p>
         </div>
 
         <div class="form-group">
             <label for="password">Password:</label>
             <input type="password" id="password" name="password">
-            <p class="error-message" id="passwordError"></p>
+            <p class="error-message" id="passwordError">
+                <?php
+                if (isset($_SESSION['errorMessages']) && in_array("Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.", $_SESSION['errorMessages'])) {
+                    echo "Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.";
+                }
+                ?>
+            </p>
         </div>
 
         <div class="form-group">
             <label for="confirm_password">Confirm Password:</label>
             <input type="password" id="confirm_password" name="confirm_password">
-            <p class="error-message" id="confirmPasswordError"></p>
+            <p class="error-message" id="confirmPasswordError">
+                <?php
+                if (isset($_SESSION['errorMessages']) && in_array("Passwords do not match.", $_SESSION['errorMessages'])) {
+                    echo "Passwords do not match.";
+                }
+                ?>
+            </p>
         </div>
 
         <label for="role">Role:</label>
@@ -66,7 +108,13 @@
             <input type="radio" id="client" name="role" value="4">
             <label for="client">Client</label>
         </div>
-        <p class="error-message" id="roleError"></p>
+        <p class="error-message" id="roleError">
+            <?php
+            if (isset($_SESSION['errorMessages']) && in_array("Please select a role.", $_SESSION['errorMessages'])) {
+                echo "Please select a role.";
+            }
+            ?>
+        </p>
 
         <div class="form-buttons">
             <button type="submit" class="button-primary">Create User</button>
@@ -75,6 +123,9 @@
 
 </div>
 
+<?php
+unset($_SESSION['errorMessages']);
+?>
 
 </body>
 </html>

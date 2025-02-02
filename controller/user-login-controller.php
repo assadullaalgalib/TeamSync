@@ -43,7 +43,8 @@ if ($user !== null) {
     setSession('firstname', $user['firstname']);
     setSession('lastname', $user['lastname']);
     setSession('name', $user['name']);
-
+    // Clear error messages upon successful login
+    unset($_SESSION['errorMessages']);
     header("Location: ../controller/user-dashboard-controller.php");
     exit();
 } else {
@@ -55,4 +56,3 @@ if ($user !== null) {
 
 // Close the database connection
 $conn->close();
-

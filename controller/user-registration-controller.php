@@ -42,6 +42,8 @@ if (empty($email)) {
     $errorMessages[] = "Email is required.";
 } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errorMessages[] = "Invalid email format.";
+} elseif (emailExists($email)) {
+    $errorMessages[] = "Email already exists. Please enter a different email.";
 }
 
 // Password validation
@@ -56,10 +58,6 @@ if ($password !== $confirmPassword) {
 
 // Check for errors
 if (!empty($errorMessages)) {
-
-    // Here redirection issue, if any error validation error occurs, it just redirect to the registration page without showing the error messages
-
-
     setSession('errorMessages', $errorMessages);
     header("Location: ../view/user-registration.php");
     exit();
@@ -94,3 +92,4 @@ if (!empty($errorMessages)) {
               </script>";
     }
 }
+?>

@@ -34,37 +34,79 @@
         <div class="form-group">
             <input type="file" id="profile_picture" name="profile_picture" style="display:none;" onchange="previewImage(event)"><br>
             <img id="preview-profile-pic" src="#" alt="New Profile Picture Preview" style="display: none;" width="150"><br><br>
-            <p class="error-message" id="fileError"></p>
+            <p class="error-message" id="fileError">
+                <?php
+                if (isset($_SESSION['error']) && $_SESSION['error'] === "Invalid file type or file too large. Please upload a JPEG, PNG, or GIF image under 5MB.") {
+                    echo $_SESSION['error'];
+                }
+                ?>
+            </p>
         </div>
 
         <div class="form-group">
             <label for="firstname">First Name:</label>
             <input type="text" id="firstname" name="firstname" value="<?php echo $user['firstname']; ?>">
-            <p class="error-message" id="firstnameError"></p>
+            <p class="error-message" id="firstnameError">
+                <?php
+                if (isset($_SESSION['errorMessages']) && in_array("Please enter a First name.", $_SESSION['errorMessages'])) {
+                    echo "Please enter a First name.";
+                }
+                ?>
+            </p>
         </div>
 
         <div class="form-group">
             <label for="lastname">Last Name:</label>
             <input type="text" id="lastname" name="lastname" value="<?php echo $user['lastname']; ?>">
-            <p class="error-message" id="lastnameError"></p>
+            <p class="error-message" id="lastnameError">
+                <?php
+                if (isset($_SESSION['errorMessages']) && in_array("Please enter a Last name.", $_SESSION['errorMessages'])) {
+                    echo "Please enter a Last name.";
+                }
+                ?>
+            </p>
         </div>
 
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" id="name" name="name" value="<?php echo $user['name']; ?>">
-            <p class="error-message" id="usernameError"></p>
+            <p class="error-message" id="usernameError">
+                <?php
+                if (isset($_SESSION['errorMessages']) && in_array("Please enter a Username.", $_SESSION['errorMessages'])) {
+                    echo "Please enter a Username.";
+                }
+                ?>
+            </p>
         </div>
 
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="text" id="email" name="email" value="<?php echo $user['email']; ?>">
-            <p class="error-message" id="emailError"></p>
+            <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>">
+            <p class="error-message" id="emailError">
+                <?php
+                if (isset($_SESSION['errorMessages'])) {
+                    if (in_array("Email is required.", $_SESSION['errorMessages'])) {
+                        echo "Email is required.";
+                    } elseif (in_array("Invalid email format.", $_SESSION['errorMessages'])) {
+                        echo "Invalid email format.";
+                    } elseif (in_array("Email already exists. Please enter a different email.", $_SESSION['errorMessages'])) {
+                        echo "Email already exists. Please enter a different email.";
+                    }
+                }
+                ?>
+            </p>
         </div>
 
         <div class="form-group">
             <label for="password">Password (Leave blank to keep current password):</label>
             <input type="password" id="password" name="password">
-            <p class="error-message" id="passwordError"></p>
+            <p class="error-message" id="passwordError">
+                <?php
+                if (isset($_SESSION['errorMessages']) && in_array("Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.", $_SESSION['errorMessages'])) {
+                    echo "Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.";
+                }
+                ?>
+            </p>
         </div>
 
         <label for="role">Role:</label>
@@ -82,7 +124,13 @@
             <input type="radio" id="client" name="role" value="4" <?php echo ($user['roleid'] == '4') ? 'checked' : ''; ?>>
             <label for="client">Client</label>
         </div>
-        <p class="error-message" id="roleError"></p>
+        <p class="error-message" id="roleError">
+            <?php
+            if (isset($_SESSION['errorMessages']) && in_array("Please select a role.", $_SESSION['errorMessages'])) {
+                echo "Please select a role.";
+            }
+            ?>
+        </p>
 
         <div class="form-buttons">
             <button type="submit" class="button-primary">Update User</button>
@@ -95,6 +143,12 @@
     </form>
 
 </div>
+
+<?php
+// Clear error messages after displaying them
+unset($_SESSION['errorMessages']);
+unset($_SESSION['error']);
+?>
 
 </body>
 </html>

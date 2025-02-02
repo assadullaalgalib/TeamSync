@@ -1,7 +1,22 @@
 <?php
 include_once 'db-connection-model.php';
 
+function emailExists($email) {
 
+    $conn = getDbConnection();
+    $sql = "SELECT COUNT(*) 
+            FROM usr 
+            WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    
+    $stmt->close();
+
+    return $count > 0;
+}
 
 function getAllUsers()
 {

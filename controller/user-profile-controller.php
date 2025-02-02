@@ -57,6 +57,47 @@ function updateUser() {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    // Server-side validation
+    $errorMessages = [];
+
+    // First Name validation
+    if (empty($first_name)) {
+        $errorMessages[] = "Please enter a First name.";
+    }
+
+    // Last Name validation
+    if (empty($last_name)) {
+        $errorMessages[] = "Please enter a Last name.";
+    }
+
+    // Username validation
+    if (empty($name)) {
+        $errorMessages[] = "Please enter a Username.";
+    }
+
+    // Email validation
+    $existingUser = getUserDetailsById($userid);
+    if (empty($email)) {
+        $errorMessages[] = "Email is required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errorMessages[] = "Invalid email format.";
+    } elseif ($email !== $existingUser['email'] && emailExists($email)) {
+        $errorMessages[] = "Email already exists. Please enter a different email.";
+    }
+
+    // Password validation (only if password is provided)
+    if (!empty($password) && (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/[a-z]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password))) {
+        $errorMessages[] = "Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.";
+    }
+
+    // If there are validation errors, redirect back to edit profile page with error messages
+    if (!empty($errorMessages)) {
+        $_SESSION['errorMessages'] = $errorMessages;
+        header("Location: ../controller/user-profile-controller.php?action=edit_profile&userid=$userid");
+        exit();
+    }
+
+    // Process the profile picture if provided
     $profile_picture = null;
     if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK) {
         $fileType = mime_content_type($_FILES['profile_picture']['tmp_name']);
@@ -73,7 +114,6 @@ function updateUser() {
     }
 
     if ($profile_picture === null) {
-        $existingUser = getUserDetailsById($userid);
         $profile_picture = $existingUser['profile_picture'];
     }
 
@@ -96,7 +136,6 @@ function updateUser() {
 }
 
 function deleteProfilePicture() {
-
     $userId = $_SESSION['userid'];
     $userName = getUserName($userId);
 
