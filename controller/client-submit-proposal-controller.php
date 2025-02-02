@@ -44,7 +44,7 @@ function handleClientSubmitProposal() {
     $clientId = getSession('userid');
     $clientName = getUserName($clientId);
 
-    $submitSuccess = submitNewProposal($clientId, $name, $description, $deadline);
+   $submitSuccess = submitNewProposal($clientId, $name, $description, $deadline);
 
     if ($submitSuccess) {
         echo "<script>
