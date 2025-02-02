@@ -62,7 +62,5 @@
     </tbody>
 </table>
 
-<a href="../controller/project-controller.php?action=view_all_projects">All Projects</a>
-
 </body>
 </html>
