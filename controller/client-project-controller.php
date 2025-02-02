@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 include_once '../model/project-model.php';
 include_once '../model/task-model.php';
