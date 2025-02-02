@@ -56,6 +56,12 @@
                 <button type="submit" class="button-primary">Update Profile</button>
             </div>
         </form>
+
+        <!-- Hidden form to delete profile picture -->
+        <form id="delete-profile-picture-form" action="../controller/user-profile-controller.php?action=delete_profile_picture" method="post">
+            <input type="hidden" name="userid" value="<?php echo $user['userid']; ?>">
+        </form>
+
     </div>
 
 </body>

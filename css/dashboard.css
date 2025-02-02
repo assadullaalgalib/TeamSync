@@ -36,6 +36,38 @@ h2, h3 {
     gap: 20px; /* Space between stats cards */
 }
 
+/* Status Styles */
+.status {
+    font-weight: bold; /* Bold text for emphasis */
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3); /* Shadow for text visibility */
+    padding: 3px; /* Internal padding for status */
+}
+
+/* Using attribute selectors to style based on the data-status attribute */
+.status[data-status="Completed"] {
+    color: green; /* Green background for completed status */
+}
+
+.status[data-status="Handed Over"] {
+    color: rgb(0, 155, 116); 
+}
+
+.status[data-status="In Progress"] {
+    color: rgb(223, 145, 0); /* Orange background for in-progress status */
+}
+
+.status[data-status="Approved"] {
+    color: blue; /* Blue background for approved status */
+}
+
+.status[data-status="Pending Approval"] {
+    color: purple; /* Purple background for pending approval status */
+}
+
+.status[data-status="Rejected"] {
+    color: red; /* Red background for rejected status */
+}
+
 .stats-card {
     background-color: #e9ecef; /* Light grey background for stats cards */
     padding: 15px; /* Padding inside cards */
@@ -64,11 +96,66 @@ h2, h3 {
     transition: transform 0.1s, box-shadow 0.1s; /* Minimal animation for scale */
 }
 
+.project-card-link,
+.task-card-link {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit color from parent */
+}
+
 .project-card:hover,
 .task-card:hover {
     transform: translateY(-2px); /* Slightly raise the card on hover */
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+    filter: brightness(0.9); /* Slightly dim the card on hover */
 }
+
+/* Card Header Styles */
+.card-header {
+    display: flex; /* Flexbox for card header */
+    justify-content: space-between; /* Space between elements */
+}
+
+/* Project button styles */
+.ongoing-projects {
+    background-color: #e4f2ff; /* Light blue */
+}
+
+.handed-over-projects {
+    background-color: #e8e8ff; /* Lavender */
+}
+
+.pending-project-approvals {
+    background-color: #fffcdf; /* Lemon chiffon */
+}
+
+.pending-task-approvals {
+    background-color: #ffe8f4; /* Beige */
+}
+
+
+/* Project section styles */
+.ongoing-projects-section {
+    background-color: #b4dcff; /* Light blue */
+}
+
+.handed-over-projects-section {
+    background-color: #c4c4ff; /* Lavender */
+}
+
+.pending-project-approvals-section {
+    background-color: #fff9c1; /* Lemon chiffon */
+}
+
+.pending-task-approvals-section {
+    background-color: #ffc8e5; /* Beige */
+}
+
+.project-id,
+.task-id {
+    font-weight: bold;
+    color: #007BFF; /* Grey color for project ID */
+}
+
 
 /* Button Styles */
 .button-primary,
@@ -108,6 +195,7 @@ h2, h3 {
 /* Search and Input Styles */
 .search-container {
     margin-top: 20px; /* Space above search container */
+    margin-bottom: 20px; /* Space below search container */
 }
 
 .search-container input[type="text"] {

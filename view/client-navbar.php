@@ -12,7 +12,7 @@
     <div class="logo">TeamSync</div>
     <div class="nav-links">
         <a href="../controller/user-dashboard-controller.php">Home</a>
-        <a href="../view/client-submit-proposal.php">Submit New Proposal</a>
+        <a href="../controller/client-submit-proposal-controller.php?action=view">Submit New Proposal</a>
         <a href="../controller/user-logout-controller.php">Logout</a>
         <a href="../controller/user-profile-controller.php?action=view_profile" class="welcome-link">Welcome, <?php echo $clientName; ?>!</a>
     </div>

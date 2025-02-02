@@ -54,6 +54,7 @@ h1 {
     width: 150px; /* Set a fixed width for the profile picture */
     height: 150px; /* Set a fixed height */
     border-radius: 50%; /* Makes the profile picture circular */
+    border: 1px solid #252525; /* Adds a circular border with a solid color */
     object-fit: cover; /* Ensures the image covers the entire element */
     margin-bottom: 20px; /* Space below the profile picture */
 }

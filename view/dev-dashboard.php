@@ -16,14 +16,24 @@
 
     <!-- Overview Section -->
     <div class="stats-section">
-        <div class="stats-card">
-            <h3>Active Tasks</h3>
-            <p><?php echo $activeTasksCount; ?></p>
-        </div>
-        <div class="stats-card">
-            <h3>Completed Tasks</h3>
-            <p><?php echo $completedTasksCount; ?></p>
-        </div>
+        <a href="../controller/dev-task-controller.php?action=view_all_tasks" class="stats-card"> 
+            <div>
+                <h3>Total Tasks</h3>
+                <p><?php echo $totalTasksCount; ?></p>
+            </div>
+        </a>
+        <a href="../controller/dev-task-controller.php?action=view_active_tasks" class="stats-card"> 
+            <div>
+                <h3>Active Tasks</h3>
+                <p><?php echo $activeTasksCount; ?></p>
+            </div>
+        </a>
+        <a href="../controller/dev-task-controller.php?action=view_completed_tasks" class="stats-card"> 
+            <div>
+                <h3>Completed Tasks</h3>
+                <p><?php echo $completedTasksCount; ?></p>
+            </div>
+        </a>
     </div>
 
     <!-- Search Section -->
@@ -35,23 +45,31 @@
     </div>
 
     <!-- Active Tasks Section -->
-    <div class="task-section">
-        <h2>Active Tasks</h2>
-        <div class="task-grid">
-            <?php foreach ($activeTasks as $task) { ?>
+<div class="task-section">
+    <h2>Active Tasks</h2>
+    <div class="task-grid">
+        <?php foreach ($activeTasks as $task) { ?>
+            <a href="../controller/dev-task-controller.php?action=view_task&task_id=<?php echo $task['task_id']; ?>" class="task-card-link">
                 <div class="task-card">
-                    <h3><?php echo $task['name']; ?></h3>
-                    <p><strong>Project Name:</strong> <?php echo $task['project_name']; ?></p>
-                    <p><strong>Managed By:</strong> <?php echo $task['pm_name']; ?></p>
-                    <p><strong>Status:</strong> <?php echo $task['status']; ?></p>
-                    <p><strong>Start Date:</strong> <?php echo $task['start_date']; ?></p>
-                    <p><strong>Deadline:</strong> <?php echo $task['deadline']; ?></p>
-                    <p><strong>PM Comments:</strong> <?php echo $task['pm_comment']; ?></p>
-                    <a href="../controller/dev-task-controller.php?action=view_task&task_id=<?php echo $task['task_id']; ?>" class="button-primary">View</a>
+                    <div class="card-header">
+                        <span class="task-id">#<?php echo $task['task_id']; ?></span>
+
+                        <span class="status" data-status="<?php echo $task['status']; ?>">
+                            <?php echo $task['status']; ?>
+                        </span>
+                    </div>
+                    <h2><?php echo $task['name']; ?></h2>
+                    <p>Project Name: <?php echo $task['project_name']; ?></p>
+                    <p>Managed By: <?php echo $task['pm_name']; ?></p>
+                    <p>Start Date: <?php echo $task['start_date']; ?></p>
+                    <p>Deadline: <?php echo $task['deadline']; ?></p>
+                    <p>PM Comments: <?php echo $task['pm_comment']; ?></p>
                 </div>
-            <?php } ?>
-        </div>
+            </a>
+        <?php } ?>
     </div>
+</div>
+
 
 </div>
 

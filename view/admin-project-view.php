@@ -49,8 +49,8 @@
     </form>
 
     <div class="card-actions">
-                    <a href="../controller/admin-project-controller.php?action=delete_project&project_id=<?php echo $project['project_id']; ?>" class="button-danger" onclick="return confirm('Are you sure you want to delete this project?');">Delete Project</a>
-                </div>
+        <a href="../controller/admin-project-controller.php?action=delete_project&project_id=<?php echo $project['project_id']; ?>" class="button-danger" onclick="return confirm('Are you sure you want to delete this project?');">Delete Project</a>
+    </div>
 
 </div>
 

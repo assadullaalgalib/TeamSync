@@ -41,7 +41,6 @@
 
         <div class="form-buttons">
             <button type="submit" class="button-primary">Add Task</button>
-            <a href="../controller/user-dashboard-controller.php" class="button-dark">Back to Dashboard</a>
         </div>
     </form>
 </div>

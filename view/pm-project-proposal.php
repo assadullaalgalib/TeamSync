@@ -22,7 +22,7 @@
     <input type="hidden" name="project_id" value="<?php echo $project['project_id']; ?>">
     <div class="form-buttons">
         <button type="submit" name="action" value="approve" class="button-primary">Approve</button>
-        <button type="submit" name="action" value="reject" class="button-danger">Reject</button>
+        <button type="submit" name="action" value="reject" class="button-danger" onclick="return confirm('Are you sure you want to reject this proposal?')">Reject</button>
     </div>
 </form>
 

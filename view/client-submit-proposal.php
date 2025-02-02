@@ -33,7 +33,7 @@ if (sessionExists('errorMessages')) {
     </header>
 
     <section>
-        <form id="proposalForm" action="../controller/client-submit-proposal-controller.php" method="post" class="proposal-form" onsubmit="validateProposalForm(event)">
+        <form id="proposalForm" action="../controller/client-submit-proposal-controller.php?action=submit" method="post" class="proposal-form" onsubmit="validateProposalForm(event)">
             <div class="form-group">
                 <label for="name">Project Name:</label>
                 <input type="text" id="proposalname" name="proposalname">

@@ -21,6 +21,7 @@
         <p><strong>Start Date:</strong> <?php echo $task['start_date']; ?></p>
         <p><strong>Deadline:</strong> <?php echo $task['deadline']; ?></p>
         <p><strong>PM Comments:</strong> <?php echo $task['pm_comment'] ? $task['pm_comment'] : 'No comments'; ?></p>
+
         <?php if ($task['status'] == 'Completed') { ?>
             <p><strong>Approved On:</strong> <?php echo $task['timestamp']; ?></p>
         <?php } ?>
@@ -28,9 +29,11 @@
 
     <?php if ($task['file_name']) { ?>
         <div class="file-details">
-            <h2>Download File</h2>
-            <p><strong>File:</strong> <?php echo $task['file_name']; ?></p>
-            <a href="dev-task-controller.php?action=download_file&task_id=<?php echo $task['task_id']; ?>" class="button-primary">Download File</a>
+            <div >
+                <h2>Download File</h2>
+                <p><strong>File:</strong> <?php echo $task['file_name']; ?></p>
+                <a href="dev-task-controller.php?action=download_file&task_id=<?php echo $task['task_id']; ?>" class="button-primary">Download File</a>
+            </div>
         </div>
     <?php } ?>
 

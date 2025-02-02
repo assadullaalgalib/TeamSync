@@ -32,7 +32,6 @@
 
         <div class="form-buttons">
             <button type="submit" class="button-primary">Update Project</button>
-            <a href="../controller/user-dashboard-controller.php" class="button-dark">Back to Dashboard</a>
         </div>
     </form>
 </div>

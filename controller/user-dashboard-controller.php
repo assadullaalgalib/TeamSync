@@ -76,6 +76,7 @@ function showDeveloperDashboard($developerId)
     $completedTasks = getCompletedTasks($developerId);
     $activeTasksCount = count($activeTasks);
     $completedTasksCount = count($completedTasks);
+    $totalTasksCount = $activeTasksCount + $completedTasksCount;
 
     include '../view/dev-dashboard.php';
 }

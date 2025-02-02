@@ -9,7 +9,8 @@ body {
 
 /* Project Container Styles */
 .project-container,
-.user-container {
+.user-container,
+.task-container {
     padding: 20px; /* Padding for containers */
     display: flex; /* Flexbox for layout */
     flex-direction: column; /* Vertical stacking */
@@ -24,7 +25,8 @@ h1 {
 
 /* Project and User Card Styles */
 .project-card,
-.user-card {
+.user-card,
+.task-card {
     background-color: #fff; /* White background for cards */
     padding: 15px; /* Padding inside cards */
     border-radius: 6px; /* Rounded corners */
@@ -34,7 +36,8 @@ h1 {
 }
 
 .project-card-link,
-.user-card-link {
+.user-card-link,
+.task-card-link {
     text-decoration: none; /* Remove underline from links */
     color: inherit; /* Inherit color from parent */
 }
@@ -57,7 +60,8 @@ h2 {
 }
 
 .project-id,
-.user-id {
+.user-id,
+.task-id {
     font-weight: bold;
     color: #007BFF; /* Grey color for project ID */
 }
@@ -67,11 +71,16 @@ h2 {
 .status {
     font-weight: bold; /* Bold text for emphasis */
     text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3); /* Shadow for text visibility */
+    padding: 3px; /* Internal padding for status */
 }
 
 /* Using attribute selectors to style based on the data-status attribute */
 .status[data-status="Completed"] {
     color: green; /* Green background for completed status */
+}
+
+.status[data-status="Handed Over"] {
+    color: rgb(0, 155, 116); 
 }
 
 .status[data-status="In Progress"] {

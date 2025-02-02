@@ -28,24 +28,14 @@
     </div>
 
     <h2>Tasks</h2>
-    <ul class="task-list">
+    <div class="task-list">
         <?php foreach ($tasks as $task) { ?>
-            <li class="task-item">
-                <a href="../controller/client-task-controller.php?action=view&task_id=<?php echo $task['task_id']; ?>"><?php echo $task['name']; ?></a>
-            </li>
+            <div class="task-item">
+                <a href="../controller/client-task-controller.php?action=view&task_id=<?php echo $task['task_id']; ?>" class="task-button"><?php echo $task['name']; ?></a>
+            </div>
         <?php } ?>
-    </ul>
-
-    <?php if (!empty($project['file_name'])) { ?>
-        <div class="file-details">
-            <p><strong>File Name:</strong> <?php echo $project['file_name']; ?></p>
-            <form action="../controller/client-project-controller.php?action=download_file" method="post" class="download-form">
-                <input type="hidden" name="project_id" value="<?php echo $project['project_id']; ?>">
-                <button type="submit" class="button-primary">Download</button>
-            </form>
-            <p><strong>Upload Time:</strong> <?php echo $project['timestamp']; ?></p>
-        </div>
-    <?php } ?>
+    </div>
+    <br>
 
     <?php if ($project['status'] == 'Handed Over') { ?>
         <h2>Project Decision</h2>

@@ -27,7 +27,7 @@
 
         <div class="profile-actions">
             <a href="../controller/user-profile-controller.php?action=edit_profile" class="button-primary">Edit Profile</a>
-            <a href="../controller/user-profile-controller.php?action=delete_account" class="button-danger">Delete My Account</a>
+            <a href="../controller/user-profile-controller.php?action=delete_account" class="button-danger" onclick="return confirm('Are you sure you want to delete this account?');">Delete My Account</a>
 
         </div>
     </div>

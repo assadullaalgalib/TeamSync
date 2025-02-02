@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PM Dashboard - TeamSync</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/dashboard.css">
     <script src="../js/pm.js" defer></script>
 </head>
@@ -34,49 +31,49 @@
         <div id="searchResults"></div>
 
         <!-- Ongoing Projects -->
-        <div class="project-section">
+        <div class="project-section ongoing-projects-section">
             <h2>Ongoing Projects</h2>
             <div class="project-grid">
                 <?php foreach ($ongoingProjects as $project) { ?>
-                    <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link"></a>
-                        <div class="project-card">
+                    <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
+                        <div class="project-card ongoing-projects">
                             <h3><?php echo $project['name']; ?></h3>
                             <p>Progress: <?php echo $project['progress']; ?>%</p>
                         </div>
-                    
+                    </a>
                 <?php } ?>
             </div>
         </div>
 
         <!-- Handed Over Projects -->
-        <div class="project-section">
+        <div class="project-section handed-over-projects-section">
             <h2>Handed Over Projects</h2>
             <div class="project-grid">
                 <?php foreach ($handedoverProjects as $project) { ?>
-                    <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link"></a>
-                        <div class="project-card pending">
+                    <a href="../controller/pm-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
+                        <div class="project-card handed-over-projects">
                             <h3><?php echo $project['name']; ?></h3>
                         </div>
-                    
+                    </a>
                 <?php } ?>
             </div>
         </div>
         <!-- Pending Project Approvals -->
-        <div class="project-section">
+        <div class="project-section pending-project-approvals-section">
             <h2>Pending Project Approvals</h2>
             <div class="project-grid">
                 <?php foreach ($pendingProposals as $project) { ?>
-                    <a href="../controller/pm-project-controller.php?action=view_proposal&project_id=<?php echo $project['project_id']; ?>" class="project-card-link"></a>
-                        <div class="project-card pending">
+                    <a href="../controller/pm-project-controller.php?action=view_proposal&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
+                        <div class="project-card pending-project-approvals">
                             <h3><?php echo $project['name']; ?></h3>
                         </div>
-                    
+                    </a>
                 <?php } ?>
             </div>
         </div>
 
         <!-- Pending Task Approvals -->
-        <div class="project-section">
+        <div class="project-section pending-task-approvals-section">
             <h2>Pending Task Approvals</h2>
             <?php
             $projectTasks = [];
@@ -90,7 +87,7 @@
                     echo "<div class='project-grid'>";
                     foreach ($projectTasks[$project['project_id']] as $task) {
                         echo "<a href='../controller/pm-task-controller.php?action=view&task_id={$task['task_id']}' class='project-card-link'>";
-                        echo "<div class='project-card pending-task'>";
+                        echo "<div class='project-card pending-task-approvals'>";
                         echo "<h3>{$task['name']}</h3>";
                         echo "</div>";
                         echo "</a>";

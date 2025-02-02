@@ -64,6 +64,17 @@ select:focus {
     margin-top: 20px; /* Space above button container */
 }
 
+.button-placeholder {
+    width: 100px; /* Set the width to match the button */
+    height: 36px; /* Set the height to match the button */
+}
+
+.project-buttons {
+    display: flex; /* Aligns the buttons horizontally */
+    gap: 10px; /* Adds space between buttons */
+    margin-top: 20px; /* Adds space above the button container */
+}
+
 .button-primary,
 .button-dark,
 .button-danger {
@@ -109,8 +120,9 @@ select:focus {
 }
 
 .edit-project-form {
-    margin-bottom: 20px; /* Space above the form */
+    margin-bottom: 12px; /* Space below the form */
 }
+
 
 /* Radio Button Styles */
 .radio-group {
@@ -125,33 +137,36 @@ select:focus {
 
 
 /* Status and Progress Styles */
+/* Status Styles */
 .status {
-    font-weight: bold; /* Highlights status */
-    padding: 3px 7px; /* Padding inside the status */
-    border-radius: 4px; /* Rounded corners */
-    color: #fff; /* Default text color to ensure readability */
-    display: inline-block; /* Display as inline block */
+    font-weight: bold; /* Bold text for emphasis */
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3); /* Shadow for text visibility */
+    padding: 3px; /* Internal padding for status */
 }
 
 /* Using attribute selectors to style based on the data-status attribute */
 .status[data-status="Completed"] {
-    background-color: green; /* Green background for completed status */
+    color: green; /* Green background for completed status */
+}
+
+.status[data-status="Handed Over"] {
+    color: rgb(0, 155, 116); 
 }
 
 .status[data-status="In Progress"] {
-    background-color: orange; /* Orange background for in-progress status */
+    color: rgb(223, 145, 0); /* Orange background for in-progress status */
 }
 
 .status[data-status="Approved"] {
-    background-color: blue; /* Blue background for approved status */
+    color: blue; /* Blue background for approved status */
 }
 
 .status[data-status="Pending Approval"] {
-    background-color: purple; /* Purple background for pending approval status */
+    color: purple; /* Purple background for pending approval status */
 }
 
 .status[data-status="Rejected"] {
-    background-color: red; /* Red background for rejected status */
+    color: red; /* Red background for rejected status */
 }
 
 
@@ -186,17 +201,13 @@ select:focus {
 
 
 /* Error Message Styles */
-.error-messages {
+.error-message {
     color: red; /* Red color for error messages */
 }
 
 /* File Details Styles */
 .file-details {
-    background-color: #f9f9f9; /* Light background for file details */
-    padding: 10px; /* Padding around file details */
-    border: 1px solid #e0e0e0; /* Light border */
-    border-radius: 4px; /* Rounded corners */
-    margin: 10px 0; /* Space around file details */
+    margin-bottom: 30px;
 }
 
 /* Proposal Form Styles */

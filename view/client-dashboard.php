@@ -15,62 +15,83 @@
 <div class="container">
 
     <!-- Project Overview Section -->
-    <section class="overview-section">
-        <h2>Project Overview</h2>
-        <input type="hidden" id="userid" value="<?php echo $_SESSION['userid']; ?>">
-        
-        <div class="search-container">
-            <h3>Search</h3>
-            <input type="text" id="searchQuery" placeholder="Search...">
-            <div id="searchResults"></div>
-        </div>
+<section class="overview-section">
+    <h2>Project Overview</h2>
+    <input type="hidden" id="userid" value="<?php echo $_SESSION['userid']; ?>">
+    
+    <div class="search-container">
+        <h3>Search</h3>
+        <input type="text" id="searchQuery" placeholder="Search...">
+        <div id="searchResults"></div>
+    </div>
 
-        <div class="stats-section">
-            <div class="stats-card">
-                <a href="../controller/client-dashboard-controller.php?action=all">All Projects</a>
+    <div class="stats-section">
+        <a href="../controller/client-dashboard-controller.php?action=all" class="stats-card">
+            <div>
+                <h3>All Projects</h3>
                 <p><?php echo $allProjectsCount; ?></p>
             </div>
-            <div class="stats-card">
-                <a href="../controller/client-dashboard-controller.php?action=active">Active Projects</a>
+        </a>
+        <a href="../controller/client-dashboard-controller.php?action=active" class="stats-card">
+            <div>
+                <h3>Active Projects</h3>
                 <p><?php echo $activeProjectsCount; ?></p>
             </div>
-            <div class="stats-card">
-                <a href="../controller/client-dashboard-controller.php?action=pending">Pending Projects</a>
+        </a>
+        <a href="../controller/client-dashboard-controller.php?action=pending" class="stats-card">
+            <div>
+                <h3>Pending Projects</h3>
                 <p><?php echo $pendingProjectsCount; ?></p>
             </div>
-            <div class="stats-card">
-                <a href="../controller/client-dashboard-controller.php?action=completed">Completed Projects</a>
+        </a>
+        <a href="../controller/client-dashboard-controller.php?action=completed" class="stats-card">
+            <div>
+                <h3>Completed Projects</h3>
                 <p><?php echo $completedProjectsCount; ?></p>
             </div>
-            <div class="stats-card">
-                <a href="../controller/client-dashboard-controller.php?action=handedover">Handed Over Projects</a>
+        </a>
+        <a href="../controller/client-dashboard-controller.php?action=handedover" class="stats-card">
+            <div>
+                <h3>Handed Over Projects</h3>
                 <p><?php echo $handedoverProjectsCount; ?></p>
             </div>
-            <div class="stats-card">
-                <a href="../controller/client-dashboard-controller.php?action=rejected">Rejected Projects</a>
+        </a>
+        <a href="../controller/client-dashboard-controller.php?action=rejected" class="stats-card">
+            <div>
+                <h3>Rejected Projects</h3>
                 <p><?php echo $rejectedProjectsCount; ?></p>
             </div>
-        </div>
-    </section>
+        </a>
+    </div>
+</section>
+
 
     <!-- Project List Section -->
-    <section class="project-section">
-        <h2><?php echo $projectType; ?> Projects</h2>
-        <div class="project-container">
-            <?php foreach ($projects as $project) { ?>
+<section class="project-section">
+    <h2><?php echo $projectType; ?> Projects</h2>
+    <div class="project-container">
+        <?php foreach ($projects as $project) { ?>
+            <a href="../controller/client-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="project-card-link">
                 <div class="project-card">
+                    <div class="card-header">
+                        <span class="project-id">#<?php echo $project['project_id']; ?></span>
+
+                        <span class="status" data-status="<?php echo $project['status']; ?>">
+                            <?php echo $project['status']; ?>
+                        </span>
+                        
+                    </div>
+
                     <h3><?php echo $project['name']; ?></h3>
-                    <p><strong>Project ID:</strong> <?php echo $project['project_id']; ?></p>
-                    <p><strong>Description:</strong> <?php echo $project['description']; ?></p>
                     <p><strong>Start Date:</strong> <?php echo $project['start_date']; ?></p>
                     <p><strong>Deadline:</strong> <?php echo $project['deadline']; ?></p>
-                    <p><strong>Status:</strong> <?php echo $project['status']; ?></p>
                     <p><strong>Progress:</strong> <?php echo $project['progress']; ?>%</p>
-                    <a href="../controller/client-project-controller.php?action=view&project_id=<?php echo $project['project_id']; ?>" class="button-primary">View</a>
                 </div>
-            <?php } ?>
-        </div>
-    </section>
+            </a>
+        <?php } ?>
+    </div>
+</section>
+
 </div>
 
 </body>

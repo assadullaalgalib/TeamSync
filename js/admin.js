@@ -1,3 +1,95 @@
+function validateUserCreateForm(event) {
+    event.preventDefault();
+    var firstname = document.getElementById('firstname');
+    var lastname = document.getElementById('lastname');
+    var username = document.getElementById('username');
+    var email = document.getElementById('email');
+    var password = document.getElementById('password');
+    var confirm_password = document.getElementById('confirm_password');
+    var admin = document.getElementById('admin');
+    var pm = document.getElementById('pm');
+    var dev = document.getElementById('dev');
+    var client = document.getElementById('client');
+
+    var firstnameError = document.getElementById('firstnameError');
+    var lastnameError = document.getElementById('lastnameError');
+    var usernameError = document.getElementById('usernameError');
+    var emailError = document.getElementById('emailError');
+    var passwordError = document.getElementById('passwordError');
+    var confirmPasswordError = document.getElementById('confirmPasswordError');
+    var roleError = document.getElementById('roleError');
+
+    let valid = true;
+
+    if (!firstname.value) {
+        firstnameError.innerHTML = 'First name is required.';
+        valid = false;
+    } else {
+        firstnameError.innerHTML = '';
+    }
+
+    if (!lastname.value) {
+        lastnameError.innerHTML = 'Last name is required.';
+        valid = false;
+    } else {
+        lastnameError.innerHTML = '';
+    }
+
+    if (!username.value) {
+        usernameError.innerHTML = 'Username is required.';
+        valid = false;
+    } else {
+        usernameError.innerHTML = '';
+    }
+
+    if (!email.value) {
+        emailError.innerHTML = 'Email is required.';
+        valid = false;
+    } else if (!validateEmail(email.value)) {
+        emailError.innerHTML = 'Invalid email format.';
+        valid = false;
+    } else {
+        emailError.innerHTML = '';
+    }
+
+    if (!password.value) {
+        passwordError.innerHTML = 'Password is required.';
+        valid = false;
+    } else if (!validatePassword(password.value)) {
+        passwordError.innerHTML = 'Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.';
+        valid = false;
+    } else {
+        passwordError.innerHTML = '';
+    }
+
+    if (password.value !== confirm_password.value) {
+        confirmPasswordError.innerHTML = 'Passwords do not match.';
+        valid = false;
+    } else {
+        confirmPasswordError.innerHTML = '';
+    }
+
+    if (!admin.checked && !pm.checked && !dev.checked && !client.checked) {
+        roleError.innerHTML = 'Please select a role.';
+        valid = false;
+    } else {
+        roleError.innerHTML = '';
+    }
+
+    if (valid) {
+        event.target.submit();
+    }
+}
+
+function validateEmail(email) {
+    var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+function validatePassword(password) {
+    return password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[^a-zA-Z0-9]/.test(password);
+}
+
 function showFileInput() {
     document.getElementById('profile_picture').style.display = 'block';
 }
