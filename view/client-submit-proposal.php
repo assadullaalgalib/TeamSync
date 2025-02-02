@@ -1,19 +1,3 @@
-<?php
-require_once '../model/session-manager-model.php';
-
-startSession();
-
-if (sessionExists('errorMessages')) {
-    $errorMessages = getSession('errorMessages');
-    echo '<ul class="error-messages">';
-    foreach ($errorMessages as $message) {
-        echo "<li>$message</li>";
-    }
-    echo '</ul>';
-    removeSession('errorMessages');
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +5,7 @@ if (sessionExists('errorMessages')) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit New Proposal - TeamSync</title>
     <link rel="stylesheet" href="../css/main.css">
-    <script src="../scripts/js/user.js" defer></script>
+    <script src="../js/client.js" defer></script>
 </head>
 <body>
 
@@ -33,7 +17,7 @@ if (sessionExists('errorMessages')) {
     </header>
 
     <section>
-        <form id="proposalForm" action="../controller/client-submit-proposal-controller.php?action=submit" method="post" class="proposal-form" onsubmit="validateProposalForm(event)">
+        <form id="proposalForm" action="../controller/client-submit-proposal-controller.php?action=submit" method="post" class="proposal-form" onsubmit="return validateProposalForm(event)">
             <div class="form-group">
                 <label for="name">Project Name:</label>
                 <input type="text" id="proposalname" name="proposalname">

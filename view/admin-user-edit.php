@@ -14,7 +14,7 @@
 <div class="project-container">
     <h1>Edit User</h1>
 
-    <form action="../controller/admin-user-controller.php?action=update_user" method="post" enctype="multipart/form-data" class="user-form">
+    <form action="../controller/admin-user-controller.php?action=update_user" method="post" enctype="multipart/form-data" class="user-form" onsubmit="return validateUserEditForm(event)">
         <input type="hidden" name="userid" value="<?php echo $user['userid']; ?>">
 
         <!-- Display current profile picture if available -->
@@ -34,31 +34,37 @@
         <div class="form-group">
             <input type="file" id="profile_picture" name="profile_picture" style="display:none;" onchange="previewImage(event)"><br>
             <img id="preview-profile-pic" src="#" alt="New Profile Picture Preview" style="display: none;" width="150"><br><br>
+            <p class="error-message" id="fileError"></p>
         </div>
 
         <div class="form-group">
             <label for="firstname">First Name:</label>
             <input type="text" id="firstname" name="firstname" value="<?php echo $user['firstname']; ?>">
+            <p class="error-message" id="firstnameError"></p>
         </div>
 
         <div class="form-group">
             <label for="lastname">Last Name:</label>
             <input type="text" id="lastname" name="lastname" value="<?php echo $user['lastname']; ?>">
+            <p class="error-message" id="lastnameError"></p>
         </div>
 
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" id="name" name="name" value="<?php echo $user['name']; ?>">
+            <p class="error-message" id="usernameError"></p>
         </div>
 
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>">
+            <input type="text" id="email" name="email" value="<?php echo $user['email']; ?>">
+            <p class="error-message" id="emailError"></p>
         </div>
 
         <div class="form-group">
             <label for="password">Password (Leave blank to keep current password):</label>
             <input type="password" id="password" name="password">
+            <p class="error-message" id="passwordError"></p>
         </div>
 
         <label for="role">Role:</label>
@@ -76,7 +82,7 @@
             <input type="radio" id="client" name="role" value="4" <?php echo ($user['roleid'] == '4') ? 'checked' : ''; ?>>
             <label for="client">Client</label>
         </div>
-            
+        <p class="error-message" id="roleError"></p>
 
         <div class="form-buttons">
             <button type="submit" class="button-primary">Update User</button>

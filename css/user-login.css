@@ -62,13 +62,10 @@ body {
     box-shadow: 0 0 8px rgba(126, 87, 194, 0.5);
 }
 
-/* Error Messages */
+/* Error Message Styles */
 .error-message {
-    font-size: 12px;
-    color: #ff6b6b;
-    margin-top: 5px;
+    color: red; /* Red color for error messages */
 }
-
 /* Login Button Styling */
 button {
     width: 75%;

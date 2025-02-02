@@ -14,7 +14,7 @@
     <div class="profile-container">
         <h1>Edit Profile</h1>
 
-        <form action="../controller/user-profile-controller.php?action=update_profile" method="post" enctype="multipart/form-data">
+        <form action="../controller/user-profile-controller.php?action=update_profile" method="post" enctype="multipart/form-data" onsubmit="return validateEditProfileForm(event)">
             <input type="hidden" name="userid" value="<?php echo $user['userid']; ?>">
 
             <!-- Display current profile picture if available -->
@@ -33,24 +33,31 @@
             <!-- File input and new profile picture preview -->
             <input type="file" id="profile_picture" name="profile_picture" style="display:none;" onchange="previewImage(event)"><br>
             <img id="preview-profile-pic" src="#" alt="New Profile Picture Preview" style="display: none;" width="150"><br><br>
+            <p class="error-message" id="fileError"></p>
 
             <label for="firstname">First Name:</label>
             <input type="text" id="firstname" name="firstname" value="<?php echo $user['firstname']; ?>">
+            <p class="error-message" id="firstNameError"></p>
 
             <label for="lastname">Last Name:</label>
             <input type="text" id="lastname" name="lastname" value="<?php echo $user['lastname']; ?>">
+            <p class="error-message" id="lastNameError"></p>
 
             <label for="username">Username:</label>
-            <input type="text" id="name" name="name" value="<?php echo $user['name']; ?>">
+            <input type="text" id="username" name="name" value="<?php echo $user['name']; ?>">
+            <p class="error-message" id="usernameError"></p>
 
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>">
+            <p class="error-message" id="emailError"></p>
 
             <label for="password">Password (Leave blank to keep current password):</label>
             <input type="password" id="password" name="password">
+            <p class="error-message" id="passwordError"></p>
             
             <label for="confirm_password">Confirm Password:</label>
             <input type="password" id="confirm_password" name="confirm_password">
+            <p class="error-message" id="confirmPasswordError"></p>
 
             <div class="form-buttons">
                 <button type="submit" class="button-primary">Update Profile</button>
@@ -63,6 +70,10 @@
         </form>
 
     </div>
+
+<script>
+
+</script>
 
 </body>
 </html>

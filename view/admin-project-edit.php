@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Project - TeamSync</title>
     <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/admin.js" defer></script>
 </head>
 <body>
 
@@ -14,28 +15,32 @@
     <h1>Edit Project</h1>
     <p><strong>Client Name: <?php echo $project['client_name']; ?></strong></p>
 
-    <form action="../controller/admin-project-controller.php?action=edit_project" method="post" class="project-form">
+    <form action="../controller/admin-project-controller.php?action=edit_project" method="post" class="project-form" onsubmit="return validateProjectForm(event)">
         <input type="hidden" name="project_id" value="<?php echo $project['project_id']; ?>">
 
         <div class="form-group">
             <label for="project_name">Project Name:</label>
             <input type="text" id="project_name" name="project_name" value="<?php echo $project['name']; ?>">
+            <p class="error-message" id="projectNameError"></p>
         </div>
 
         <div class="form-group">
             <label for="description">Description:</label>
             <textarea id="description" name="description"><?php echo $project['description']; ?></textarea>
+            <p class="error-message" id="descriptionError"></p>
         </div>
 
         <div class="form-row">
             <div class="form-group">
                 <label for="start_date">Start Date:</label>
                 <input type="date" id="start_date" name="start_date" value="<?php echo $project['start_date']; ?>">
+                <p class="error-message" id="startDateError"></p>
             </div>
 
             <div class="form-group">
                 <label for="deadline">Deadline:</label>
                 <input type="date" id="deadline" name="deadline" value="<?php echo $project['deadline']; ?>">
+                <p class="error-message" id="deadlineError"></p>
             </div>
         </div>
 
@@ -49,6 +54,7 @@
                 }
                 ?>
             </select>
+            <p class="error-message" id="pmIdError"></p>
         </div>
 
         <div class="form-group">
@@ -62,6 +68,7 @@
                 }
                 ?>
             </select>
+            <p class="error-message" id="statusError"></p>
         </div>
 
         <div class="form-buttons">

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Task - TeamSync</title>
     <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/pm.js" defer></script>
 </head>
 <body>
 
@@ -25,8 +26,6 @@
                 <?php echo $task['status']; ?>
             </span>
         </p>
-
-
     </div>
 
     <?php if (!empty($task['file_name'])) { ?>
@@ -39,9 +38,10 @@
     <?php } ?>
 
     <h2>Project Manager Comments</h2>
-    <form action="../controller/pm-task-controller.php?action=approve_reject" method="post">
+    <form action="../controller/pm-task-controller.php?action=approve_reject" method="post" onsubmit="return validatePMCommentsTaskForm(event)">
         <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
-        <textarea name="pm_comment" rows="4"><?php echo $task['pm_comment']; ?></textarea>
+        <textarea name="pm_comment" rows="4" id="pm_comment"><?php echo $task['pm_comment']; ?></textarea>
+        <p class="error-message" id="commentError"></p>
         <div class="form-buttons">
             <button type="submit" name="action" value="approve" class="button-primary">Approve</button>
             <button type="submit" name="action" value="reject" class="button-danger">Reject</button>
@@ -61,8 +61,7 @@
             <button type="submit" class="button-danger">Delete Task</button>
         </form>
     </div>
-
-    </div>
+</div>
 
 </body>
 </html>

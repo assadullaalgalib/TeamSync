@@ -150,3 +150,8 @@ input[type="password"]:focus {
         width: 90%; /* Use a percentage width on smaller screens */
     }
 }
+
+/* Error Message Styles */
+.error-message {
+    color: red; /* Red color for error messages */
+}

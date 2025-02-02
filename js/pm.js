@@ -1,29 +1,163 @@
-/* function setupSearch(roleid) {
-    function loadDoc() {
-        var xhr = new XMLHttpRequest();
-        var searchQuery = document.getElementById("searchQuery").value;
-        var searchFilter = document.getElementById("searchFilter").value;
-        var userid = document.getElementById("userid").value;
+function validateEditProjectForm(event) {
+    event.preventDefault();
+    var project_name = document.getElementById('project_name');
+    var description = document.getElementById('description');
+    var start_date = document.getElementById('start_date');
+    var deadline = document.getElementById('deadline');
 
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                document.getElementById("searchResults").innerHTML = xhr.responseText;
-            }
-        };
+    var projectNameError = document.getElementById('projectNameError');
+    var descriptionError = document.getElementById('descriptionError');
+    var startDateError = document.getElementById('startDateError');
+    var deadlineError = document.getElementById('deadlineError');
 
-        xhr.open('GET', `../controller/pm-search-controller.php?query=${encodeURIComponent(searchQuery)}&filter=${searchFilter}&roleid=${roleid}&userid=${userid}`, true);
-        xhr.send();
+    let valid = true;
+
+    if (!project_name.value) {
+        projectNameError.innerHTML = 'Project name is required.';
+        valid = false;
+    } else {
+        projectNameError.innerHTML = '';
     }
 
-    document.getElementById('searchQuery').addEventListener('input', loadDoc);
-    document.getElementById('searchFilter').addEventListener('change', loadDoc);
+    if (!description.value) {
+        descriptionError.innerHTML = 'Description is required.';
+        valid = false;
+    } else {
+        descriptionError.innerHTML = '';
+    }
+
+    if (!start_date.value) {
+        startDateError.innerHTML = 'Start date is required.';
+        valid = false;
+    } else {
+        startDateError.innerHTML = '';
+    }
+
+    if (!deadline.value) {
+        deadlineError.innerHTML = 'Deadline is required.';
+        valid = false;
+    } else {
+        deadlineError.innerHTML = '';
+    }
+
+    if (valid) {
+        event.target.submit();
+    }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const roleid = 2;
-    setupSearch(roleid);
-}); */
+function validateAddTaskForm(event) {
+    event.preventDefault();
+    var task_name = document.getElementById('task_name');
+    var task_description = document.getElementById('task_description');
+    var start_date = document.getElementById('start_date');
+    var deadline = document.getElementById('deadline');
 
+    var taskNameError = document.getElementById('taskNameError');
+    var taskDescriptionError = document.getElementById('taskDescriptionError');
+    var startDateError = document.getElementById('startDateError');
+    var deadlineError = document.getElementById('deadlineError');
+
+    let valid = true;
+
+    if (!task_name.value) {
+        taskNameError.innerHTML = 'Task name is required.';
+        valid = false;
+    } else {
+        taskNameError.innerHTML = '';
+    }
+
+    if (!task_description.value) {
+        taskDescriptionError.innerHTML = 'Task description is required.';
+        valid = false;
+    } else {
+        taskDescriptionError.innerHTML = '';
+    }
+
+    if (!start_date.value) {
+        startDateError.innerHTML = 'Start date is required.';
+        valid = false;
+    } else {
+        startDateError.innerHTML = '';
+    }
+
+    if (!deadline.value) {
+        deadlineError.innerHTML = 'Deadline is required.';
+        valid = false;
+    } else {
+        deadlineError.innerHTML = '';
+    }
+
+    if (valid) {
+        event.target.submit();
+    }
+}
+
+function validateTaskEditForm(event) {
+    event.preventDefault();
+    var task_name = document.getElementById('task_name');
+    var task_description = document.getElementById('task_description');
+    var start_date = document.getElementById('start_date');
+    var deadline = document.getElementById('deadline');
+
+    var taskNameError = document.getElementById('taskNameError');
+    var taskDescriptionError = document.getElementById('taskDescriptionError');
+    var startDateError = document.getElementById('startDateError');
+    var deadlineError = document.getElementById('deadlineError');
+
+    let valid = true;
+
+    if (!task_name.value) {
+        taskNameError.innerHTML = 'Task name is required.';
+        valid = false;
+    } else {
+        taskNameError.innerHTML = '';
+    }
+
+    if (!task_description.value) {
+        taskDescriptionError.innerHTML = 'Task description is required.';
+        valid = false;
+    } else {
+        taskDescriptionError.innerHTML = '';
+    }
+
+    if (!start_date.value) {
+        startDateError.innerHTML = 'Start date is required.';
+        valid = false;
+    } else {
+        startDateError.innerHTML = '';
+    }
+
+    if (!deadline.value) {
+        deadlineError.innerHTML = 'Deadline is required.';
+        valid = false;
+    } else {
+        deadlineError.innerHTML = '';
+    }
+
+    if (valid) {
+        event.target.submit();
+    }
+}
+
+function validatePMCommentsTaskForm(event) {
+    var pm_comment = document.getElementById('pm_comment');
+    var commentError = document.getElementById('commentError');
+    let valid = true;
+
+    if (event.submitter.name === 'action' && event.submitter.value === 'approve' && !pm_comment.value.trim()) {
+        commentError.innerHTML = 'Comment is required for approval.';
+        valid = false;
+    } else {
+        commentError.innerHTML = '';
+    }
+
+    if (valid) {
+        return true;
+    } else {
+        event.preventDefault();
+        return false;
+    }
+}
 
 function setupSearch(roleid) {
     function loadDoc() {

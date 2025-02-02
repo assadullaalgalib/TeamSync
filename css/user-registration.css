@@ -99,10 +99,9 @@ body {
     box-shadow: 0 0 8px rgba(126, 87, 194, 0.5);
 }
 
+/* Error Message Styles */
 .error-message {
-    font-size: 11px;
-    color: #ff6b6b;
-    margin-top: 3px;
+    color: red; /* Red color for error messages */
 }
 
 /* Submission Section */

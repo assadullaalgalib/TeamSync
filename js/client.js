@@ -1,3 +1,40 @@
+function validateProposalForm(event) {
+    event.preventDefault();
+    var proposalname = document.getElementById('proposalname');
+    var description = document.getElementById('description');
+    var proposaldeadline = document.getElementById('proposaldeadline');
+
+    var nameError = document.getElementById('nameError');
+    var descriptionError = document.getElementById('descriptionError');
+    var deadlineError = document.getElementById('deadlineError');
+
+    let valid = true;
+
+    if (!proposalname.value) {
+        nameError.innerHTML = 'Project name is required.';
+        valid = false;
+    } else {
+        nameError.innerHTML = '';
+    }
+
+    if (!description.value) {
+        descriptionError.innerHTML = 'Project description is required.';
+        valid = false;
+    } else {
+        descriptionError.innerHTML = '';
+    }
+
+    if (!proposaldeadline.value) {
+        deadlineError.innerHTML = 'Deadline is required.';
+        valid = false;
+    } else {
+        deadlineError.innerHTML = '';
+    }
+
+    if (valid) {
+        event.target.submit();
+    }
+}
 
 function setupSearch(roleid) {
     function loadDoc() {

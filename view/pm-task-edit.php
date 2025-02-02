@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Task - TeamSync</title>
     <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/pm.js" defer></script>
 </head>
 <body>
 
@@ -13,29 +14,33 @@
 <div class="project-container">
     <h1>Edit Task</h1>
 
-    <form action="../controller/pm-task-controller.php?action=update" method="post" class="task-form">
+    <form action="../controller/pm-task-controller.php?action=update" method="post" class="task-form" onsubmit="return validateTaskEditForm(event)">
         <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
         <input type="hidden" name="project_id" value="<?php echo $task['project_id']; ?>">
 
         <div class="form-group">
             <label for="task_name">Task Name:</label>
             <input type="text" id="task_name" name="task_name" value="<?php echo $task['name']; ?>">
+            <p class="error-message" id="taskNameError"></p>
         </div>
 
         <div class="form-group">
             <label for="task_description">Task Description:</label>
             <textarea id="task_description" name="task_description"><?php echo $task['description']; ?></textarea>
+            <p class="error-message" id="taskDescriptionError"></p>
         </div>
 
         <div class="form-row">
             <div class="form-group">
                 <label for="start_date">Start Date:</label>
                 <input type="date" id="start_date" name="start_date" value="<?php echo $task['start_date']; ?>">
+                <p class="error-message" id="startDateError"></p>
             </div>
 
             <div class="form-group">
                 <label for="deadline">Deadline:</label>
                 <input type="date" id="deadline" name="deadline" value="<?php echo $task['deadline']; ?>">
+                <p class="error-message" id="deadlineError"></p>
             </div>
         </div>
 
@@ -57,6 +62,7 @@
         </div>
     </form>
 </div>
+
 
 </body>
 </html>

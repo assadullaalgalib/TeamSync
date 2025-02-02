@@ -195,3 +195,92 @@ function validateProposalForm(event) {
         event.target.submit();
     }
 }
+
+function validateEditProfileForm(event) {
+    event.preventDefault();
+    var firstName = document.getElementById('firstname');
+    var lastName = document.getElementById('lastname');
+    var username = document.getElementById('username');
+    var email = document.getElementById('email');
+    var password = document.getElementById('password');
+    var confirmPassword = document.getElementById('confirm_password');
+    var profilePicture = document.getElementById('profile_picture');
+
+    var firstNameError = document.getElementById('firstNameError');
+    var lastNameError = document.getElementById('lastNameError');
+    var usernameError = document.getElementById('usernameError');
+    var emailError = document.getElementById('emailError');
+    var passwordError = document.getElementById('passwordError');
+    var confirmPasswordError = document.getElementById('confirmPasswordError');
+    var fileError = document.getElementById('fileError');
+
+    let valid = true;
+
+    if (!firstName.value) {
+        firstNameError.innerHTML = 'First name is required.';
+        valid = false;
+    } else {
+        firstNameError.innerHTML = '';
+    }
+
+    if (!lastName.value) {
+        lastNameError.innerHTML = 'Last name is required.';
+        valid = false;
+    } else {
+        lastNameError.innerHTML = '';
+    }
+
+    if (!username.value) {
+        usernameError.innerHTML = 'Username is required.';
+        valid = false;
+    } else {
+        usernameError.innerHTML = '';
+    }
+
+    if (!email.value) {
+        emailError.innerHTML = 'Email is required.';
+        valid = false;
+    } else if (!validateEmail(email.value)) {
+        emailError.innerHTML = 'Invalid email format.';
+        valid = false;
+    } else {
+        emailError.innerHTML = '';
+    }
+
+    if (password.value && !validatePassword(password.value)) {
+        passwordError.innerHTML = 'Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.';
+        valid = false;
+    } else {
+        passwordError.innerHTML = '';
+    }
+
+    if (password.value !== confirmPassword.value) {
+        confirmPasswordError.innerHTML = 'Passwords do not match.';
+        valid = false;
+    } else {
+        confirmPasswordError.innerHTML = '';
+    }
+
+    if (profilePicture.files.length > 0 && !validateFileType(profilePicture.files[0])) {
+        fileError.innerHTML = 'Invalid file type or size. Only jpeg, jpg, gif, and png are allowed and must be less than 5MB.';
+        valid = false;
+    } else {
+        fileError.innerHTML = '';
+    }
+
+    if (valid) {
+        event.target.submit();
+    }
+}
+
+function validateFileType(file) {
+    var allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+    var maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if (!allowedTypes.includes(file.type)) {
+        return false;
+    }
+    if (file.size > maxSize) {
+        return false;
+    }
+    return true;
+}

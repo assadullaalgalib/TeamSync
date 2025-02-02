@@ -1,3 +1,169 @@
+function validateUserEditForm(event) {
+    event.preventDefault();
+    var firstname = document.getElementById('firstname');
+    var lastname = document.getElementById('lastname');
+    var username = document.getElementById('name');
+    var email = document.getElementById('email');
+    var password = document.getElementById('password');
+    var admin = document.getElementById('admin');
+    var pm = document.getElementById('pm');
+    var dev = document.getElementById('dev');
+    var client = document.getElementById('client');
+
+    var firstnameError = document.getElementById('firstnameError');
+    var lastnameError = document.getElementById('lastnameError');
+    var usernameError = document.getElementById('usernameError');
+    var emailError = document.getElementById('emailError');
+    var passwordError = document.getElementById('passwordError');
+    var fileError = document.getElementById('fileError');
+    var roleError = document.getElementById('roleError');
+
+    let valid = true;
+
+    if (!firstname.value) {
+        firstnameError.innerHTML = 'First name is required.';
+        valid = false;
+    } else {
+        firstnameError.innerHTML = '';
+    }
+
+    if (!lastname.value) {
+        lastnameError.innerHTML = 'Last name is required.';
+        valid = false;
+    } else {
+        lastnameError.innerHTML = '';
+    }
+
+    if (!username.value) {
+        usernameError.innerHTML = 'Username is required.';
+        valid = false;
+    } else {
+        usernameError.innerHTML = '';
+    }
+
+    if (!email.value) {
+        emailError.innerHTML = 'Email is required.';
+        valid = false;
+    } else if (!validateEmail(email.value)) {
+        emailError.innerHTML = 'Invalid email format.';
+        valid = false;
+    } else {
+        emailError.innerHTML = '';
+    }
+
+    if (password.value && !validatePassword(password.value)) {
+        passwordError.innerHTML = 'Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.';
+        valid = false;
+    } else {
+        passwordError.innerHTML = '';
+    }
+
+    if (profile_picture.files.length > 0 && !validateFileType(profile_picture.files[0])) {
+        fileError.innerHTML = 'Invalid file type. Only jpeg, jpg, gif, and png are allowed.';
+        valid = false;
+    } else {
+        fileError.innerHTML = '';
+    }
+
+    if (!admin.checked && !pm.checked && !dev.checked && !client.checked) {
+        roleError.innerHTML = 'Please select a role.';
+        valid = false;
+    } else {
+        roleError.innerHTML = '';
+    }
+
+    if (valid) {
+        event.target.submit();
+    }
+}
+
+function validateEmail(email) {
+    var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+function validatePassword(password) {
+    return password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[^a-zA-Z0-9]/.test(password);
+}
+
+function validateFileType(file) {
+    var allowedTypes = ['image/jpeg', 'image/jpg', 'image/gif', 'image/png'];
+    var maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if (!allowedTypes.includes(file.type)) {
+        return false;
+    }
+    if (file.size > maxSize) {
+        return false;
+    }
+    return true;
+}
+
+
+function validateProjectForm(event) {
+    event.preventDefault();
+    var project_name = document.getElementById('project_name');
+    var description = document.getElementById('description');
+    var start_date = document.getElementById('start_date');
+    var deadline = document.getElementById('deadline');
+    var pm_id = document.getElementById('pm_id');
+    var status = document.getElementById('status');
+
+    var projectNameError = document.getElementById('projectNameError');
+    var descriptionError = document.getElementById('descriptionError');
+    var startDateError = document.getElementById('startDateError');
+    var deadlineError = document.getElementById('deadlineError');
+    var pmIdError = document.getElementById('pmIdError');
+    var statusError = document.getElementById('statusError');
+
+    let valid = true;
+
+    if (!project_name.value) {
+        projectNameError.innerHTML = 'Project name is required.';
+        valid = false;
+    } else {
+        projectNameError.innerHTML = '';
+    }
+
+    if (!description.value) {
+        descriptionError.innerHTML = 'Description is required.';
+        valid = false;
+    } else {
+        descriptionError.innerHTML = '';
+    }
+
+    if (!start_date.value) {
+        startDateError.innerHTML = 'Start date is required.';
+        valid = false;
+    } else {
+        startDateError.innerHTML = '';
+    }
+
+    if (!deadline.value) {
+        deadlineError.innerHTML = 'Deadline is required.';
+        valid = false;
+    } else {
+        deadlineError.innerHTML = '';
+    }
+
+    if (!pm_id.value) {
+        pmIdError.innerHTML = 'Project Manager is required.';
+        valid = false;
+    } else {
+        pmIdError.innerHTML = '';
+    }
+
+    if (!status.value) {
+        statusError.innerHTML = 'Status is required.';
+        valid = false;
+    } else {
+        statusError.innerHTML = '';
+    }
+
+    if (valid) {
+        event.target.submit();
+    }
+}
+
 function validateUserCreateForm(event) {
     event.preventDefault();
     var firstname = document.getElementById('firstname');
