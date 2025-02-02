@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 $query = $_GET['query'] ?? '';
 $userid = $_GET['userid'] ?? '';
 
-$results = [];
+$results = [];  
 
 if (!empty($query)) {
     $query = "%" . strtolower($query) . "%";
@@ -22,14 +22,3 @@ if (!empty($query)) {
     }
 }
 
-// Sort results to show best matches first
-usort($results, function($a, $b) {
-    return strcmp($a['name'], $b['name']);
-});
-
-// Limit the results to the first 5 items
-$limitedResults = array_slice($results, 0, 5);
-
-// Return the results as JSON
-echo json_encode($limitedResults);
-?>
