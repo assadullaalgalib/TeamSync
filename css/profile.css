@@ -1,157 +1,145 @@
 /* user-profile-view-and-edit.css */
 
-/* General Body Styles */
 body {
-    font-family: Arial, sans-serif; /* Sets a clean and readable font */
-    margin: 0; /* Removes default margin for a controlled layout */
-    background-color: #f4f4f4; /* Light grey background for overall page */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
 }
 
-/* Navbar Styles */
 .navbar {
-    background-color: #007BFF; /* Navbar background color */
-    display: flex; /* Use flexbox for layout */
-    justify-content: space-between; /* Space between logo and links */
-    align-items: center; /* Vertically center items */
-    padding: 10px 20px; /* Padding around navbar */
-    color: #fff; /* White text color */
+    background-color: #007BFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    color: #fff;
 }
 
 .logo {
-    font-size: 24px; /* Larger font size for the logo */
-    font-weight: bold; /* Bold font for emphasis */
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .nav-links {
-    display: flex; /* Flexbox for nav items */
+    display: flex;
 }
 
 .nav-links a {
-    color: #fff; /* White color for links */
-    text-decoration: none; /* Removes underline from links */
-    margin-left: 20px; /* Space between links */
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
 }
 
-
-/* Profile Container Styles */
 .profile-container {
-    background-color: #fff; /* White background for profile container */
-    padding: 20px; /* Padding inside the container */
-    border-radius: 8px; /* Rounded corners for a softer look */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    max-width: 600px; /* Limits the width of the profile container */
-    margin: auto; /* Centers the container horizontally */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
 }
 
-/* Headings */
 h1 {
-    color: #333; /* Dark grey color for headings */
-    margin-bottom: 20px; /* Space below the title */
+    color: #333;
+    margin-bottom: 20px;
 }
 
-/* Profile Picture Styles */
 .profile-picture {
-    width: 150px; /* Set a fixed width for the profile picture */
-    height: 150px; /* Set a fixed height */
-    border-radius: 50%; /* Makes the profile picture circular */
-    border: 1px solid #252525; /* Adds a circular border with a solid color */
-    object-fit: cover; /* Ensures the image covers the entire element */
-    margin-bottom: 20px; /* Space below the profile picture */
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 1px solid #252525;
+    object-fit: cover;
+    margin-bottom: 20px;
 }
 
-/* Form Elements */
 form {
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column; /* Stack elements vertically */
+    display: flex;
+    flex-direction: column;
 }
 
 label {
-    margin-top: 15px; /* Space above labels */
-    font-weight: bold; /* Bold text for labels */
+    margin-top: 15px;
+    font-weight: bold;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="file"] {
-    padding: 10px; /* Internal spacing for inputs */
-    border: 1px solid #ccc; /* Light grey border */
-    border-radius: 4px; /* Slightly rounded corners */
-    box-sizing: border-box; /* Ensure padding doesn't affect total width */
-    transition: border-color 0.3s; /* Smooth transition for border color */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
-    border-color: #007BFF; /* Change border color on focus */
+    border-color: #007BFF;
 }
 
-/* Hidden Input for File Upload */
 .hidden-input {
-    display: none; /* Hides the file input */
+    display: none;
 }
 
-/* Form Buttons */
 .form-buttons {
-    margin-top: 20px; /* Space above the button container */
+    margin-top: 20px;
 }
 
 .button-primary,
 .button-danger,
 .button-link {
-    padding: 10px 15px; /* Internal padding for buttons */
-    border-radius: 4px; /* Rounded corners for buttons */
-    color: #fff; /* White text */
-    text-decoration: none; /* Remove underline */
-    display: inline-block; /* Allows padding and width */
-    transition: background-color 0.3s; /* Smooth background color transition */
-    border: none; /* Remove any default border */
-    cursor: pointer; /* Pointer cursor on hover */
+    padding: 10px 15px;
+    border-radius: 4px;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+    border: none;
+    cursor: pointer;
 }
 
 .button-primary {
-    background-color: #007BFF; /* Primary button color */
+    background-color: #007BFF;
 }
 
 .button-danger {
-    background-color: #dc3545; /* Danger button color */
+    background-color: #dc3545;
 }
 
 .button-link {
-    background-color: transparent; /* Transparent for link buttons */
-    color: #007BFF; /* Blue color for links */
+    background-color: transparent;
+    color: #007BFF;
 }
 
 .button-primary:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #0056b3;
 }
 
 .button-danger:hover {
-    background-color: #c82333; /* Darker shade on hover */
+    background-color: #c82333;
 }
 
-/* Profile Actions Styles */
 .profile-actions {
-    margin-top: 20px; /* Space above profile actions */
+    margin-top: 20px;
 }
 
 .profile-info {
-    margin-top: 20px; /* Space above profile info */
+    margin-top: 20px;
 }
 
 .label {
-    font-weight: bold; /* Bold text for labels within profile info */
+    font-weight: bold;
 }
 
-/* Responsive Design */
 @media (max-width: 600px) {
     .profile-container {
-        width: 90%; /* Use a percentage width on smaller screens */
+        width: 90%;
     }
 }
 
-/* Error Message Styles */
 .error-message {
-    color: red; /* Red color for error messages */
+    color: red;
 }

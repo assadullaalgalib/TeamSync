@@ -1,53 +1,48 @@
 /* project-edit.css */
 
-/* General Body Styles */
 body {
-    font-family: Arial, sans-serif; /* Sets a clean and readable font */
-    margin: 0; /* Removes default margin for a controlled layout */
-    background-color: #f4f4f4; /* Light grey background for overall page */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
 }
 
-/* Project Container Styles */
 .project-container {
-    background-color: #fff; /* White background for the project form */
-    padding: 20px; /* Padding inside the container */
-    border-radius: 8px; /* Rounded corners for a softer look */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    max-width: 600px; /* Limits the width of the form */
-    margin: auto; /* Centers the container horizontally */
-    transition: box-shadow 0.3s; /* Transition for box shadow on hover */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
+    transition: box-shadow 0.3s;
 }
 
 .project-container:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Headings */
 h1, h2, h3 {
-    color: #333; /* Dark grey color for readability */
-    margin-bottom: 10px; /* Space below titles */
+    color: #333;
+    margin-bottom: 10px;
 }
 
-/* Form Elements */
 label {
-    display: block; /* Makes labels take full width and stack */
-    margin: 10px 0 5px; /* Space around labels */
-    font-weight: bold; /* Bold text for visibility */
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
 }
 
-/* Input, Textarea, and Select Styles */
 input[type="text"],
 input[type="date"],
 input[type="email"],
 input[type="password"],
 textarea,
 select {
-    width: 100%; /* Full width for inputs */
-    padding: 10px; /* Internal spacing */
-    border: 1px solid #ccc; /* Light grey border */
-    border-radius: 4px; /* Slightly rounded corners */
-    box-sizing: border-box; /* Ensures padding doesn't affect total width */
-    transition: border-color 0.3s; /* Smooth border transition on focus */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
 }
 
 input[type="text"]:focus,
@@ -56,166 +51,147 @@ input[type="email"]:focus,
 input[type="password"]:focus,
 textarea:focus,
 select:focus {
-    border-color: #007BFF; /* Change border color on focus */
+    border-color: #007BFF;
 }
 
-/* Button Styles */
 .form-buttons {
-    margin-top: 20px; /* Space above button container */
+    margin-top: 20px;
 }
 
 .button-placeholder {
-    width: 100px; /* Set the width to match the button */
-    height: 36px; /* Set the height to match the button */
+    width: 100px;
+    height: 36px;
 }
 
 .project-buttons {
-    display: flex; /* Aligns the buttons horizontally */
-    gap: 10px; /* Adds space between buttons */
-    margin-top: 20px; /* Adds space above the button container */
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .button-primary,
 .button-dark,
 .button-danger {
-    padding: 10px 15px; /* Internal spacing for buttons */
-    border: none; /* Removes default border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Shows pointer cursor on hover */
-    font-size: 16px; /* Clear text size for buttons */
-    transition: background-color 0.3s; /* Smooth background color transition */
-    text-decoration: none; /* Removes underline from buttons */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    text-decoration: none;
 }
 
 .button-primary {
-    background-color: #007BFF; /* Bootstrap primary color */
-    color: #fff; /* White text color */
+    background-color: #007BFF;
+    color: #fff;
 }
 
 .button-dark {
-    background-color: #333; /* Dark grey color */
-    color: #fff; /* White text color */
+    background-color: #333;
+    color: #fff;
 }
 
 .button-danger {
-    background-color: #dc3545; /* Bootstrap danger color */
-    color: #fff; /* White text color */
+    background-color: #dc3545;
+    color: #fff;
 }
 
 .button-primary:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #0056b3;
 }
 
 .button-dark:hover {
-    background-color: #555; /* Lighter shade on hover */
+    background-color: #555;
 }
 
 .button-danger:hover {
-    background-color: #c82333; /* Darker shade on hover */
+    background-color: #c82333;
 }
 
-/* Form Group Styles */
 .form-group {
-    margin-bottom: 15px; /* Space below each form group */
+    margin-bottom: 15px;
 }
 
 .edit-project-form {
-    margin-bottom: 12px; /* Space below the form */
+    margin-bottom: 12px;
 }
 
-
-/* Radio Button Styles */
 .radio-group {
-    display: flex; /* Use flexbox to align radio buttons side by side */
-    gap: 5px; /* Space between radio buttons */
+    display: flex;
+    gap: 5px;
     margin-left: 40px;
 }
 
 .radio-group label {
-    margin-right: 30px; /* Space between radio button and label */
+    margin-right: 30px;
 }
 
-
-/* Status and Progress Styles */
-/* Status Styles */
 .status {
-    font-weight: bold; /* Bold text for emphasis */
-    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3); /* Shadow for text visibility */
-    padding: 3px; /* Internal padding for status */
+    font-weight: bold;
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+    padding: 3px;
 }
 
-/* Using attribute selectors to style based on the data-status attribute */
 .status[data-status="Completed"] {
-    color: green; /* Green background for completed status */
+    color: green;
 }
 
 .status[data-status="Handed Over"] {
-    color: rgb(0, 155, 116); 
+    color: rgb(0, 155, 116);
 }
 
 .status[data-status="In Progress"] {
-    color: rgb(223, 145, 0); /* Orange background for in-progress status */
+    color: rgb(223, 145, 0);
 }
 
 .status[data-status="Approved"] {
-    color: blue; /* Blue background for approved status */
+    color: blue;
 }
 
 .status[data-status="Pending Approval"] {
-    color: purple; /* Purple background for pending approval status */
+    color: purple;
 }
 
 .status[data-status="Rejected"] {
-    color: red; /* Red background for rejected status */
+    color: red;
 }
 
-
-/* Task List Styles */
 .task-list {
-    list-style-type: none; /* Removes bullet points from the list */
-    padding: 0; /* Removes default padding */
+    list-style-type: none;
+    padding: 0;
 }
 
-/* Task Button Styles */
-/* Task Button Styles */
 .task-button {
-    text-decoration: none; /* Remove underline from links */
-    color: #007BFF; /* Blue color for text */
-    font-weight: bold; /* Bold font for text */
-    display: block; /* Make the link a block element */
-    padding: 10px; /* Padding inside the link */
-    border-radius: 4px; /* Rounded corners for links */
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
-    background-color: transparent; /* Initial transparent background */
-    cursor: pointer; /* Change cursor to pointer */
-    text-align: left; /* Align text to the left */
-    max-width: 250px; /* Limit the width of the button */
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: transparent;
+    cursor: pointer;
+    text-align: left;
+    max-width: 250px;
 }
 
 .task-button:hover {
-    background-color: #3e85d1; /* Background color on hover */
-    color: #fff; /* White text on hover */
+    background-color: #3e85d1;
+    color: #fff;
 }
 
-
-
-
-/* Error Message Styles */
 .error-message {
-    color: red; /* Red color for error messages */
+    color: red;
 }
 
-/* File Details Styles */
 .file-details {
     margin-bottom: 30px;
 }
 
-/* Proposal Form Styles */
 textarea.textarea-feedback {
-    height: auto; /* Allows for dynamic height */
+    height: auto;
 }
 
-/* Navigation Button Styles */
 .nav-button {
-    text-align: center; /* Centers navigation buttons */
+    text-align: center;
 }

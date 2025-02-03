@@ -1,136 +1,126 @@
 /* show-all.css */
 
-/* General Body Styles */
 body {
-    font-family: Arial, sans-serif; /* Sets a clean and readable font */
-    margin: 0; /* Removes default margin for a controlled layout */
-    background-color: #f4f4f4; /* Light grey background for overall page */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
 }
 
-/* Project Container Styles */
 .project-container,
 .user-container,
 .task-container {
-    padding: 20px; /* Padding for containers */
-    display: flex; /* Flexbox for layout */
-    flex-direction: column; /* Vertical stacking */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Heading Styles */
 h1 {
-    color: #333; /* Dark grey color for section headings */
-    margin-bottom: 10px; /* Space below headings */
-    margin-left: 20px; /* Indent headings for hierarchy */
+    color: #333;
+    margin-bottom: 10px;
+    margin-left: 20px;
 }
 
-/* Project and User Card Styles */
 .project-card,
 .user-card,
 .task-card {
-    background-color: #fff; /* White background for cards */
-    padding: 15px; /* Padding inside cards */
-    border-radius: 6px; /* Rounded corners */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    margin-bottom: 20px; /* Space below cards */
-    transition: transform 0.1s; /* Minimal animation for scale */
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.1s;
 }
 
 .project-card-link,
 .user-card-link,
 .task-card-link {
-    text-decoration: none; /* Remove underline from links */
-    color: inherit; /* Inherit color from parent */
+    text-decoration: none;
+    color: inherit;
 }
 
 .project-card:hover,
 .user-card:hover {
-    transform: translateY(-2px); /* Slightly raise the card on hover */
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* Card Header Styles */
 .card-header {
-    display: flex; /* Flexbox for card header */
-    justify-content: space-between; /* Space between elements */
+    display: flex;
+    justify-content: space-between;
 }
 
 h2 {
-    color: #2e2e2e; /* Dark grey color for section headings */
-
+    color: #2e2e2e;
 }
 
 .project-id,
 .user-id,
 .task-id {
     font-weight: bold;
-    color: #007BFF; /* Grey color for project ID */
+    color: #007BFF;
 }
 
-
-/* Status Styles */
 .status {
-    font-weight: bold; /* Bold text for emphasis */
-    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3); /* Shadow for text visibility */
-    padding: 3px; /* Internal padding for status */
+    font-weight: bold;
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+    padding: 3px;
 }
 
-/* Using attribute selectors to style based on the data-status attribute */
 .status[data-status="Completed"] {
-    color: green; /* Green background for completed status */
+    color: green;
 }
 
 .status[data-status="Handed Over"] {
-    color: rgb(0, 155, 116); 
+    color: rgb(0, 155, 116);
 }
 
 .status[data-status="In Progress"] {
-    color: rgb(223, 145, 0); /* Orange background for in-progress status */
+    color: rgb(223, 145, 0);
 }
 
 .status[data-status="Approved"] {
-    color: blue; /* Blue background for approved status */
+    color: blue;
 }
 
 .status[data-status="Pending Approval"] {
-    color: purple; /* Purple background for pending approval status */
+    color: purple;
 }
 
 .status[data-status="Rejected"] {
-    color: red; /* Red background for rejected status */
+    color: red;
 }
 
-/* Button Styles in Cards */
 .card-actions, .user-actions {
-    margin-top: 10px; /* Space above actions */
+    margin-top: 10px;
 }
 
 .button-primary,
 .button-danger {
-    padding: 8px 12px; /* Internal padding for buttons */
-    border-radius: 4px; /* Rounded corners */
-    color: #fff; /* White text */
-    text-decoration: none; /* Remove underline */
-    transition: background-color 0.3s; /* Smooth background color transition */
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s;
 }
 
 .button-primary {
-    background-color: #007BFF; /* Primary button color */
+    background-color: #007BFF;
 }
 
 .button-danger {
-    background-color: #dc3545; /* Danger button color */
+    background-color: #dc3545;
 }
 
 .button-primary:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #0056b3;
 }
 
 .button-danger:hover {
-    background-color: #c82333; /* Darker shade on hover */
+    background-color: #c82333;
 }
 
 .form-buttons {
-    margin-top: 20px; /* Space above button container */
-    margin-left: 20px; /* Indent buttons for alignment */
-    margin-bottom: 10px; /* Space below button container */
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 10px;
 }

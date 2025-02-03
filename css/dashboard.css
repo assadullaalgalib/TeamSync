@@ -1,51 +1,42 @@
-/* dashboard.css */
-
-/* General Body Styles */
 body {
-    font-family: Arial, sans-serif; /* Sets a clean and readable font */
-    margin: 0; /* Removes default margin for a controlled layout */
-    background-color: #f4f4f4; /* Light grey background for overall page */
+    font-family: Arial, sans-serif; 
+    margin: 0; 
+    background-color: #f4f4f4;
 }
 
-/* Main Container Styles */
 .container {
-    padding: 20px; /* Padding for main container */
+    padding: 20px; 
 }
 
-/* Section Styles */
 .overview-section,
 .project-section,
 .task-section {
-    background-color: #fff; /* White background for sections */
-    margin-bottom: 20px; /* Space below each section */
-    padding: 20px; /* Padding inside sections */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #fff; 
+    margin-bottom: 20px; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
-/* Heading Styles */
 h2, h3 {
-    color: #333; /* Dark grey color for section headings */
-    margin-bottom: 10px; /* Space below headings */
+    color: #333; 
+    margin-bottom: 10px; 
 }
 
-/* Stats Section Styles */
 .stats-section {
-    display: flex; /* Flexbox for stats display */
-    flex-wrap: wrap; /* Allow wrapping */
-    gap: 20px; /* Space between stats cards */
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 20px; 
 }
 
-/* Status Styles */
 .status {
-    font-weight: bold; /* Bold text for emphasis */
-    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3); /* Shadow for text visibility */
-    padding: 3px; /* Internal padding for status */
+    font-weight: bold; 
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3); 
+    padding: 3px; 
 }
 
-/* Using attribute selectors to style based on the data-status attribute */
 .status[data-status="Completed"] {
-    color: green; /* Green background for completed status */
+    color: green; 
 }
 
 .status[data-status="Handed Over"] {
@@ -53,187 +44,177 @@ h2, h3 {
 }
 
 .status[data-status="In Progress"] {
-    color: rgb(223, 145, 0); /* Orange background for in-progress status */
+    color: rgb(223, 145, 0); 
 }
 
 .status[data-status="Approved"] {
-    color: blue; /* Blue background for approved status */
+    color: blue; 
 }
 
 .status[data-status="Pending Approval"] {
-    color: purple; /* Purple background for pending approval status */
+    color: purple; 
 }
 
 .status[data-status="Rejected"] {
-    color: red; /* Red background for rejected status */
+    color: red; 
 }
 
 .stats-card {
-    background-color: #e9ecef; /* Light grey background for stats cards */
-    padding: 15px; /* Padding inside cards */
-    border-radius: 6px; /* Rounded corners for cards */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    flex: 1; /* Flex-grow to take available space */
-    text-align: center; /* Center text in cards */
-    transition: background-color 0.3s; /* Animation for background on hover */
-    text-decoration: none; /* Remove underline from links */
+    background-color: #e9ecef; 
+    padding: 15px; 
+    border-radius: 6px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    flex: 1; 
+    text-align: center; 
+    transition: background-color 0.3s; 
+    text-decoration: none; 
 }
 
 .stats-card:hover {
-    background-color: #dedede; /* Darker grey on hover */
-    transform: translateY(-2px); /* Slightly raise the card on hover */
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+    background-color: #dedede; 
+    transform: translateY(-2px); 
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15); 
 }
 
-/* Project and User Card Styles */
 .project-card,
 .task-card {
-    background-color: #fff; /* White background for cards */
-    padding: 15px; /* Padding inside cards */
-    border-radius: 6px; /* Rounded corners for cards */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    margin-bottom: 20px; /* Space below each card */
-    transition: transform 0.1s, box-shadow 0.1s; /* Minimal animation for scale */
+    background-color: #fff; 
+    padding: 15px; 
+    border-radius: 6px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 20px; 
+    transition: transform 0.1s, box-shadow 0.1s; 
 }
 
 .project-card-link,
 .task-card-link {
-    text-decoration: none; /* Remove underline from links */
-    color: inherit; /* Inherit color from parent */
+    text-decoration: none; 
+    color: inherit; 
 }
 
 .project-card:hover,
 .task-card:hover {
-    transform: translateY(-2px); /* Slightly raise the card on hover */
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
-    filter: brightness(0.9); /* Slightly dim the card on hover */
+    transform: translateY(-2px); 
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15); 
+    filter: brightness(0.9); 
 }
 
-/* Card Header Styles */
 .card-header {
-    display: flex; /* Flexbox for card header */
-    justify-content: space-between; /* Space between elements */
+    display: flex; 
+    justify-content: space-between; 
 }
 
-/* Project button styles */
 .ongoing-projects {
-    background-color: #e4f2ff; /* Light blue */
+    background-color: #e4f2ff; 
 }
 
 .handed-over-projects {
-    background-color: #e8e8ff; /* Lavender */
+    background-color: #e8e8ff; 
 }
 
 .pending-project-approvals {
-    background-color: #fffcdf; /* Lemon chiffon */
+    background-color: #fffcdf; 
 }
 
 .pending-task-approvals {
-    background-color: #ffe8f4; /* Beige */
+    background-color: #ffe8f4; 
 }
 
-
-/* Project section styles */
 .ongoing-projects-section {
-    background-color: #b4dcff; /* Light blue */
+    background-color: #b4dcff; 
 }
 
 .handed-over-projects-section {
-    background-color: #c4c4ff; /* Lavender */
+    background-color: #c4c4ff; 
 }
 
 .pending-project-approvals-section {
-    background-color: #fff9c1; /* Lemon chiffon */
+    background-color: #fff9c1; 
 }
 
 .pending-task-approvals-section {
-    background-color: #ffc8e5; /* Beige */
+    background-color: #ffc8e5; 
 }
 
 .project-id,
 .task-id {
     font-weight: bold;
-    color: #007BFF; /* Grey color for project ID */
+    color: #007BFF; 
 }
 
-
-/* Button Styles */
 .button-primary,
 .button-dark,
 .button-danger {
-    padding: 10px 15px; /* Internal padding for buttons */
-    border-radius: 4px; /* Rounded corners for buttons */
-    color: #fff; /* White text */
-    text-decoration: none; /* Remove underline */
-    transition: background-color 0.3s; /* Smooth background color transition */
+    padding: 10px 15px; 
+    border-radius: 4px; 
+    color: #fff; 
+    text-decoration: none; 
+    transition: background-color 0.3s; 
 }
 
 .button-primary {
-    background-color: #007BFF; /* Primary button color */
+    background-color: #007BFF; 
 }
 
 .button-dark {
-    background-color: #333; /* Dark button color */
+    background-color: #333; 
 }
 
 .button-danger {
-    background-color: #dc3545; /* Danger button color */
+    background-color: #dc3545; 
 }
 
 .button-primary:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #0056b3; 
 }
 
 .button-dark:hover {
-    background-color: #555; /* Lighter shade on hover */
+    background-color: #555; 
 }
 
 .button-danger:hover {
-    background-color: #c82333; /* Darker shade on hover */
+    background-color: #c82333; 
 }
 
-/* Search and Input Styles */
 .search-container {
-    margin-top: 20px; /* Space above search container */
-    margin-bottom: 20px; /* Space below search container */
+    margin-top: 20px; 
+    margin-bottom: 20px; 
 }
 
 .search-container input[type="text"] {
-    width: 100%; /* Full width for search input */
-    padding: 10px; /* Internal padding */
-    border: 1px solid #ccc; /* Light grey border */
-    border-radius: 4px; /* Rounded corners */
-    box-sizing: border-box; /* Ensure padding doesn't affect total width */
+    width: 100%; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    box-sizing: border-box; 
 }
 
-/* Task Filter Styles */
 .filter-container {
-    margin: 20px 0; /* Space above and below filter container */
-    display: flex; /* Flexbox for filter links */
-    gap: 10px; /* Space between filter links */
+    margin: 20px 0; 
+    display: flex; 
+    gap: 10px; 
 }
 
-/* User Info Styles */
 .user-container {
-    display: flex; /* Flexbox for user cards */
-    flex-wrap: wrap; /* Allow wrapping */
-    gap: 20px; /* Space between user cards */
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 20px; 
 }
 
 .user-card {
-    background-color: #fff; /* White background for user cards */
-    padding: 15px; /* Padding inside user cards */
-    border-radius: 6px; /* Rounded corners */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    transition: transform 0.1s; /* Minimal animation for scale */
+    background-color: #fff; 
+    padding: 15px; 
+    border-radius: 6px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.1s; 
 }
 
 .user-card:hover {
-    transform: translateY(-2px); /* Slightly raise the card on hover */
+    transform: translateY(-2px); 
 }
 
 .user-actions {
-    margin-top: 10px; /* Space above actions */
-    display: flex; /* Flexbox for buttons */
-    gap: 10px; /* Space between buttons */
+    margin-top: 10px; 
+    display: flex; 
+    gap: 10px; 
 }

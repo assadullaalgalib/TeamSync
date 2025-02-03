@@ -3,16 +3,15 @@ body {
     padding: 0;
     font-family: "Roboto", serif;
     background: url('../images/login background.jpg');
-    background-size: cover; /* Ensure the image covers the full viewport */
+    background-size: cover;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Login Box Container */
 .login-box {
-    background-color: rgba(26, 11, 53, 0.9); /* Slight transparency for frosted effect */
+    background-color: rgba(26, 11, 53, 0.9);
     border-radius: 12px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
     width: 400px;
@@ -20,7 +19,6 @@ body {
     text-align: center;
 }
 
-/* Form Header */
 .login-box h2 {
     font-size: 24px;
     font-weight: bold;
@@ -28,7 +26,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Input Group Styling */
 .input-group {
     margin-bottom: 20px;
     text-align: left;
@@ -42,8 +39,8 @@ body {
 }
 
 .input-group input {
-    width: 94%; /* Make the input fill the container */
-    padding: 10px; /* Add consistent padding inside the input */
+    width: 94%;
+    padding: 10px;
     font-size: 14px;
     border: 1px solid #4e3b75;
     border-radius: 8px;
@@ -62,11 +59,10 @@ body {
     box-shadow: 0 0 8px rgba(126, 87, 194, 0.5);
 }
 
-/* Error Message Styles */
 .error-message {
-    color: red; /* Red color for error messages */
+    color: red;
 }
-/* Login Button Styling */
+
 button {
     width: 75%;
     padding: 10px;
@@ -85,7 +81,6 @@ button:hover {
     background-color: #9575cd;
 }
 
-/* Register Link */
 p {
     margin-top: 20px;
     font-size: 14px;
