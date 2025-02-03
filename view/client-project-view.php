@@ -44,7 +44,7 @@
             <textarea name="client_feedback" rows="4" cols="50" placeholder="Enter your feedback here..." class="textarea-feedback"></textarea><br>
             <div class="form-buttons">
                 <button type="submit" name="action" value="accept" class="button-primary">Accept</button>
-                <button type="submit" name="action" value="reject" class="button-danger">Reject</button>
+                <button type="submit" name="action" value="reject" class="button-danger" onclick="return confirm('Are you sure you want to reject the project')">Reject</button>
             </div>
         </form>
     <?php } ?>

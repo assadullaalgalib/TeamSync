@@ -51,7 +51,7 @@ function handleAcceptRejectProject() {
     if ($action == 'accept') {
 
         $projectAccepted = acceptHandedoverProject($projectId, $clientFeedback);
-        if ($taskApproved) {
+        if ($projectAccepted) {
             $_SESSION['successMessage'] = "Project accepted successfully.";
         } else {
             $_SESSION['errorMessage'] = "Failed to accept project.";
@@ -59,7 +59,7 @@ function handleAcceptRejectProject() {
     } elseif ($action == 'reject') {
 
         $projectRejected = rejectHandedoverProject($projectId, $clientFeedback);
-        if ($taskRejected) {
+        if ($projectRejected) {
             $_SESSION['successMessage'] = "Project rejected successfully.";
         } else {
             $_SESSION['errorMessage'] = "Failed to reject project.";
